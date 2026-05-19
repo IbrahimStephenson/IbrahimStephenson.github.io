@@ -36,7 +36,7 @@ The answer was a nullable programme lookup.
 
 ## The Build
 
-**Layer 1: Dataverse Schema**
+Layer 1: Dataverse Schema
 
 The content store is a custom table, ttd_supporthub. Each record holds a title, a plain-text description, comma-separated keywords for search, a URL to the actual guide, a service lookup, and a programme lookup.
 
@@ -44,7 +44,7 @@ The programme lookup is nullable by design. A guide with no programme set surfac
 
 There is also an isfeatured boolean for surfacing priority content, and the service table has a hasascribe boolean that controls which services appear in the app at all. Onboarding a new service means setting that flag. No app changes required.
 
-**Layer 2: The Canvas App**
+Layer 2: The Canvas App
 
 Four screens. Embedded in Dynamics so advisors never leave the environment they are already in.
 
