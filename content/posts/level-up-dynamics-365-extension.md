@@ -10,6 +10,7 @@ tags:
   - productivity
   - tools
 draft: false
+cover: /images/LevelUp.jpg
 ---
 
 Over 100,000 people use this browser extension — are you one of them?
