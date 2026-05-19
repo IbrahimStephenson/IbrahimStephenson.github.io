@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:hugo-theme-dream.g1en.site)"
+    ]
+  }
+}
