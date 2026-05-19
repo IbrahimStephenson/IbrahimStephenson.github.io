@@ -1,5 +1,4 @@
 socials = [
   { href = "https://www.linkedin.com/in/ibrahimstephenson", target = "_blank", icon = "logo-linkedin", title = "LinkedIn" },
   { href = "https://github.com/IbrahimStephenson", target = "_blank", icon = "logo-github", title = "GitHub" },
-  { href = "https://youtube.com/@Powercademy", target = "_blank", icon = "logo-youtube", title = "YouTube" },
 ]
