@@ -6,8 +6,8 @@ theme = "dream"
 
 [params]
   author = "Ibrahim Stephenson"
-  description = "Power Platform Developer | Content Creator | Chess enthusiast"
-  motto = "Power Platform Developer | YouTuber | Chess enthusiast"
+  description = "Power Platform Developer"
+  motto = "Welcome to my Mind Palace"
   showSummary = true
   avatar = "/logo.png"
   lightTheme = "emerald"
