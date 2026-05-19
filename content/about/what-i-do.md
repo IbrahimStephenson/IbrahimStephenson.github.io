@@ -1,6 +1,16 @@
 ---
-title: What I Do
+title: Technical Skills
 date: 2026-01-02
 ---
 
-I build solutions on the Microsoft Power Platform — Power Apps, Power Automate, and Dataverse — as well as Microsoft Dynamics 365. My work spans custom model-driven and canvas apps, automated business processes, and integrations across the Microsoft ecosystem.
+**Power Platform** — Power Automate · Power Apps (Model-Driven) · Power Pages · Dataverse ALM & Solution Management
+
+**CRM / ERP** — Microsoft Dynamics 365 · Dataverse Customisation · Business Rules · Calculated Fields · Form & View Configuration
+
+**Integrations** — Plumsail Forms · Microsoft Bookings · Freshdesk API · REST API · OData Queries · FetchXML
+
+**Development** — JavaScript (Forms Customisation) · Power Fx · JSON · HTML / CSS
+
+**Cloud & Infrastructure** — Microsoft Azure · Azure Cosmos DB · SharePoint Online · Microsoft Entra ID
+
+**Tooling & Process** — XrmToolBox · Azure DevOps (Pipelines) · Agile / Scrum
