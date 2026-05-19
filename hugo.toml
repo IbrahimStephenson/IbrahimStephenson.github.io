@@ -9,3 +9,5 @@ theme = "dream"
   description = "Power Platform Developer | Content Creator | Chess enthusiast"
   showSummary = true
   avatar = "/logo.png"
+  lightTheme = "emerald"
+  darkTheme = "forest"
