@@ -3,6 +3,7 @@ locale = "en-us"
 defaultContentLanguage = "en"
 title = "Ibrahim Stephenson"
 theme = "dream"
+buildFuture = true
 
 [params]
   author = "Ibrahim Stephenson"
