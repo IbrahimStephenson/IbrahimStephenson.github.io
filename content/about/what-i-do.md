@@ -1,5 +1,5 @@
 ---
-title: Technical Skills
+title: What i use
 date: 2026-01-02
 ---
 
