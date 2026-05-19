@@ -12,5 +12,8 @@ theme = "dream"
   avatar = "/logo.png"
   lightTheme = "emerald"
   darkTheme = "forest"
-  rss = true
-  reorderNavItems = ["about", "posts", "search", "tags", "categories", "rss"]
+  reorderNavItems = ["about", "posts", "search", "tags", "categories", "linkedin", "github"]
+
+[params.navItems]
+  linkedin = { href = "https://www.linkedin.com/in/ibrahimstephenson", target = "_blank", icon = "logo-linkedin", title = "LinkedIn" }
+  github = { href = "https://github.com/IbrahimStephenson", target = "_blank", icon = "logo-github", title = "GitHub" }
