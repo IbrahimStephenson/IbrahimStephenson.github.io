@@ -4,7 +4,8 @@ title = "Ibrahim Stephenson"
 theme = "PaperMod"
 
 [params]
-  homeInfoParams = {Title = "Hi, I'm Ibrahim", Content = "Welcome to my Mind Palace"}
+  disableFingerprinting = true
+  homeInfoParams = {Title = "Hi, I'm Ibrahim 👋", Content = "Welcome to my Mind Palace"}
   showReadingTime = true
   showShareButtons = false
 
