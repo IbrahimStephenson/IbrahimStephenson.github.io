@@ -12,7 +12,7 @@ theme = "dream"
   avatar = "/logo.png"
   lightTheme = "emerald"
   darkTheme = "forest"
-  reorderNavItems = ["about", "posts", "search", "tags", "categories", "linkedin", "github"]
+  reorderNavItems = ["about", "posts", "search", "categories", "linkedin", "github"]
 
 [params.navItems]
   linkedin = { href = "https://www.linkedin.com/in/ibrahimstephenson", target = "_blank", icon = "logo-linkedin", title = "LinkedIn" }
