@@ -1,7 +1,7 @@
 baseURL = "https://ibrahimstephenson.github.io/"
 languageCode = "en-us"
 title = "Ibrahim Stephenson"
-theme = "PaperMod"
+theme = "ananke"
 
 [params]
   disableFingerprinting = true
