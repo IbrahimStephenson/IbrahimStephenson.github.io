@@ -12,6 +12,7 @@ theme = "dream"
   avatar = "/logo.png"
   lightTheme = "emerald"
   darkTheme = "forest"
+  noDefaultSummaryCover = true
   reorderNavItems = ["about", "posts", "search", "categories", "linkedin", "github"]
 
 [params.navItems]
