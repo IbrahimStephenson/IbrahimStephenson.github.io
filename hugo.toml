@@ -1,20 +1,10 @@
 baseURL = "https://ibrahimstephenson.github.io/"
-languageCode = "en-us"
+locale = "en-us"
+defaultContentLanguage = "en"
 title = "Ibrahim Stephenson"
 theme = "dream"
 
 [params]
-  disableFingerprinting = true
-  homeInfoParams = {Title = "Hi, I'm Ibrahim 👋", Content = "Welcome to my Mind Palace"}
-  showReadingTime = true
-  showShareButtons = false
-
-[menu]
-  [[menu.main]]
-    name = "Blog"
-    url = "/posts/"
-    weight = 1
-  [[menu.main]]
-    name = "Projects"
-    url = "/projects/"
-    weight = 2
+  author = "Ibrahim Stephenson"
+  description = "Power Platform Developer | Content Creator | Chess enthusiast"
+  showSummary = true
