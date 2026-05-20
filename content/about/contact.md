@@ -4,7 +4,7 @@ date: 2026-01-10
 weight: 10
 ---
 
-Whether you have a project in mind, a question about my work, or just want to say hello — drop me a message.
+Feel free to drop me a message below, whether you want to say Hi, discuss a project or simply connect. My inbox is always open.
 
 <form id="contact-form" action="https://formspree.io/f/xwvzvjap" method="POST" class="not-prose space-y-3 mt-4">
   <input type="hidden" name="_subject" value="Portfolio Enquiry" />
