@@ -3,4 +3,6 @@ title: Powercademy
 date: 2026-01-03
 ---
 
-I run [Powercademy](https://youtube.com/@Powercademy) on YouTube, where I create tutorials and guides for Power Platform developers and learners. The channel is focused on making Microsoft tools more accessible — whether you're just getting started with Power Apps or looking to level up your Power Automate flows.
+I contribute to and edit Power Platform educational for (https://www.youtube.com/@Powercademy) content across YouTube tutorials, written guides, and
+structured course material, ensuring technical accuracy and clarity for a practical audience and demonstrating
+active engagement with the Power Platform community outside of commercial work.
