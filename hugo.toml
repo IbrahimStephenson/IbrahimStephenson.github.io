@@ -1,4 +1,9 @@
 baseURL = "https://ibrahimstephenson.github.io/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
 locale = "en-us"
 defaultContentLanguage = "en"
 title = "Ibrahim Stephenson"
