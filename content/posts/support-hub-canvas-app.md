@@ -10,6 +10,7 @@ tags:
   - power-apps
   - dynamics-365
 draft: false
+cover: /images/supporthub.png
 ---
 
 The worst kind of support ticket is the one that didn't need to be raised.
