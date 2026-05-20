@@ -1,6 +1,7 @@
 ---
 title: This Site
 date: 2026-01-06
+weight: 1
 ---
 
 This is where I share blog posts, projects, and things I'm thinking about. Mostly around Power Platform, but occasionally beyond it.

@@ -1,6 +1,7 @@
 ---
 title: Powercademy
 date: 2026-01-03
+weight: 3
 ---
 
 I contribute to and edit Power Platform educational for (https://www.youtube.com/@Powercademy) content across YouTube tutorials, written guides, and

@@ -1,8 +1,12 @@
 <div class="dream-grid dream-grid-about">
   {{ with site.GetPage "/about" }}
   {{ $aboutPages := .Resources.ByType "page" }}
-  {{ range (sort $aboutPages "Date" "asc") }}
-  <div class="w-full md:w-1/2 lg:w-1/3 p-4 dream-column">
+  {{ range (sort $aboutPages ".Params.weight" "asc") }}
+  {{ $span := .Params.span | default "third" }}
+  {{ $width := "w-full md:w-1/2 lg:w-1/3" }}
+  {{ if eq $span "full" }}{{ $width = "w-full" }}{{ end }}
+  {{ if eq $span "half" }}{{ $width = "w-full md:w-1/2" }}{{ end }}
+  <div class="{{ $width }} p-4 dream-column">
     <article
       class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
     >

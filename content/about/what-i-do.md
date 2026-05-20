@@ -1,6 +1,7 @@
 ---
 title: What i use
 date: 2026-01-02
+weight: 4
 ---
 
 **Power Platform** — Power Automate · Power Apps (Model-Driven) · Power Pages · Dataverse ALM & Solution Management
