@@ -1,0 +1,9 @@
+<div>
+  {{ if site.Params.siteStartYear }}
+  <p>
+    © {{ if eq now.Year site.Params.siteStartYear }}{{ now.Year }}{{ else }}{{ site.Params.siteStartYear }} - {{ now.Year }}{{ end }} {{ site.Title }}
+  </p>
+  {{ else }}
+  <p>© {{ now.Year }} {{ site.Title }}</p>
+  {{ end }}
+</div>
