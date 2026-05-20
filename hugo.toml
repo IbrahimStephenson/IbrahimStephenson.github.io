@@ -14,7 +14,7 @@ buildFuture = true
   lightTheme = "emerald"
   darkTheme = "forest"
   noDefaultSummaryCover = true
-  reorderNavItems = ["about", "posts", "search", "categories", "linkedin", "github"]
+  reorderNavItems = ["about", "posts", "search", "categories", "linkedin", "github", "email"]
 
 [params.advanced]
   customCSS = ["/css/custom.css"]
@@ -22,3 +22,4 @@ buildFuture = true
 [params.navItems]
   linkedin = { href = "https://www.linkedin.com/in/ibrahimstephenson", target = "_blank", icon = "logo-linkedin", title = "LinkedIn" }
   github = { href = "https://github.com/IbrahimStephenson", target = "_blank", icon = "logo-github", title = "GitHub" }
+  email = { href = "mailto:Ibrahimstephenson@gmail.com?subject=Portfolio%20Enquiry", icon = "mail", title = "Contact Me" }
