@@ -10,7 +10,7 @@ tags:
   - pac-cli
   - dataverse
   - power-automate
-draft: true
+draft: false
 cover: /images/alm.png
 ---
 

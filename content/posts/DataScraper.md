@@ -9,7 +9,7 @@ tags:
   - ai-builder
   - claude
   - dataverse
-draft: true
+draft: false
 ---
 
 We had a solution everyone loved. Until they didn't. Here's what happened, and what I built to replace it.

@@ -9,7 +9,7 @@ tags:
   - solo-developer
   - career
   - life
-draft: true
+draft: false
 ---
 
 I still remember exactly where I was when I found out.

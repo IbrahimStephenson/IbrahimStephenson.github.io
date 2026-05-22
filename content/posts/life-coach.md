@@ -6,7 +6,7 @@ categories:
   - Rant
 tags:
   - Life Goals
-draft: true
+draft: false
 ---
 
 When I was younger, my dream was to be a life coach. For an introvert, that is a pretty strange thing to want.
