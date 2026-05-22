@@ -29,7 +29,7 @@ When I joined, there was a proper team. Established, supportive, the kind of env
 
 After the redundancies we were three. Me, the lead, and a PO.
 
-Then the lead left. Voluntarily. He went to Capgemini, which was absolutely the right move for him, and I was genuinely happy for him. I was also, if I am being honest, terrified. Because now it was just me. One developer. A PO. And a Dynamics 365 database with over a hundred thousand client records that ran NHS programmes for real people.
+Then the lead left. Voluntarily. He went to Capgemini, which was absolutely the right move for him, and I was genuinely happy for him. I was also, if I am being honest, terrified. Because now it was just me. One developer. A PO. And a Dynamics 365 database with over a hundred thousand client records.
 
 I did not feel ready. I am not sure I was ready. But ready stopped being relevant the moment I became the only option.
 
