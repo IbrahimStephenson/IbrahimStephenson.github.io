@@ -830,22 +830,19 @@
 
   function fetchMangaCover(manga) {
     var slug = 'bsmc-' + manga.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
-    return fetch('https://api.mangadex.org/manga?title=' + encodeURIComponent(manga.title) + '&limit=1&includes[]=cover_art')
+    var mangaId;
+    return fetch('https://api.mangadex.org/manga?title=' + encodeURIComponent(manga.title) + '&limit=1')
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        var entry = d.data && d.data[0];
-        if (!entry) throw new Error('no entry');
-        var mangaId = entry.id;
-        var rels = entry.relationships || [];
-        var coverRel = null;
-        for (var i = 0; i < rels.length; i++) {
-          if (rels[i].type === 'cover_art') { coverRel = rels[i]; break; }
-        }
-        var fileName = coverRel && coverRel.attributes && coverRel.attributes.fileName;
-        if (!fileName) throw new Error('no fileName');
-        return 'https://uploads.mangadex.org/covers/' + mangaId + '/' + fileName + '.256.jpg';
+        mangaId = d.data && d.data[0] && d.data[0].id;
+        if (!mangaId) throw new Error('no id');
+        return fetch('https://api.mangadex.org/cover?manga[]=' + mangaId + '&limit=1');
       })
-      .then(function (url) {
+      .then(function (r) { return r.json(); })
+      .then(function (cd) {
+        var fileName = cd.data && cd.data[0] && cd.data[0].attributes && cd.data[0].attributes.fileName;
+        if (!fileName) throw new Error('no fileName');
+        var url = 'https://uploads.mangadex.org/covers/' + mangaId + '/' + fileName + '.256.jpg';
         mangaCache[manga.title] = url;
         var el = document.getElementById(slug);
         if (el) {
@@ -859,8 +856,7 @@
         mangaCache[manga.title] = null;
         var el = document.getElementById(slug);
         if (el) {
-          var c = TIER_COLORS[manga.tier];
-          el.innerHTML = '<div style="width:100%;height:100%;background:' + c + '22;display:flex;align-items:center;justify-content:center;padding:4px;font-size:0.58rem;color:' + c + ';text-align:center;">' + escHtml(manga.title) + '</div>';
+          el.innerHTML = '<div style="width:100%;height:100%;background:#2a2a2a;display:flex;align-items:center;justify-content:center;padding:4px;font-size:0.58rem;color:rgba(255,255,255,0.45);text-align:center;">' + escHtml(manga.title) + '</div>';
         }
       });
   }
