@@ -4,6 +4,6 @@ date: 2026-01-02
 weight: 3
 ---
 
-Books, manga and anime — rated and ranked.
+Take a look at my ratings and reviews for all the books i've read, animes i've watched and mangas i've also read...
 
 [Browse the full library &rarr;](/library/)

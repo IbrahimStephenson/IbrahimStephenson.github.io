@@ -9,6 +9,34 @@
   </a>
 </div>
 
+<div class="px-4 mb-8">
+  <div class="home-cr-label">Currently Reading</div>
+  <div class="home-cr-card">
+    <img class="home-cr-cover" id="home-cr-img"
+         src="https://covers.openlibrary.org/b/title/THE-POPPY-WAR-L.jpg"
+         alt="The Poppy War">
+    <div class="home-cr-placeholder" id="home-cr-ph">The Poppy War</div>
+    <div class="home-cr-info">
+      <div class="home-cr-title">The Poppy War</div>
+      <div class="home-cr-author">R.F. Kuang</div>
+      <div class="home-cr-note">A brutal, brilliant fantasy rooted in Chinese history. Not what I expected and better for it.</div>
+      <a href="/library/" class="home-cr-link">See my full library →</a>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var img = document.getElementById('home-cr-img');
+  var ph  = document.getElementById('home-cr-ph');
+  if (img) {
+    img.onerror = function () {
+      img.classList.add('home-cr-hidden');
+      if (ph) ph.classList.add('home-cr-ph-show');
+    };
+  }
+})();
+</script>
+
 {{ if site.Params.zenMode }}
 <div class="dream-zen-posts max-w-[65ch] mt-8 mx-auto px-4 space-y-8">
 {{ range $paginator.Pages }}

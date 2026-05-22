@@ -1,3 +1,11 @@
+<!--
+  CURRENTLY READING
+  To update the book you are currently reading, find the CURRENTLY_READING object
+  near the top of the script block and update title, author, note, and image.
+  If you have a cover image, drop it into static/images/books/ and set image to "/images/books/filename.jpg"
+  If image is left as an empty string, the cover will be fetched automatically from Open Library.
+  Update the homepage card separately in layouts/home.html.
+-->
 <style>
 /* ── BOOKSHELF SHORTCODE ───────────────────────── */
 #bs-root {
@@ -178,7 +186,7 @@
 }
 
 .bs-tbr-title {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: #e0e0e0;
   text-align: center;
@@ -189,9 +197,10 @@
   max-width: 100%;
 }
 
-.bs-tbr-section .bs-section-label {
+.bs-tbr-section .bs-section-label,
+.bs-shelf-section .bs-section-label {
   color: #aaaaaa;
-  font-size: 13px;
+  font-size: 15px;
   opacity: 1;
 }
 
@@ -493,35 +502,6 @@
   color: rgba(255,255,255,0.9);
 }
 
-/* ── SPINE HOVER TOOLTIP ───────────────────────── */
-.bs-spine-hover {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(10,10,10,0.92);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 6px;
-  padding: 0.45rem 0.6rem;
-  min-width: 140px;
-  max-width: 180px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.18s ease;
-  z-index: 30;
-  white-space: normal;
-  text-align: center;
-}
-
-.bs-spine:hover .bs-spine-hover {
-  opacity: 1;
-}
-
-.bs-spine-hover-note {
-  font-size: 11px;
-  color: #cccccc;
-  line-height: 1.4;
-}
 
 /* ── TBR INLINE NOTE ───────────────────────────── */
 .bs-tbr-book {
@@ -610,6 +590,86 @@
   white-space: normal;
 }
 
+/* ── CURRENTLY READING ─────────────────────────── */
+.bs-cr-wrap {
+  margin-bottom: 40px;
+}
+
+.bs-cr-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #2ec4b6;
+  margin-bottom: 10px;
+}
+
+.bs-cr-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: #1a1a1a;
+  border-left: 3px solid #2ec4b6;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.bs-cr-cover {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.bs-cr-placeholder {
+  width: 120px;
+  height: 180px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  background: #2a2a2a;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  padding: 8px;
+  line-height: 1.4;
+}
+
+.bs-cr-placeholder.bs-cr-ph-show {
+  display: flex;
+}
+
+.bs-cr-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.bs-cr-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.bs-cr-author {
+  font-size: 14px;
+  color: #2ec4b6;
+  margin-bottom: 10px;
+}
+
+.bs-cr-note {
+  font-size: 13px;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
 /* ── RESPONSIVE ────────────────────────────────── */
 @media (max-width: 640px) {
   .bs-books-layout {
@@ -639,6 +699,8 @@
 
 <div id="bs-root">
 
+  <div id="bs-cr" class="bs-cr-wrap"></div>
+
   <div class="bs-tabs">
     <button class="bs-tab bs-tab-active" data-bs-tab="books">Books</button>
     <button class="bs-tab" data-bs-tab="manga">Manga</button>
@@ -648,7 +710,7 @@
   <div class="bs-pane" id="bs-pane-books">
     <div class="bs-books-layout">
       <div class="bs-shelf-section">
-        <div class="bs-section-label">the shelf</div>
+        <div class="bs-section-label">Shelved (Already Read)</div>
         <div class="bs-shelf-wrap">
           <div class="bs-shelf-books" id="bs-shelf-books"></div>
           <div class="bs-shelf-bar"></div>
@@ -685,6 +747,13 @@
 
   /* ── DATA ─────────────────────────────────────── */
 
+  var CURRENTLY_READING = {
+    title:  'The Poppy War',
+    author: 'R.F. Kuang',
+    note:   'A brutal, brilliant fantasy rooted in Chinese history. Not what I expected and better for it.',
+    image:  '',
+  };
+
   var SHELF = [
     { title: 'The Way of Kings',       color: '#4a6fa5', note: 'The book that got me into fantasy. Sanderson builds a world unlike anything else.' },
     { title: 'Words of Radiance',      color: '#7b4f9e', note: "Better than the first. Shallan's arc is underrated." },
@@ -705,35 +774,35 @@
   ];
 
   var MANGA = [
-    { title: 'One Piece',                         tier: 'S', note: 'The greatest ongoing story in manga. Nothing comes close for ambition and heart.' },
-    { title: 'Tower of God',                      tier: 'S', note: 'Complex, political, and unpredictable. Rachel discourse will never end.' },
-    { title: 'Berserk',                           tier: 'S', note: 'The standard everything else is measured against. Miura was one of a kind.' },
-    { title: 'Vagabond',                          tier: 'S', note: 'Not a manga, it is a painting. Every page is art.' },
-    { title: 'The Beginning After the End',       tier: 'A', note: 'Hooked me early. The later arcs get genuinely dark.' },
-    { title: 'Solo Levelling',                    tier: 'A', note: 'Power fantasy done right. The art carries it to another level.' },
-    { title: 'Mosquito War',                      tier: 'A', note: 'Underseen. Surprisingly gripping once it gets going.' },
-    { title: 'Latna Saga',                        tier: 'A', note: 'Solid isekai with more depth than most in the genre.' },
-    { title: 'Hardcore Levelling Warrior',        tier: 'B', note: 'Fun but inconsistent. The comedy lands more than the drama.' },
-    { title: 'The World After the End',           tier: 'B', note: 'Good premise, decent execution. Does not fully reach its potential.' },
-    { title: 'The House Without Time',            tier: 'B', note: 'Interesting concept. Gets strange in a good way.' },
-    { title: 'Surviving the Game as a Barbarian', tier: 'B', note: 'Enjoyable isekai. The barbarian angle is a nice twist.' },
-    { title: 'God of High School',                tier: 'C', note: 'Great fights, thin story. Style over substance.' },
-    { title: 'Player',                            tier: 'C', note: 'Fine. Nothing that sticks with you.' },
-    { title: 'Pick Me Up Infinite Gacha',         tier: 'D', note: 'The gacha concept wears thin fast.' },
-    { title: 'Troll Trap',                        tier: 'D', note: 'Did not land for me at all.' },
+    { title: 'One Piece',                         tier: 'S', note: 'The greatest ongoing story in manga. Nothing comes close for ambition and heart.', image: '' },
+    { title: 'Tower of God',                      tier: 'S', note: 'Complex, political, and unpredictable. Rachel discourse will never end.', image: '' },
+    { title: 'Berserk',                           tier: 'S', note: 'The standard everything else is measured against. Miura was one of a kind.', image: '' },
+    { title: 'Vagabond',                          tier: 'S', note: 'Not a manga, it is a painting. Every page is art.', image: '' },
+    { title: 'The Beginning After the End',       tier: 'A', note: 'Hooked me early. The later arcs get genuinely dark.', image: '' },
+    { title: 'Solo Levelling',                    tier: 'A', note: 'Power fantasy done right. The art carries it to another level.', image: '' },
+    { title: 'Mosquito War',                      tier: 'A', note: 'Underseen. Surprisingly gripping once it gets going.', image: '' },
+    { title: 'Latna Saga',                        tier: 'A', note: 'Solid isekai with more depth than most in the genre.', image: '' },
+    { title: 'Hardcore Levelling Warrior',        tier: 'B', note: 'Fun but inconsistent. The comedy lands more than the drama.', image: '' },
+    { title: 'The World After the End',           tier: 'B', note: 'Good premise, decent execution. Does not fully reach its potential.', image: '' },
+    { title: 'The House Without Time',            tier: 'B', note: 'Interesting concept. Gets strange in a good way.', image: '' },
+    { title: 'Surviving the Game as a Barbarian', tier: 'B', note: 'Enjoyable isekai. The barbarian angle is a nice twist.', image: '' },
+    { title: 'God of High School',                tier: 'C', note: 'Great fights, thin story. Style over substance.', image: '' },
+    { title: 'Player',                            tier: 'C', note: 'Fine. Nothing that sticks with you.', image: '' },
+    { title: 'Pick Me Up Infinite Gacha',         tier: 'D', note: 'The gacha concept wears thin fast.', image: '' },
+    { title: 'Troll Trap',                        tier: 'D', note: 'Did not land for me at all.', image: '' },
   ];
 
   var ANIME = [
-    { title: 'Attack on Titan',                  rating: 5, note: 'One of the best stories ever told in any medium. The ending divides people. I understand why.' },
-    { title: 'Fullmetal Alchemist Brotherhood',  rating: 5, note: 'Close to perfect. The pacing, the themes, the payoff. Textbook anime.' },
-    { title: 'Hunter x Hunter',                  rating: 5, note: 'Chimera Ant arc changed how I think about storytelling. Nothing else like it.' },
-    { title: 'Vinland Saga',                     rating: 5, note: 'Surprisingly deep. Started as a revenge story and became something much more important.' },
-    { title: 'Cowboy Bebop',                     rating: 5, note: 'Style and soul. The jazz, the loneliness, the ending. A classic for a reason.' },
-    { title: 'Demon Slayer',                     rating: 4, note: 'Stunning animation. The story is straightforward but the craft is undeniable.' },
-    { title: 'Jujutsu Kaisen',                   rating: 4, note: 'Stylish and brutal. Gojo carried the first season and then some.' },
-    { title: 'Neon Genesis Evangelion',          rating: 4, note: 'Difficult and strange and worth every confusing minute.' },
-    { title: 'Death Note',                       rating: 4, note: 'First two thirds are some of the best television I have watched. You know what happened after.' },
-    { title: 'Your Lie in April',                rating: 4, note: 'I was not prepared. Nobody ever is.' },
+    { title: 'Attack on Titan',                  rating: 5, note: 'One of the best stories ever told in any medium. The ending divides people. I understand why.', image: '' },
+    { title: 'Fullmetal Alchemist Brotherhood',  rating: 5, note: 'Close to perfect. The pacing, the themes, the payoff. Textbook anime.', image: '' },
+    { title: 'Hunter x Hunter',                  rating: 5, note: 'Chimera Ant arc changed how I think about storytelling. Nothing else like it.', image: '' },
+    { title: 'Vinland Saga',                     rating: 5, note: 'Surprisingly deep. Started as a revenge story and became something much more important.', image: '' },
+    { title: 'Cowboy Bebop',                     rating: 5, note: 'Style and soul. The jazz, the loneliness, the ending. A classic for a reason.', image: '' },
+    { title: 'Demon Slayer',                     rating: 4, note: 'Stunning animation. The story is straightforward but the craft is undeniable.', image: '' },
+    { title: 'Jujutsu Kaisen',                   rating: 4, note: 'Stylish and brutal. Gojo carried the first season and then some.', image: '' },
+    { title: 'Neon Genesis Evangelion',          rating: 4, note: 'Difficult and strange and worth every confusing minute.', image: '' },
+    { title: 'Death Note',                       rating: 4, note: 'First two thirds are some of the best television I have watched. You know what happened after.', image: '' },
+    { title: 'Your Lie in April',                rating: 4, note: 'I was not prepared. Nobody ever is.', image: '' },
   ];
 
   /* ── STATE ────────────────────────────────────── */
@@ -854,14 +923,37 @@
     var spineHeights = [180, 200, 210, 195, 185, 205, 215, 190, 175, 200];
     var spineWidth   = 40;
 
+    var bookTooltip = document.createElement('div');
+    bookTooltip.id = 'book-tooltip';
+    bookTooltip.style.cssText = 'position:fixed;background:rgba(20,20,20,0.95);color:#e0e0e0;padding:8px 12px;border-radius:6px;font-size:12px;max-width:200px;pointer-events:none;z-index:9999;display:none;text-align:center;line-height:1.4;';
+    document.body.appendChild(bookTooltip);
+
     SHELF.forEach(function (book, i) {
       var mb = heightOffsets[i % heightOffsets.length];
       var h  = spineHeights[i % spineHeights.length];
       var el = document.createElement('div');
       el.className = 'bs-spine';
       el.style.cssText = 'background:' + book.color + ';width:' + spineWidth + 'px;height:' + h + 'px;margin-bottom:' + mb + 'px;';
-      el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>' +
-        '<div class="bs-spine-hover"><div class="bs-spine-hover-note">' + escHtml(book.note) + '</div></div>';
+      el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>';
+      el.addEventListener('mouseenter', (function (b, spine) {
+        return function () {
+          bookTooltip.innerHTML = '<strong>' + escHtml(b.title) + '</strong><br>' + escHtml(b.note);
+          bookTooltip.style.display = 'block';
+          var rect = spine.getBoundingClientRect();
+          var tw   = bookTooltip.offsetWidth;
+          var th   = bookTooltip.offsetHeight;
+          var left = rect.left + rect.width / 2 - tw / 2;
+          var top  = rect.top - th - 8;
+          if (left < 6) left = 6;
+          if (left + tw > window.innerWidth - 6) left = window.innerWidth - tw - 6;
+          if (top < 6) top = rect.bottom + 8;
+          bookTooltip.style.left = left + 'px';
+          bookTooltip.style.top  = top  + 'px';
+        };
+      })(book, el));
+      el.addEventListener('mouseleave', function () {
+        bookTooltip.style.display = 'none';
+      });
       el.addEventListener('click', (function (b, idx) {
         return function () {
           openPanel(
@@ -1005,7 +1097,26 @@
 
   function initManga() {
     buildTierRows();
-    Promise.all(MANGA.map(fetchMangaCover));
+    MANGA.forEach(function (manga) {
+      if (manga.image) {
+        var slug = 'bsmc-' + manga.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+        var el = document.getElementById(slug);
+        if (el) {
+          var img = new Image();
+          img.alt = manga.title;
+          img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+          (function (wrap, m, im) {
+            im.onerror = function () {
+              wrap.innerHTML = '<div style="width:100%;height:100%;background:#2a2a2a;display:flex;align-items:center;justify-content:center;padding:4px;font-size:0.58rem;color:rgba(255,255,255,0.45);text-align:center;">' + escHtml(m.title) + '</div>';
+            };
+            im.onload = function () { wrap.innerHTML = ''; wrap.appendChild(im); };
+          })(el, manga, img);
+          img.src = manga.image;
+        }
+      } else {
+        fetchMangaCover(manga);
+      }
+    });
   }
 
   /* ── ANIME ────────────────────────────────────── */
@@ -1030,7 +1141,21 @@
       var cover = document.createElement('div');
       cover.className = 'bs-anime-cover';
       cover.id = 'bsac-' + i;
-      cover.innerHTML = '<div class="bs-anime-placeholder">' + escHtml(anime.title) + '</div>';
+
+      if (anime.image) {
+        var img = new Image();
+        img.alt = anime.title;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+        (function (c, a, im) {
+          im.onerror = function () {
+            c.innerHTML = '<div class="bs-anime-placeholder">' + escHtml(a.title) + '</div>';
+          };
+          im.onload = function () { c.appendChild(im); };
+        })(cover, anime, img);
+        img.src = anime.image;
+      } else {
+        cover.innerHTML = '<div class="bs-anime-placeholder">' + escHtml(anime.title) + '</div>';
+      }
 
       wrap.appendChild(pin);
       wrap.appendChild(cover);
@@ -1063,30 +1188,42 @@
     });
   }
 
-  function fetchAnimeCover(anime, i) {
-    return new Promise(function (resolve) { setTimeout(resolve, i * 334); })
-      .then(function () {
-        return fetch('https://api.jikan.moe/v4/anime?q=' + encodeURIComponent(anime.title) + '&limit=1');
-      })
-      .then(function (r) { return r.json(); })
-      .then(function (d) {
-        var url = d.data && d.data[0] && d.data[0].images && d.data[0].images.jpg && d.data[0].images.jpg.large_image_url;
-        if (!url) throw new Error('no image');
-        animeCache[anime.title] = url;
-        var el = document.getElementById('bsac-' + i);
-        if (el) {
-          var img = new Image();
-          img.alt = anime.title;
-          img.onload = function () { el.innerHTML = ''; el.appendChild(img); };
-          img.src = url;
-        }
-      })
-      .catch(function () { animeCache[anime.title] = null; });
-  }
-
   function initAnime() {
     buildAnimePlaceholders();
-    Promise.all(ANIME.map(fetchAnimeCover));
+  }
+
+  /* ── CURRENTLY READING ────────────────────────── */
+
+  function renderCurrentlyReading() {
+    var crEl = document.getElementById('bs-cr');
+    if (!crEl) return;
+
+    var coverSrc = CURRENTLY_READING.image;
+    if (!coverSrc) {
+      var titleSlug = CURRENTLY_READING.title.toUpperCase().replace(/\s+/g, '-');
+      coverSrc = 'https://covers.openlibrary.org/b/title/' + titleSlug + '-L.jpg';
+    }
+
+    crEl.innerHTML =
+      '<div class="bs-cr-label">Currently Reading</div>' +
+      '<div class="bs-cr-card">' +
+        '<img class="bs-cr-cover" id="bs-cr-img" src="' + escHtml(coverSrc) + '" alt="' + escHtml(CURRENTLY_READING.title) + '">' +
+        '<div class="bs-cr-placeholder" id="bs-cr-ph">' + escHtml(CURRENTLY_READING.title) + '</div>' +
+        '<div class="bs-cr-info">' +
+          '<div class="bs-cr-title">' + escHtml(CURRENTLY_READING.title) + '</div>' +
+          '<div class="bs-cr-author">' + escHtml(CURRENTLY_READING.author) + '</div>' +
+          '<div class="bs-cr-note">' + escHtml(CURRENTLY_READING.note) + '</div>' +
+        '</div>' +
+      '</div>';
+
+    var img = document.getElementById('bs-cr-img');
+    var ph  = document.getElementById('bs-cr-ph');
+    if (img && ph) {
+      img.onerror = function () {
+        img.style.display = 'none';
+        ph.classList.add('bs-cr-ph-show');
+      };
+    }
   }
 
   /* ── UTILITY ──────────────────────────────────── */
@@ -1101,6 +1238,7 @@
 
   /* ── INIT ─────────────────────────────────────── */
 
+  renderCurrentlyReading();
   renderBooks();
 
   var booksPane = document.getElementById('bs-pane-books');
