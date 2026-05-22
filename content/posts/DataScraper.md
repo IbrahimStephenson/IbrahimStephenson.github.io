@@ -10,6 +10,7 @@ tags:
   - claude
   - dataverse
 draft: false
+cover: /images/datascraper.png
 ---
 
 We had a solution everyone loved. Until they didn't. Here's what happened, and what I built to replace it.

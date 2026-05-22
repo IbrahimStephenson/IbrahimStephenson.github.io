@@ -11,7 +11,7 @@ tags:
   - claude
   - dataverse
 draft: false
-cover: /images/supporthub-v2.png
+cover: /images/genpage.png
 ---
 
 The Support Hub canvas app worked. It did the job. But I always knew it had a ceiling.

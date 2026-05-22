@@ -10,6 +10,7 @@ tags:
   - career
   - life
 draft: false
+cover: /images/Growth.png
 ---
 
 I still remember exactly where I was when I found out.

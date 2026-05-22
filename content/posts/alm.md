@@ -11,7 +11,7 @@ tags:
   - dataverse
   - power-automate
 draft: false
-cover: /images/alm.png
+cover: /images/ALM.png
 ---
 
 Three environments. No pipeline. Everything unmanaged. DEV, UAT, and PROD all existed, but nobody could tell you with confidence what was in each one or how they had diverged. And it had been that way for years.
