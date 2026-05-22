@@ -1,0 +1,875 @@
+<style>
+/* ── BOOKSHELF SHORTCODE ───────────────────────── */
+#bs-root {
+  margin-top: 2.5rem;
+  font-family: inherit;
+}
+
+/* ── TABS ──────────────────────────────────────── */
+.bs-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.bs-tab {
+  padding: 0.4rem 1.15rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  font-family: inherit;
+}
+
+.bs-tab:hover {
+  border-color: #2dd4bf;
+  color: #2dd4bf;
+}
+
+.bs-tab.bs-tab-active {
+  background: #2dd4bf;
+  border-color: #2dd4bf;
+  color: #0d1f0d;
+}
+
+/* ── PANES ─────────────────────────────────────── */
+.bs-pane {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+/* ── SECTION LABEL ─────────────────────────────── */
+.bs-section-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  opacity: 0.4;
+  margin-bottom: 0.6rem;
+}
+
+/* ── BOOKS LAYOUT ──────────────────────────────── */
+.bs-books-layout {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.bs-shelf-section {
+  flex: 0 0 68%;
+  min-width: 0;
+}
+
+.bs-tbr-section {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ── READ SHELF ────────────────────────────────── */
+.bs-shelf-wrap {
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 2px;
+}
+
+.bs-shelf-books {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  padding: 0.5rem 0.25rem 0;
+  min-height: 175px;
+}
+
+.bs-shelf-bar {
+  height: 14px;
+  background: linear-gradient(180deg, #6b4c35 0%, #3d2b1f 55%, #271a10 100%);
+  box-shadow: 0 5px 14px rgba(0,0,0,0.65);
+  border-radius: 2px;
+  position: relative;
+}
+
+.bs-shelf-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 22px,
+    rgba(0,0,0,0.07) 22px,
+    rgba(0,0,0,0.07) 23px
+  );
+  border-radius: 2px;
+}
+
+/* ── BOOK SPINE ────────────────────────────────── */
+.bs-spine {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border-radius: 1px 3px 3px 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bs-spine:hover {
+  transform: translateY(-6px);
+}
+
+.bs-spine-edge {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: rgba(0,0,0,0.28);
+  border-radius: 1px 0 0 1px;
+}
+
+.bs-spine-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.59rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.87);
+  padding: 0.35rem 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 90%;
+  letter-spacing: 0.03em;
+}
+
+/* ── TBR PILE ──────────────────────────────────── */
+.bs-tbr-books {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 0.5rem;
+}
+
+.bs-tbr-book {
+  width: 100%;
+  height: 46px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 2px 3px 8px rgba(0,0,0,0.45);
+}
+
+.bs-tbr-book:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 3px 6px 14px rgba(0,0,0,0.55);
+}
+
+.bs-tbr-title {
+  font-size: 0.63rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.78);
+  text-align: center;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* ── MANGA TIER LIST ───────────────────────────── */
+.bs-tier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.bs-tier-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 8px;
+  padding: 0.65rem 0.8rem;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid;
+}
+
+.bs-tier-label {
+  font-size: 1.1rem;
+  font-weight: 800;
+  width: 1.4rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.bs-tier-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.bs-manga-card {
+  width: 80px;
+  cursor: pointer;
+  position: relative;
+}
+
+.bs-manga-cover-wrap {
+  width: 80px;
+  height: 110px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.07);
+  transition: box-shadow 0.2s ease;
+}
+
+.bs-manga-card:hover .bs-manga-cover-wrap {
+  box-shadow: 0 0 0 2px #2dd4bf;
+}
+
+.bs-manga-cover-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bs-manga-skel {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.04) 25%,
+    rgba(255,255,255,0.09) 50%,
+    rgba(255,255,255,0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: bs-shimmer 1.5s infinite;
+}
+
+@keyframes bs-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.bs-manga-card-title {
+  font-size: 0.58rem;
+  text-align: center;
+  margin-top: 0.3rem;
+  opacity: 0.7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bs-manga-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: rgba(10,10,10,0.9);
+  color: #fff;
+  font-size: 0.65rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 20;
+  white-space: normal;
+  text-align: center;
+  max-width: 140px;
+}
+
+.bs-manga-card:hover .bs-manga-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── ANIME WALL ────────────────────────────────── */
+.bs-anime-wall {
+  background: #0d0d0d;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0);
+  background-size: 20px 20px;
+  border-radius: 8px;
+  padding: 1.75rem 1.25rem 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  justify-content: center;
+}
+
+.bs-anime-poster-wrap {
+  position: relative;
+  cursor: pointer;
+  width: 120px;
+  height: 170px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.bs-anime-poster-wrap:hover {
+  transform: rotate(0deg) scale(1.05) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.75);
+  z-index: 5;
+}
+
+.bs-anime-pin {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle at 35% 35%, #bbb, #666);
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.bs-anime-cover {
+  width: 120px;
+  height: 170px;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 2px 3px 10px rgba(0,0,0,0.55);
+}
+
+.bs-anime-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bs-anime-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #1c1c1c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem;
+  text-align: center;
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.4;
+}
+
+/* ── SHARED PANEL ──────────────────────────────── */
+.bs-panel {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.35s ease;
+  margin-top: 0;
+}
+
+.bs-panel.bs-panel-open {
+  max-height: 700px;
+  opacity: 1;
+  margin-top: 1.25rem;
+}
+
+.bs-panel-inner {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 1.25rem 3rem 1.25rem 1.5rem;
+  position: relative;
+}
+
+.bs-panel-close {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.8rem;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.45);
+  font-size: 1.15rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem 0.4rem;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+  font-family: inherit;
+}
+
+.bs-panel-close:hover {
+  color: rgba(255,255,255,0.9);
+}
+
+.bs-panel-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+
+.bs-panel-sub {
+  font-size: 0.78rem;
+  opacity: 0.48;
+  margin: 0 0 0.8rem;
+}
+
+.bs-panel-note {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.bs-panel-stars {
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+}
+
+.bs-star-filled { color: #f59e0b; }
+.bs-star-empty  { color: rgba(255,255,255,0.18); }
+
+.bs-tier-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 0.1rem 0.5rem;
+  border-radius: 9999px;
+  margin-left: 0.55rem;
+  vertical-align: middle;
+  color: #000;
+}
+
+/* ── RESPONSIVE ────────────────────────────────── */
+@media (max-width: 640px) {
+  .bs-books-layout {
+    flex-direction: column;
+  }
+  .bs-shelf-section,
+  .bs-tbr-section {
+    flex: none;
+    width: 100%;
+  }
+  .bs-shelf-wrap {
+    overflow-x: auto;
+  }
+  .bs-tbr-book {
+    width: 100%;
+  }
+  .bs-anime-poster-wrap {
+    width: 100px;
+    height: 142px;
+  }
+  .bs-anime-cover {
+    width: 100px;
+    height: 142px;
+  }
+}
+</style>
+
+<div id="bs-root">
+
+  <div class="bs-tabs">
+    <button class="bs-tab bs-tab-active" data-bs-tab="books">Books</button>
+    <button class="bs-tab" data-bs-tab="manga">Manga</button>
+    <button class="bs-tab" data-bs-tab="anime">Anime</button>
+  </div>
+
+  <div class="bs-pane" id="bs-pane-books">
+    <div class="bs-books-layout">
+      <div class="bs-shelf-section">
+        <div class="bs-section-label">the shelf</div>
+        <div class="bs-shelf-wrap">
+          <div class="bs-shelf-books" id="bs-shelf-books"></div>
+          <div class="bs-shelf-bar"></div>
+        </div>
+      </div>
+      <div class="bs-tbr-section">
+        <div class="bs-section-label">getting to it</div>
+        <div class="bs-tbr-books" id="bs-tbr-books"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bs-pane" id="bs-pane-manga">
+    <div class="bs-tier-list" id="bs-tier-list"></div>
+  </div>
+
+  <div class="bs-pane" id="bs-pane-anime">
+    <div class="bs-anime-wall" id="bs-anime-wall"></div>
+  </div>
+
+  <div class="bs-panel" id="bs-panel">
+    <div class="bs-panel-inner">
+      <button class="bs-panel-close" id="bs-panel-close">&#x2715;</button>
+      <div id="bs-panel-content"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+
+  /* ── DATA ─────────────────────────────────────── */
+
+  var BOOKS = [
+    { title: 'The Way of Kings',       author: 'Brandon Sanderson', note: 'The one that started an obsession. I picked this up not knowing what I was getting into and came out the other side a different person. Kaladin\'s arc alone is worth the thousand pages.', color: '#4a6fa5', h: 155, w: 38, read: true },
+    { title: 'Words of Radiance',      author: 'Brandon Sanderson', note: 'Bigger, better, somehow. The world gets wider and the stakes get higher and it never once feels bloated.', color: '#6272a8', h: 150, w: 40, read: true },
+    { title: 'Oathbringer',            author: 'Brandon Sanderson', note: 'I cried. I will not say where.', color: '#8b5e8e', h: 160, w: 42, read: true },
+    { title: 'Rhythm of War',          author: 'Brandon Sanderson', note: 'Slower burn, still worth every page. The mental health themes hit harder than I expected.', color: '#7b8b5e', h: 157, w: 40, read: true },
+    { title: 'The Final Empire',       author: 'Brandon Sanderson', note: 'The best magic system I have ever read. Allomancy is genius and the ending genuinely surprised me.', color: '#5e7b8b', h: 140, w: 34, read: true },
+    { title: 'The Well of Ascension',  author: 'Brandon Sanderson', note: 'The middle book that earns it. Slower but it sets up everything that follows.', color: '#5e8b6b', h: 136, w: 34, read: true },
+    { title: 'The Hero of Ages',       author: 'Brandon Sanderson', note: 'The payoff was worth the series. One of those endings that recontextualises everything before it.', color: '#8b6b5e', h: 132, w: 32, read: true },
+    { title: 'Red Rising',             author: 'Pierce Brown',      note: 'Brutal and brilliant. Read it in two days. Did not sleep much.', color: '#b83c3c', h: 128, w: 30, read: true },
+    { title: 'Golden Son',             author: 'Pierce Brown',      note: 'The empire strikes back but better. Everything gets bigger and darker and more complicated.', color: '#b8743c', h: 126, w: 30, read: true },
+    { title: 'Morning Star',           author: 'Pierce Brown',      note: 'One of the best trilogy endings I have read. Earns every moment.', color: '#c8a040', h: 122, w: 30, read: true },
+    { title: 'The Winds of Winter',    author: 'George R.R. Martin', note: 'It has to come out eventually. I will be ready.', color: '#3d4f63', h: 144, w: 36, read: false },
+    { title: "Assassin's Apprentice",  author: 'Robin Hobb',        note: 'Everyone I trust says this is essential. On the list.', color: '#4e5a60', h: 128, w: 30, read: false },
+    { title: 'The Name of the Wind',   author: 'Patrick Rothfuss',  note: 'Been meaning to start this for two years. The pile grows.', color: '#5a4848', h: 132, w: 32, read: false },
+  ];
+
+  var MANGA = [
+    { title: 'One Piece',                        tier: 'S', note: 'The greatest adventure ever told. A world so alive and characters so human that a thousand chapters feels like it was not enough.' },
+    { title: 'Tower of God',                     tier: 'S', note: 'Dense, intricate, and unlike anything else. The tower rewards patience in ways few stories ever do.' },
+    { title: 'Berserk',                          tier: 'S', note: 'The defining dark fantasy. Guts is one of the greatest characters ever written. A masterwork, despite everything.' },
+    { title: 'Vagabond',                         tier: 'S', note: 'Art that belongs in a gallery. The story of Miyamoto Musashi told with an honesty and beauty that leaves you speechless.' },
+    { title: 'The Beginning After the End',      tier: 'A', note: 'Starts strong and builds into something genuinely gripping. The world-building is exceptional.' },
+    { title: 'Solo Leveling',                    tier: 'A', note: 'The power fantasy done right. Slick, satisfying, and relentlessly entertaining.' },
+    { title: 'Mosquito War',                     tier: 'A', note: 'Underrated. Chaotic energy with real emotional stakes underneath. Did not expect to care as much as I did.' },
+    { title: 'Latna Saga',                       tier: 'A', note: 'Smart and self-aware. Plays with genre conventions in interesting ways.' },
+    { title: 'Hardcore Leveling Warrior',        tier: 'B', note: 'Messy but charming. The comedy lands more than you would expect.' },
+    { title: 'The World After the End',          tier: 'B', note: 'Solid entry in the regression genre. Competent and enjoyable without being remarkable.' },
+    { title: 'The House Without Time',           tier: 'B', note: 'Interesting premise, decent execution. Worth reading for the concept alone.' },
+    { title: 'Surviving the Game as a Barbarian',tier: 'B', note: 'Fun premise, good pacing. Scratches the isekai itch without overstaying its welcome.' },
+    { title: 'God of High School',               tier: 'C', note: 'The fights are flashy but the story loses the plot completely. Fun while it lasts.' },
+    { title: 'Player',                           tier: 'C', note: 'Serviceable. Ticks the genre boxes without doing anything memorable with them.' },
+    { title: 'Pick Me Up Infinite Gacha',        tier: 'D', note: 'The meta premise is clever but the execution runs out of ideas faster than the gacha pity counter.' },
+    { title: 'Troll Trap',                       tier: 'D', note: 'I finished it. That is the kindest thing I can say.' },
+  ];
+
+  var ANIME = [
+    { title: 'Attack on Titan',            stars: 5, note: 'One of the best stories ever told in any medium. The ending divides people. I understand why.' },
+    { title: 'Fullmetal Alchemist: Brotherhood', stars: 5, note: 'Close to perfect. The pacing, the themes, the payoff. Textbook anime.' },
+    { title: 'Hunter x Hunter',            stars: 5, note: 'Chimera Ant arc changed how I think about storytelling. Nothing else like it.' },
+    { title: 'Demon Slayer',               stars: 4, note: 'Stunning animation. The story is straightforward but the craft is undeniable.' },
+    { title: 'Jujutsu Kaisen',             stars: 4, note: 'Stylish and brutal. Gojo carried the first season and then some.' },
+    { title: 'Vinland Saga',               stars: 5, note: 'Surprisingly deep. Started as a revenge story and became something much more important.' },
+    { title: 'Neon Genesis Evangelion',    stars: 4, note: 'Difficult and strange and worth every confusing minute.' },
+    { title: 'Cowboy Bebop',               stars: 5, note: 'Style and soul. The jazz, the loneliness, the ending. A classic for a reason.' },
+    { title: 'Death Note',                 stars: 4, note: 'First two thirds are some of the best television I have watched. You know what happened after.' },
+    { title: 'Your Lie in April',          stars: 4, note: 'I was not prepared. Nobody ever is.' },
+  ];
+
+  /* ── STATE ────────────────────────────────────── */
+
+  var panelKey      = null;
+  var mangaFetched  = false;
+  var animeFetched  = false;
+  var mangaCache    = {};
+  var animeCache    = {};
+
+  /* ── DOM ──────────────────────────────────────── */
+
+  var root        = document.getElementById('bs-root');
+  var panel       = document.getElementById('bs-panel');
+  var panelContent= document.getElementById('bs-panel-content');
+  var panelClose  = document.getElementById('bs-panel-close');
+
+  /* ── PANEL ────────────────────────────────────── */
+
+  function closePanel() {
+    panel.classList.remove('bs-panel-open');
+    panelKey = null;
+  }
+
+  function openPanel(html, key) {
+    if (panelKey === key) { closePanel(); return; }
+    panelKey = key;
+    panelContent.innerHTML = html;
+    panel.classList.add('bs-panel-open');
+  }
+
+  panelClose.addEventListener('click', closePanel);
+
+  /* ── TABS ─────────────────────────────────────── */
+
+  var tabs  = root.querySelectorAll('.bs-tab');
+  var panes = root.querySelectorAll('.bs-pane');
+
+  function showPane(id) {
+    panes.forEach(function (p) {
+      p.style.opacity = '0';
+      p.style.pointerEvents = 'none';
+      setTimeout(function () { if (p.id !== id) p.style.display = 'none'; }, 220);
+    });
+    var target = document.getElementById(id);
+    target.style.display = 'block';
+    target.style.pointerEvents = '';
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { target.style.opacity = '1'; });
+    });
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var name = tab.dataset.bsTab;
+      tabs.forEach(function (t) { t.classList.remove('bs-tab-active'); });
+      tab.classList.add('bs-tab-active');
+      showPane('bs-pane-' + name);
+      closePanel();
+      if (name === 'manga' && !mangaFetched) { mangaFetched = true; initManga(); }
+      if (name === 'anime' && !animeFetched) { animeFetched = true; initAnime(); }
+    });
+  });
+
+  /* ── BOOKS ────────────────────────────────────── */
+
+  var heightOffsets = [0, 2, 0, 1, 2, 0, 1, 0, 2, 1];
+
+  function renderBooks() {
+    var shelfEl = document.getElementById('bs-shelf-books');
+    var tbrEl   = document.getElementById('bs-tbr-books');
+    var rotations = [-3, 4, -2, 3, -4, 2];
+
+    BOOKS.filter(function (b) { return b.read; }).forEach(function (book, i) {
+      var mb = heightOffsets[i % heightOffsets.length];
+      var el = document.createElement('div');
+      el.className = 'bs-spine';
+      el.style.cssText = 'background:' + book.color + ';width:' + book.w + 'px;height:' + book.h + 'px;margin-bottom:' + mb + 'px;';
+      el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>';
+      el.addEventListener('click', (function (b, idx) {
+        return function () {
+          openPanel(
+            '<p class="bs-panel-title">' + escHtml(b.title) + '</p>' +
+            '<p class="bs-panel-sub">'   + escHtml(b.author) + '</p>' +
+            '<p class="bs-panel-note">'  + escHtml(b.note)   + '</p>',
+            'book-' + idx
+          );
+        };
+      })(book, i));
+      shelfEl.appendChild(el);
+    });
+
+    BOOKS.filter(function (b) { return !b.read; }).forEach(function (book, i) {
+      var rot = rotations[i % rotations.length];
+      var el = document.createElement('div');
+      el.className = 'bs-tbr-book';
+      el.style.cssText = 'background:' + book.color + ';transform:rotate(' + rot + 'deg);';
+      el.innerHTML = '<span class="bs-tbr-title">' + escHtml(book.title) + '</span>';
+      el.addEventListener('click', (function (b, idx) {
+        return function () {
+          openPanel(
+            '<p class="bs-panel-title">' + escHtml(b.title) + '</p>' +
+            '<p class="bs-panel-sub">'   + escHtml(b.author) + ' &mdash; to be read</p>' +
+            '<p class="bs-panel-note">'  + escHtml(b.note)   + '</p>',
+            'tbr-' + idx
+          );
+        };
+      })(book, i));
+      tbrEl.appendChild(el);
+    });
+  }
+
+  /* ── MANGA ────────────────────────────────────── */
+
+  var TIER_COLORS = { S: '#f59e0b', A: '#22c55e', B: '#3b82f6', C: '#9ca3af', D: '#ef4444' };
+
+  function buildTierRows() {
+    var listEl = document.getElementById('bs-tier-list');
+    ['S','A','B','C','D'].forEach(function (tier) {
+      var items = MANGA.filter(function (m) { return m.tier === tier; });
+      if (!items.length) return;
+      var color = TIER_COLORS[tier];
+
+      var row = document.createElement('div');
+      row.className = 'bs-tier-row';
+      row.style.borderLeftColor = color;
+      row.style.color = color;
+
+      var label = document.createElement('div');
+      label.className = 'bs-tier-label';
+      label.textContent = tier;
+
+      var cards = document.createElement('div');
+      cards.className = 'bs-tier-cards';
+
+      items.forEach(function (manga) {
+        var globalIdx = MANGA.indexOf(manga);
+        var slug = 'bsmc-' + manga.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+
+        var card = document.createElement('div');
+        card.className = 'bs-manga-card';
+
+        var tooltip = document.createElement('div');
+        tooltip.className = 'bs-manga-tooltip';
+        tooltip.textContent = manga.title;
+
+        var coverWrap = document.createElement('div');
+        coverWrap.className = 'bs-manga-cover-wrap';
+        coverWrap.id = slug;
+        coverWrap.innerHTML = '<div class="bs-manga-skel"></div>';
+
+        var titleEl = document.createElement('div');
+        titleEl.className = 'bs-manga-card-title';
+        titleEl.textContent = manga.title;
+
+        card.appendChild(tooltip);
+        card.appendChild(coverWrap);
+        card.appendChild(titleEl);
+
+        card.addEventListener('click', (function (m, idx) {
+          return function () {
+            openPanel(
+              '<p class="bs-panel-title">' + escHtml(m.title) +
+              '<span class="bs-tier-badge" style="background:' + TIER_COLORS[m.tier] + '">' + m.tier + '</span></p>' +
+              '<p class="bs-panel-note">' + escHtml(m.note) + '</p>',
+              'manga-' + idx
+            );
+          };
+        })(manga, globalIdx));
+
+        cards.appendChild(card);
+      });
+
+      row.appendChild(label);
+      row.appendChild(cards);
+      listEl.appendChild(row);
+    });
+  }
+
+  function fetchMangaCover(manga) {
+    var slug = 'bsmc-' + manga.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
+    return fetch('https://api.mangadex.org/manga?title=' + encodeURIComponent(manga.title) + '&limit=1')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var mangaId = d.data && d.data[0] && d.data[0].id;
+        if (!mangaId) throw new Error('no id');
+        return fetch('https://api.mangadex.org/cover?manga[]=' + mangaId + '&limit=1')
+          .then(function (r) { return r.json(); })
+          .then(function (cd) {
+            var fileName = cd.data && cd.data[0] && cd.data[0].attributes && cd.data[0].attributes.fileName;
+            if (!fileName) throw new Error('no file');
+            return 'https://uploads.mangadex.org/covers/' + mangaId + '/' + fileName + '.256.jpg';
+          });
+      })
+      .then(function (url) {
+        mangaCache[manga.title] = url;
+        var el = document.getElementById(slug);
+        if (el) {
+          var img = new Image();
+          img.alt = manga.title;
+          img.onload = function () { el.innerHTML = ''; el.appendChild(img); };
+          img.src = url;
+        }
+      })
+      .catch(function () {
+        mangaCache[manga.title] = null;
+        var el = document.getElementById(slug);
+        if (el) {
+          var c = TIER_COLORS[manga.tier];
+          el.innerHTML = '<div style="width:100%;height:100%;background:' + c + '22;display:flex;align-items:center;justify-content:center;padding:4px;font-size:0.58rem;color:' + c + ';text-align:center;">' + escHtml(manga.title) + '</div>';
+        }
+      });
+  }
+
+  function initManga() {
+    buildTierRows();
+    Promise.all(MANGA.map(fetchMangaCover));
+  }
+
+  /* ── ANIME ────────────────────────────────────── */
+
+  var ANIME_ROTATIONS = [2, -3, 1, -2, 3, -1, 2, -3, 1, -2];
+
+  function buildAnimePlaceholders() {
+    var wall = document.getElementById('bs-anime-wall');
+    ANIME.forEach(function (anime, i) {
+      var rot = ANIME_ROTATIONS[i % ANIME_ROTATIONS.length];
+
+      var wrap = document.createElement('div');
+      wrap.className = 'bs-anime-poster-wrap';
+      wrap.style.transform = 'rotate(' + rot + 'deg)';
+
+      var pin = document.createElement('div');
+      pin.className = 'bs-anime-pin';
+
+      var cover = document.createElement('div');
+      cover.className = 'bs-anime-cover';
+      cover.id = 'bsac-' + i;
+      cover.innerHTML = '<div class="bs-anime-placeholder">' + escHtml(anime.title) + '</div>';
+
+      wrap.appendChild(pin);
+      wrap.appendChild(cover);
+
+      wrap.addEventListener('click', (function (a, idx) {
+        return function () {
+          var stars = '';
+          for (var s = 0; s < 5; s++) {
+            stars += '<span class="' + (s < a.stars ? 'bs-star-filled' : 'bs-star-empty') + '">&#9733;</span>';
+          }
+          openPanel(
+            '<p class="bs-panel-title">' + escHtml(a.title) + '</p>' +
+            '<div class="bs-panel-stars">' + stars + '</div>' +
+            '<p class="bs-panel-note">' + escHtml(a.note) + '</p>',
+            'anime-' + idx
+          );
+        };
+      })(anime, i));
+
+      wall.appendChild(wrap);
+    });
+  }
+
+  function fetchAnimeCover(anime, i) {
+    return new Promise(function (resolve) { setTimeout(resolve, i * 334); })
+      .then(function () {
+        return fetch('https://api.jikan.moe/v4/anime?q=' + encodeURIComponent(anime.title) + '&limit=1');
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        var url = d.data && d.data[0] && d.data[0].images && d.data[0].images.jpg && d.data[0].images.jpg.large_image_url;
+        if (!url) throw new Error('no image');
+        animeCache[anime.title] = url;
+        var el = document.getElementById('bsac-' + i);
+        if (el) {
+          var img = new Image();
+          img.alt = anime.title;
+          img.onload = function () { el.innerHTML = ''; el.appendChild(img); };
+          img.src = url;
+        }
+      })
+      .catch(function () { animeCache[anime.title] = null; });
+  }
+
+  function initAnime() {
+    buildAnimePlaceholders();
+    Promise.all(ANIME.map(fetchAnimeCover));
+  }
+
+  /* ── UTILITY ──────────────────────────────────── */
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ── INIT ─────────────────────────────────────── */
+
+  renderBooks();
+
+  var booksPane = document.getElementById('bs-pane-books');
+  booksPane.style.display = 'block';
+  booksPane.style.opacity = '1';
+
+})();
+</script>
