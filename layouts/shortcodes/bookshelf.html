@@ -2,6 +2,9 @@
 /* ── BOOKSHELF SHORTCODE ───────────────────────── */
 #bs-root {
   margin-top: 2.5rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
   font-family: inherit;
 }
 
@@ -13,13 +16,13 @@
 }
 
 .bs-tab {
-  padding: 0.4rem 1.15rem;
+  padding: 10px 24px;
   border-radius: 9999px;
   border: 1px solid rgba(255,255,255,0.15);
   background: transparent;
   color: inherit;
   cursor: pointer;
-  font-size: 0.875rem;
+  font-size: 15px;
   font-weight: 500;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
   font-family: inherit;
@@ -64,7 +67,7 @@
 }
 
 .bs-tbr-section {
-  flex: 1 1 0;
+  flex: 0 0 310px;
   min-width: 0;
 }
 
@@ -80,7 +83,7 @@
   gap: 4px;
   align-items: flex-end;
   padding: 0.5rem 0.25rem 0;
-  min-height: 175px;
+  min-height: 240px;
 }
 
 .bs-shelf-bar {
@@ -135,7 +138,7 @@
 .bs-spine-title {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 0.59rem;
+  font-size: 11px;
   font-weight: 600;
   color: rgba(255,255,255,0.87);
   padding: 0.35rem 0;
@@ -157,7 +160,7 @@
 
 .bs-tbr-book {
   width: 100%;
-  height: 46px;
+  height: 56px;
   border-radius: 3px;
   cursor: pointer;
   display: flex;
@@ -165,6 +168,8 @@
   justify-content: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 2px 3px 8px rgba(0,0,0,0.45);
+  background: #2a2a2a;
+  border: 1px solid #444;
 }
 
 .bs-tbr-book:hover {
@@ -173,15 +178,21 @@
 }
 
 .bs-tbr-title {
-  font-size: 0.63rem;
+  font-size: 13px;
   font-weight: 600;
-  color: rgba(255,255,255,0.78);
+  color: #e0e0e0;
   text-align: center;
   padding: 0 0.5rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+}
+
+.bs-tbr-section .bs-section-label {
+  color: #aaaaaa;
+  font-size: 13px;
+  opacity: 1;
 }
 
 /* ── MANGA TIER LIST ───────────────────────────── */
@@ -196,15 +207,15 @@
   align-items: center;
   gap: 0.75rem;
   border-radius: 8px;
-  padding: 0.65rem 0.8rem;
+  padding: 0.65rem 0.8rem 24px 0.8rem;
   background: rgba(255,255,255,0.03);
   border-left: 3px solid;
 }
 
 .bs-tier-label {
-  font-size: 1.1rem;
+  font-size: 22px;
   font-weight: 800;
-  width: 1.4rem;
+  width: 2rem;
   flex-shrink: 0;
   text-align: center;
 }
@@ -216,14 +227,14 @@
 }
 
 .bs-manga-card {
-  width: 80px;
+  width: 130px;
   cursor: pointer;
   position: relative;
 }
 
 .bs-manga-cover-wrap {
-  width: 80px;
-  height: 110px;
+  width: 130px;
+  height: 190px;
   border-radius: 4px;
   overflow: hidden;
   background: rgba(255,255,255,0.07);
@@ -260,7 +271,7 @@
 }
 
 .bs-manga-card-title {
-  font-size: 0.58rem;
+  font-size: 12px;
   text-align: center;
   margin-top: 0.3rem;
   opacity: 0.7;
@@ -310,8 +321,8 @@
 .bs-anime-poster-wrap {
   position: relative;
   cursor: pointer;
-  width: 120px;
-  height: 170px;
+  width: 130px;
+  height: 190px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -335,8 +346,8 @@
 }
 
 .bs-anime-cover {
-  width: 120px;
-  height: 170px;
+  width: 130px;
+  height: 190px;
   border-radius: 3px;
   overflow: hidden;
   box-shadow: 2px 3px 10px rgba(0,0,0,0.55);
@@ -558,19 +569,19 @@
   /* ── DATA ─────────────────────────────────────── */
 
   var BOOKS = [
-    { title: 'The Way of Kings',       author: 'Brandon Sanderson', note: 'The one that started an obsession. I picked this up not knowing what I was getting into and came out the other side a different person. Kaladin\'s arc alone is worth the thousand pages.', color: '#4a6fa5', h: 155, w: 38, read: true },
-    { title: 'Words of Radiance',      author: 'Brandon Sanderson', note: 'Bigger, better, somehow. The world gets wider and the stakes get higher and it never once feels bloated.', color: '#6272a8', h: 150, w: 40, read: true },
-    { title: 'Oathbringer',            author: 'Brandon Sanderson', note: 'I cried. I will not say where.', color: '#8b5e8e', h: 160, w: 42, read: true },
-    { title: 'Rhythm of War',          author: 'Brandon Sanderson', note: 'Slower burn, still worth every page. The mental health themes hit harder than I expected.', color: '#7b8b5e', h: 157, w: 40, read: true },
-    { title: 'The Final Empire',       author: 'Brandon Sanderson', note: 'The best magic system I have ever read. Allomancy is genius and the ending genuinely surprised me.', color: '#5e7b8b', h: 140, w: 34, read: true },
-    { title: 'The Well of Ascension',  author: 'Brandon Sanderson', note: 'The middle book that earns it. Slower but it sets up everything that follows.', color: '#5e8b6b', h: 136, w: 34, read: true },
-    { title: 'The Hero of Ages',       author: 'Brandon Sanderson', note: 'The payoff was worth the series. One of those endings that recontextualises everything before it.', color: '#8b6b5e', h: 132, w: 32, read: true },
-    { title: 'Red Rising',             author: 'Pierce Brown',      note: 'Brutal and brilliant. Read it in two days. Did not sleep much.', color: '#b83c3c', h: 128, w: 30, read: true },
-    { title: 'Golden Son',             author: 'Pierce Brown',      note: 'The empire strikes back but better. Everything gets bigger and darker and more complicated.', color: '#b8743c', h: 126, w: 30, read: true },
-    { title: 'Morning Star',           author: 'Pierce Brown',      note: 'One of the best trilogy endings I have read. Earns every moment.', color: '#c8a040', h: 122, w: 30, read: true },
-    { title: 'The Winds of Winter',    author: 'George R.R. Martin', note: 'It has to come out eventually. I will be ready.', color: '#3d4f63', h: 144, w: 36, read: false },
-    { title: "Assassin's Apprentice",  author: 'Robin Hobb',        note: 'Everyone I trust says this is essential. On the list.', color: '#4e5a60', h: 128, w: 30, read: false },
-    { title: 'The Name of the Wind',   author: 'Patrick Rothfuss',  note: 'Been meaning to start this for two years. The pile grows.', color: '#5a4848', h: 132, w: 32, read: false },
+    { title: 'The Way of Kings',       author: 'Brandon Sanderson', note: 'The one that started an obsession. I picked this up not knowing what I was getting into and came out the other side a different person. Kaladin\'s arc alone is worth the thousand pages.', color: '#4a6fa5', h: 213, w: 44, read: true },
+    { title: 'Words of Radiance',      author: 'Brandon Sanderson', note: 'Bigger, better, somehow. The world gets wider and the stakes get higher and it never once feels bloated.', color: '#6272a8', h: 206, w: 46, read: true },
+    { title: 'Oathbringer',            author: 'Brandon Sanderson', note: 'I cried. I will not say where.', color: '#8b5e8e', h: 220, w: 48, read: true },
+    { title: 'Rhythm of War',          author: 'Brandon Sanderson', note: 'Slower burn, still worth every page. The mental health themes hit harder than I expected.', color: '#7b8b5e', h: 216, w: 46, read: true },
+    { title: 'The Final Empire',       author: 'Brandon Sanderson', note: 'The best magic system I have ever read. Allomancy is genius and the ending genuinely surprised me.', color: '#5e7b8b', h: 193, w: 39, read: true },
+    { title: 'The Well of Ascension',  author: 'Brandon Sanderson', note: 'The middle book that earns it. Slower but it sets up everything that follows.', color: '#5e8b6b', h: 187, w: 39, read: true },
+    { title: 'The Hero of Ages',       author: 'Brandon Sanderson', note: 'The payoff was worth the series. One of those endings that recontextualises everything before it.', color: '#8b6b5e', h: 181, w: 37, read: true },
+    { title: 'Red Rising',             author: 'Pierce Brown',      note: 'Brutal and brilliant. Read it in two days. Did not sleep much.', color: '#b83c3c', h: 176, w: 34, read: true },
+    { title: 'Golden Son',             author: 'Pierce Brown',      note: 'The empire strikes back but better. Everything gets bigger and darker and more complicated.', color: '#b8743c', h: 173, w: 34, read: true },
+    { title: 'Morning Star',           author: 'Pierce Brown',      note: 'One of the best trilogy endings I have read. Earns every moment.', color: '#c8a040', h: 168, w: 34, read: true },
+    { title: 'The Winds of Winter',    author: 'George R.R. Martin', note: 'It has to come out eventually. I will be ready.', color: '#3d4f63', h: 198, w: 41, read: false },
+    { title: "Assassin's Apprentice",  author: 'Robin Hobb',        note: 'Everyone I trust says this is essential. On the list.', color: '#4e5a60', h: 176, w: 34, read: false },
+    { title: 'The Name of the Wind',   author: 'Patrick Rothfuss',  note: 'Been meaning to start this for two years. The pile grows.', color: '#5a4848', h: 181, w: 37, read: false },
   ];
 
   var MANGA = [
