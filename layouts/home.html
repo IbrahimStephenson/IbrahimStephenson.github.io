@@ -3,8 +3,10 @@
 {{ $allPosts := where site.RegularPages "Type" "posts" }}
 {{ $paginator := .Paginate $allPosts }}
 
-<div class="px-4 mt-4 mb-2 text-sm">
-  <a href="/library/" class="text-primary hover:underline">Take a look at my library →</a>
+<div class="px-4 my-6">
+  <a href="/library/" class="home-library-teaser">
+    Take a look at my library <span class="home-library-arrow">→</span>
+  </a>
 </div>
 
 {{ if site.Params.zenMode }}

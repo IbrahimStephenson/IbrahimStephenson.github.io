@@ -65,6 +65,19 @@
   font-size: 1.5rem;
 }
 
+/* Homepage library teaser */
+.home-library-teaser {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+}
+
+.home-library-arrow {
+  color: #2ec4b6;
+}
+
 /* Ensure library shortcode renders above the footer in the flip-back stacking context */
 #bs-root {
   position: relative;

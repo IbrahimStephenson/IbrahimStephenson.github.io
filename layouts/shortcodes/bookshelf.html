@@ -118,7 +118,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .bs-spine:hover {
@@ -493,6 +493,123 @@
   color: rgba(255,255,255,0.9);
 }
 
+/* ── SPINE HOVER TOOLTIP ───────────────────────── */
+.bs-spine-hover {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(10,10,10,0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  min-width: 140px;
+  max-width: 180px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  z-index: 30;
+  white-space: normal;
+  text-align: center;
+}
+
+.bs-spine:hover .bs-spine-hover {
+  opacity: 1;
+}
+
+.bs-spine-hover-note {
+  font-size: 11px;
+  color: #cccccc;
+  line-height: 1.4;
+}
+
+/* ── TBR INLINE NOTE ───────────────────────────── */
+.bs-tbr-book {
+  flex-direction: column;
+  height: auto;
+  min-height: 56px;
+  padding: 0.5rem 0.4rem;
+}
+
+.bs-tbr-note {
+  font-size: 12px;
+  color: #aaaaaa;
+  margin-top: 6px;
+  text-align: center;
+  padding: 0 0.25rem;
+  white-space: normal;
+  line-height: 1.35;
+}
+
+/* ── MANGA HOVER OVERLAY ───────────────────────── */
+.bs-manga-cover-wrap {
+  position: relative;
+}
+
+.bs-manga-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  text-align: center;
+}
+
+.bs-manga-card:hover .bs-manga-overlay {
+  opacity: 1;
+}
+
+.bs-manga-overlay-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.bs-manga-overlay-note {
+  font-size: 11px;
+  color: #cccccc;
+  line-height: 1.35;
+}
+
+/* ── ANIME ENTRY INFO ──────────────────────────── */
+.bs-anime-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bs-anime-info {
+  max-width: 130px;
+  margin-top: 0.4rem;
+  text-align: center;
+}
+
+.bs-anime-info-title {
+  font-size: 12px;
+  color: #e0e0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+
+.bs-anime-info-note {
+  font-size: 12px;
+  color: #aaaaaa;
+  margin-top: 4px;
+  line-height: 1.35;
+  white-space: normal;
+}
+
 /* ── RESPONSIVE ────────────────────────────────── */
 @media (max-width: 640px) {
   .bs-books-layout {
@@ -566,55 +683,13 @@
 <script>
 (function () {
 
-  /* ── DATA ─────────────────────────────────────── */
-
-  var BOOKS = [
-    { title: 'The Way of Kings',       author: 'Brandon Sanderson', note: 'The one that started an obsession. I picked this up not knowing what I was getting into and came out the other side a different person. Kaladin\'s arc alone is worth the thousand pages.', color: '#4a6fa5', h: 213, w: 44, read: true },
-    { title: 'Words of Radiance',      author: 'Brandon Sanderson', note: 'Bigger, better, somehow. The world gets wider and the stakes get higher and it never once feels bloated.', color: '#6272a8', h: 206, w: 46, read: true },
-    { title: 'Oathbringer',            author: 'Brandon Sanderson', note: 'I cried. I will not say where.', color: '#8b5e8e', h: 220, w: 48, read: true },
-    { title: 'Rhythm of War',          author: 'Brandon Sanderson', note: 'Slower burn, still worth every page. The mental health themes hit harder than I expected.', color: '#7b8b5e', h: 216, w: 46, read: true },
-    { title: 'The Final Empire',       author: 'Brandon Sanderson', note: 'The best magic system I have ever read. Allomancy is genius and the ending genuinely surprised me.', color: '#5e7b8b', h: 193, w: 39, read: true },
-    { title: 'The Well of Ascension',  author: 'Brandon Sanderson', note: 'The middle book that earns it. Slower but it sets up everything that follows.', color: '#5e8b6b', h: 187, w: 39, read: true },
-    { title: 'The Hero of Ages',       author: 'Brandon Sanderson', note: 'The payoff was worth the series. One of those endings that recontextualises everything before it.', color: '#8b6b5e', h: 181, w: 37, read: true },
-    { title: 'Red Rising',             author: 'Pierce Brown',      note: 'Brutal and brilliant. Read it in two days. Did not sleep much.', color: '#b83c3c', h: 176, w: 34, read: true },
-    { title: 'Golden Son',             author: 'Pierce Brown',      note: 'The empire strikes back but better. Everything gets bigger and darker and more complicated.', color: '#b8743c', h: 173, w: 34, read: true },
-    { title: 'Morning Star',           author: 'Pierce Brown',      note: 'One of the best trilogy endings I have read. Earns every moment.', color: '#c8a040', h: 168, w: 34, read: true },
-    { title: 'The Winds of Winter',    author: 'George R.R. Martin', note: 'It has to come out eventually. I will be ready.', color: '#3d4f63', h: 198, w: 41, read: false },
-    { title: "Assassin's Apprentice",  author: 'Robin Hobb',        note: 'Everyone I trust says this is essential. On the list.', color: '#4e5a60', h: 176, w: 34, read: false },
-    { title: 'The Name of the Wind',   author: 'Patrick Rothfuss',  note: 'Been meaning to start this for two years. The pile grows.', color: '#5a4848', h: 181, w: 37, read: false },
-  ];
-
-  var MANGA = [
-    { title: 'One Piece',                        tier: 'S', note: 'The greatest adventure ever told. A world so alive and characters so human that a thousand chapters feels like it was not enough.' },
-    { title: 'Tower of God',                     tier: 'S', note: 'Dense, intricate, and unlike anything else. The tower rewards patience in ways few stories ever do.' },
-    { title: 'Berserk',                          tier: 'S', note: 'The defining dark fantasy. Guts is one of the greatest characters ever written. A masterwork, despite everything.' },
-    { title: 'Vagabond',                         tier: 'S', note: 'Art that belongs in a gallery. The story of Miyamoto Musashi told with an honesty and beauty that leaves you speechless.' },
-    { title: 'The Beginning After the End',      tier: 'A', note: 'Starts strong and builds into something genuinely gripping. The world-building is exceptional.' },
-    { title: 'Solo Leveling',                    tier: 'A', note: 'The power fantasy done right. Slick, satisfying, and relentlessly entertaining.' },
-    { title: 'Mosquito War',                     tier: 'A', note: 'Underrated. Chaotic energy with real emotional stakes underneath. Did not expect to care as much as I did.' },
-    { title: 'Latna Saga',                       tier: 'A', note: 'Smart and self-aware. Plays with genre conventions in interesting ways.' },
-    { title: 'Hardcore Leveling Warrior',        tier: 'B', note: 'Messy but charming. The comedy lands more than you would expect.' },
-    { title: 'The World After the End',          tier: 'B', note: 'Solid entry in the regression genre. Competent and enjoyable without being remarkable.' },
-    { title: 'The House Without Time',           tier: 'B', note: 'Interesting premise, decent execution. Worth reading for the concept alone.' },
-    { title: 'Surviving the Game as a Barbarian',tier: 'B', note: 'Fun premise, good pacing. Scratches the isekai itch without overstaying its welcome.' },
-    { title: 'God of High School',               tier: 'C', note: 'The fights are flashy but the story loses the plot completely. Fun while it lasts.' },
-    { title: 'Player',                           tier: 'C', note: 'Serviceable. Ticks the genre boxes without doing anything memorable with them.' },
-    { title: 'Pick Me Up Infinite Gacha',        tier: 'D', note: 'The meta premise is clever but the execution runs out of ideas faster than the gacha pity counter.' },
-    { title: 'Troll Trap',                       tier: 'D', note: 'I finished it. That is the kindest thing I can say.' },
-  ];
-
-  var ANIME = [
-    { title: 'Attack on Titan',            stars: 5, note: 'One of the best stories ever told in any medium. The ending divides people. I understand why.' },
-    { title: 'Fullmetal Alchemist: Brotherhood', stars: 5, note: 'Close to perfect. The pacing, the themes, the payoff. Textbook anime.' },
-    { title: 'Hunter x Hunter',            stars: 5, note: 'Chimera Ant arc changed how I think about storytelling. Nothing else like it.' },
-    { title: 'Demon Slayer',               stars: 4, note: 'Stunning animation. The story is straightforward but the craft is undeniable.' },
-    { title: 'Jujutsu Kaisen',             stars: 4, note: 'Stylish and brutal. Gojo carried the first season and then some.' },
-    { title: 'Vinland Saga',               stars: 5, note: 'Surprisingly deep. Started as a revenge story and became something much more important.' },
-    { title: 'Neon Genesis Evangelion',    stars: 4, note: 'Difficult and strange and worth every confusing minute.' },
-    { title: 'Cowboy Bebop',               stars: 5, note: 'Style and soul. The jazz, the loneliness, the ending. A classic for a reason.' },
-    { title: 'Death Note',                 stars: 4, note: 'First two thirds are some of the best television I have watched. You know what happened after.' },
-    { title: 'Your Lie in April',          stars: 4, note: 'I was not prepared. Nobody ever is.' },
-  ];
+  /* ── DATA (injected from data/*.yaml) ─────────── */
+  var _shelf = {{ site.Data.books.shelf | jsonify }};
+  var _tbr   = {{ site.Data.books.tbr   | jsonify }};
+  var BOOKS  = _shelf.map(function(b) { b.read = true;  return b; })
+    .concat(_tbr.map(function(b) { b.read = false; return b; }));
+  var MANGA  = {{ site.Data.manga | jsonify }};
+  var ANIME  = {{ site.Data.anime | jsonify }};
 
   /* ── STATE ────────────────────────────────────── */
 
@@ -736,7 +811,8 @@
       var el = document.createElement('div');
       el.className = 'bs-spine';
       el.style.cssText = 'background:' + book.color + ';width:' + book.w + 'px;height:' + book.h + 'px;margin-bottom:' + mb + 'px;';
-      el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>';
+      el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>' +
+        '<div class="bs-spine-hover"><div class="bs-spine-hover-note">' + escHtml(book.note) + '</div></div>';
       el.addEventListener('click', (function (b, idx) {
         return function () {
           openPanel(
@@ -754,8 +830,9 @@
       var rot = rotations[i % rotations.length];
       var el = document.createElement('div');
       el.className = 'bs-tbr-book';
-      el.style.cssText = 'background:' + book.color + ';transform:rotate(' + rot + 'deg);';
-      el.innerHTML = '<span class="bs-tbr-title">' + escHtml(book.title) + '</span>';
+      el.style.cssText = 'transform:rotate(' + rot + 'deg);';
+      el.innerHTML = '<span class="bs-tbr-title">' + escHtml(book.title) + '</span>' +
+        '<span class="bs-tbr-note">' + escHtml(book.note) + '</span>';
       el.addEventListener('click', (function (b, idx) {
         return function () {
           openPanel(
@@ -808,6 +885,12 @@
         coverWrap.className = 'bs-manga-cover-wrap';
         coverWrap.id = slug;
         coverWrap.innerHTML = '<div class="bs-manga-skel"></div>';
+
+        var overlay = document.createElement('div');
+        overlay.className = 'bs-manga-overlay';
+        overlay.innerHTML = '<div class="bs-manga-overlay-title">' + escHtml(manga.title) + '</div>' +
+          '<div class="bs-manga-overlay-note">' + escHtml(manga.note) + '</div>';
+        coverWrap.appendChild(overlay);
 
         var titleEl = document.createElement('div');
         titleEl.className = 'bs-manga-card-title';
@@ -886,6 +969,9 @@
     ANIME.forEach(function (anime, i) {
       var rot = ANIME_ROTATIONS[i % ANIME_ROTATIONS.length];
 
+      var entry = document.createElement('div');
+      entry.className = 'bs-anime-entry';
+
       var wrap = document.createElement('div');
       wrap.className = 'bs-anime-poster-wrap';
       wrap.style.transform = 'rotate(' + rot + 'deg)';
@@ -918,7 +1004,14 @@
         };
       })(anime, i, wrap));
 
-      wall.appendChild(wrap);
+      var info = document.createElement('div');
+      info.className = 'bs-anime-info';
+      info.innerHTML = '<div class="bs-anime-info-title">' + escHtml(anime.title) + '</div>' +
+        '<div class="bs-anime-info-note">' + escHtml(anime.note) + '</div>';
+
+      entry.appendChild(wrap);
+      entry.appendChild(info);
+      wall.appendChild(entry);
     });
   }
 
