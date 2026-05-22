@@ -19,7 +19,7 @@ buildFuture = true
   lightTheme = "emerald"
   darkTheme = "forest"
   noDefaultSummaryCover = true
-  reorderNavItems = ["home", "about", "library", "posts", "search", "categories", "linkedin", "github", "email"]
+  reorderNavItems = ["home", "about", "library", "search", "linkedin", "github", "email"]
 
 [params.advanced]
   customCSS = ["/css/custom.css"]

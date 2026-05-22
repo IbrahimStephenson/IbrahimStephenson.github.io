@@ -683,13 +683,58 @@
 <script>
 (function () {
 
-  /* ── DATA (injected from data/*.yaml) ─────────── */
-  var _shelf = {{ site.Data.books.shelf | jsonify }};
-  var _tbr   = {{ site.Data.books.tbr   | jsonify }};
-  var BOOKS  = _shelf.map(function(b) { b.read = true;  return b; })
-    .concat(_tbr.map(function(b) { b.read = false; return b; }));
-  var MANGA  = {{ site.Data.manga | jsonify }};
-  var ANIME  = {{ site.Data.anime | jsonify }};
+  /* ── DATA ─────────────────────────────────────── */
+
+  var SHELF = [
+    { title: 'The Way of Kings',       color: '#4a6fa5', note: 'The book that got me into fantasy. Sanderson builds a world unlike anything else.' },
+    { title: 'Words of Radiance',      color: '#7b4f9e', note: "Better than the first. Shallan's arc is underrated." },
+    { title: 'Oathbringer',            color: '#5a8a5a', note: 'Slow in the middle but the ending earns everything.' },
+    { title: 'Rhythm of War',          color: '#8a6a3a', note: 'Divisive but I liked it. The mental health themes hit differently.' },
+    { title: 'The Final Empire',       color: '#6a3a3a', note: 'Mistborn at its best. The magic system is genius.' },
+    { title: 'The Well of Ascension',  color: '#3a6a6a', note: 'Slower but necessary. Sets up the finale perfectly.' },
+    { title: 'The Hero of Ages',       color: '#7a5a3a', note: 'One of the best trilogy endings I have read.' },
+    { title: 'Red Rising',             color: '#8a3a3a', note: 'Did not expect to be this gripped. Darrow is a great protagonist.' },
+    { title: 'Golden Son',             color: '#4a6a8a', note: 'Bigger in every way. The political complexity kicks in here.' },
+    { title: 'Morning Star',           color: '#6a4a8a', note: 'Earns every moment. The payoff is real.' },
+  ];
+
+  var TBR = [
+    { title: 'The Winds of Winter',   color: '#3a5a7a', note: 'It has to come out eventually. I will be ready.' },
+    { title: "Assassin's Apprentice", color: '#5a4a6a', note: 'Everyone I trust says this is essential.' },
+    { title: 'The Name of the Wind',  color: '#6a4a4a', note: 'Been meaning to start this for two years. The pile grows.' },
+  ];
+
+  var MANGA = [
+    { title: 'One Piece',                         tier: 'S', note: 'The greatest ongoing story in manga. Nothing comes close for ambition and heart.' },
+    { title: 'Tower of God',                      tier: 'S', note: 'Complex, political, and unpredictable. Rachel discourse will never end.' },
+    { title: 'Berserk',                           tier: 'S', note: 'The standard everything else is measured against. Miura was one of a kind.' },
+    { title: 'Vagabond',                          tier: 'S', note: 'Not a manga, it is a painting. Every page is art.' },
+    { title: 'The Beginning After the End',       tier: 'A', note: 'Hooked me early. The later arcs get genuinely dark.' },
+    { title: 'Solo Levelling',                    tier: 'A', note: 'Power fantasy done right. The art carries it to another level.' },
+    { title: 'Mosquito War',                      tier: 'A', note: 'Underseen. Surprisingly gripping once it gets going.' },
+    { title: 'Latna Saga',                        tier: 'A', note: 'Solid isekai with more depth than most in the genre.' },
+    { title: 'Hardcore Levelling Warrior',        tier: 'B', note: 'Fun but inconsistent. The comedy lands more than the drama.' },
+    { title: 'The World After the End',           tier: 'B', note: 'Good premise, decent execution. Does not fully reach its potential.' },
+    { title: 'The House Without Time',            tier: 'B', note: 'Interesting concept. Gets strange in a good way.' },
+    { title: 'Surviving the Game as a Barbarian', tier: 'B', note: 'Enjoyable isekai. The barbarian angle is a nice twist.' },
+    { title: 'God of High School',                tier: 'C', note: 'Great fights, thin story. Style over substance.' },
+    { title: 'Player',                            tier: 'C', note: 'Fine. Nothing that sticks with you.' },
+    { title: 'Pick Me Up Infinite Gacha',         tier: 'D', note: 'The gacha concept wears thin fast.' },
+    { title: 'Troll Trap',                        tier: 'D', note: 'Did not land for me at all.' },
+  ];
+
+  var ANIME = [
+    { title: 'Attack on Titan',                  rating: 5, note: 'One of the best stories ever told in any medium. The ending divides people. I understand why.' },
+    { title: 'Fullmetal Alchemist Brotherhood',  rating: 5, note: 'Close to perfect. The pacing, the themes, the payoff. Textbook anime.' },
+    { title: 'Hunter x Hunter',                  rating: 5, note: 'Chimera Ant arc changed how I think about storytelling. Nothing else like it.' },
+    { title: 'Vinland Saga',                     rating: 5, note: 'Surprisingly deep. Started as a revenge story and became something much more important.' },
+    { title: 'Cowboy Bebop',                     rating: 5, note: 'Style and soul. The jazz, the loneliness, the ending. A classic for a reason.' },
+    { title: 'Demon Slayer',                     rating: 4, note: 'Stunning animation. The story is straightforward but the craft is undeniable.' },
+    { title: 'Jujutsu Kaisen',                   rating: 4, note: 'Stylish and brutal. Gojo carried the first season and then some.' },
+    { title: 'Neon Genesis Evangelion',          rating: 4, note: 'Difficult and strange and worth every confusing minute.' },
+    { title: 'Death Note',                       rating: 4, note: 'First two thirds are some of the best television I have watched. You know what happened after.' },
+    { title: 'Your Lie in April',                rating: 4, note: 'I was not prepared. Nobody ever is.' },
+  ];
 
   /* ── STATE ────────────────────────────────────── */
 
@@ -806,18 +851,21 @@
     var tbrEl   = document.getElementById('bs-tbr-books');
     var rotations = [-3, 4, -2, 3, -4, 2];
 
-    BOOKS.filter(function (b) { return b.read; }).forEach(function (book, i) {
+    var spineHeights = [180, 200, 210, 195, 185, 205, 215, 190, 175, 200];
+    var spineWidth   = 40;
+
+    SHELF.forEach(function (book, i) {
       var mb = heightOffsets[i % heightOffsets.length];
+      var h  = spineHeights[i % spineHeights.length];
       var el = document.createElement('div');
       el.className = 'bs-spine';
-      el.style.cssText = 'background:' + book.color + ';width:' + book.w + 'px;height:' + book.h + 'px;margin-bottom:' + mb + 'px;';
+      el.style.cssText = 'background:' + book.color + ';width:' + spineWidth + 'px;height:' + h + 'px;margin-bottom:' + mb + 'px;';
       el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>' +
         '<div class="bs-spine-hover"><div class="bs-spine-hover-note">' + escHtml(book.note) + '</div></div>';
       el.addEventListener('click', (function (b, idx) {
         return function () {
           openPanel(
             '<p class="bs-panel-title">' + escHtml(b.title) + '</p>' +
-            '<p class="bs-panel-sub">'   + escHtml(b.author) + '</p>' +
             '<p class="bs-panel-note">'  + escHtml(b.note)   + '</p>',
             'book-' + idx
           );
@@ -826,7 +874,7 @@
       shelfEl.appendChild(el);
     });
 
-    BOOKS.filter(function (b) { return !b.read; }).forEach(function (book, i) {
+    TBR.forEach(function (book, i) {
       var rot = rotations[i % rotations.length];
       var el = document.createElement('div');
       el.className = 'bs-tbr-book';
@@ -837,7 +885,7 @@
         return function () {
           openPanel(
             '<p class="bs-panel-title">' + escHtml(b.title) + '</p>' +
-            '<p class="bs-panel-sub">'   + escHtml(b.author) + ' &mdash; to be read</p>' +
+            '<p class="bs-panel-sub">to be read</p>' +
             '<p class="bs-panel-note">'  + escHtml(b.note)   + '</p>',
             'tbr-' + idx
           );
@@ -992,7 +1040,7 @@
           e.stopPropagation();
           var stars = '';
           for (var s = 0; s < 5; s++) {
-            stars += '<span class="' + (s < a.stars ? 'bs-star-filled' : 'bs-star-empty') + '">&#9733;</span>';
+            stars += '<span class="' + (s < a.rating ? 'bs-star-filled' : 'bs-star-empty') + '">&#9733;</span>';
           }
           showFloat(
             el,
