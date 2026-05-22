@@ -9,3 +9,58 @@
   object-fit: cover;
   object-position: center;
 }
+
+/* Featured Post */
+.featured-post-wrapper {
+  padding: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.featured-post-card {
+  flex-direction: column;
+}
+
+.featured-post-figure {
+  overflow: hidden;
+  max-height: 260px;
+}
+
+.featured-post-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (min-width: 768px) {
+  .featured-post-card {
+    flex-direction: row;
+  }
+
+  .featured-post-figure {
+    width: 42%;
+    min-width: 42%;
+    flex-shrink: 0;
+    max-height: none;
+    height: auto;
+  }
+}
+
+.featured-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f59e0b;
+  color: #1a1a1a;
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+
+.featured-post-title {
+  font-size: 1.5rem;
+}
