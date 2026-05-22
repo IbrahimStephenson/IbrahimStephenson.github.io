@@ -1,12 +1,12 @@
 ---
 title: "Life Coach"
-date: 2026-05-22
+date: 2026-05-21
 author: Ibrahim Stephenson
 categories:
   - Rant
 tags:
   - Life Goals
-draft: false
+draft: true
 ---
 
 When I was younger, my dream was to be a life coach. For an introvert, that is a pretty strange thing to want.
