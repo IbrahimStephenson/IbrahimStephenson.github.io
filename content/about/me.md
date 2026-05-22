@@ -11,7 +11,3 @@ This is my corner of the internet. Somewhere to write about the things I'm build
 Currently drowning in backlog.
 
 Sole internal Power Platform developer at a UK health and wellbeing charity, building and maintaining the Dynamics 365 systems that run NHS health programmes. Always down to talk about whatever, whenever.
-
-## Library
-
-{{< bookshelf >}}

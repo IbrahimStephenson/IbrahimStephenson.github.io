@@ -446,6 +446,42 @@
   color: #000;
 }
 
+/* ── FLOATING POPUP (manga / anime) ───────────── */
+#bs-float {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  min-width: 260px;
+  max-width: 340px;
+  background: #141a14;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 1rem 2.5rem 1rem 1.1rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.65);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.bs-float-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2rem 0.35rem;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.bs-float-close:hover {
+  color: rgba(255,255,255,0.9);
+}
+
 /* ── RESPONSIVE ────────────────────────────────── */
 @media (max-width: 640px) {
   .bs-books-layout {
@@ -514,6 +550,8 @@
 
 </div>
 
+<div id="bs-float"></div>
+
 <script>
 (function () {
 
@@ -570,6 +608,7 @@
   /* ── STATE ────────────────────────────────────── */
 
   var panelKey      = null;
+  var floatKey      = null;
   var mangaFetched  = false;
   var animeFetched  = false;
   var mangaCache    = {};
@@ -598,6 +637,48 @@
 
   panelClose.addEventListener('click', closePanel);
 
+  /* ── FLOAT POPUP (manga / anime) ──────────────── */
+
+  function closeFloat() {
+    var el = document.getElementById('bs-float');
+    el.style.opacity = '0';
+    floatKey = null;
+    setTimeout(function () { if (floatKey === null) el.style.display = 'none'; }, 190);
+  }
+
+  function showFloat(anchor, html, key) {
+    if (floatKey === key) { closeFloat(); return; }
+    floatKey = key;
+    var el = document.getElementById('bs-float');
+    el.innerHTML = html + '<button class="bs-float-close" id="bs-float-close-btn">&#x2715;</button>';
+    document.getElementById('bs-float-close-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeFloat();
+    });
+    el.style.opacity = '0';
+    el.style.top = '-9999px';
+    el.style.left = '-9999px';
+    el.style.display = 'block';
+    requestAnimationFrame(function () {
+      var fw = el.offsetWidth;
+      var fh = el.offsetHeight;
+      var rect = anchor.getBoundingClientRect();
+      var top  = rect.bottom + 8;
+      var left = rect.left;
+      if (left + fw > window.innerWidth - 10) left = window.innerWidth - fw - 10;
+      if (left < 6) left = 6;
+      if (top + fh > window.innerHeight - 10) top = rect.top - fh - 8;
+      el.style.top  = top  + 'px';
+      el.style.left = left + 'px';
+      requestAnimationFrame(function () { el.style.opacity = '1'; });
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = document.getElementById('bs-float');
+    if (floatKey !== null && el && !el.contains(e.target)) closeFloat();
+  });
+
   /* ── TABS ─────────────────────────────────────── */
 
   var tabs  = root.querySelectorAll('.bs-tab');
@@ -624,6 +705,7 @@
       tab.classList.add('bs-tab-active');
       showPane('bs-pane-' + name);
       closePanel();
+      closeFloat();
       if (name === 'manga' && !mangaFetched) { mangaFetched = true; initManga(); }
       if (name === 'anime' && !animeFetched) { animeFetched = true; initAnime(); }
     });
@@ -724,16 +806,18 @@
         card.appendChild(coverWrap);
         card.appendChild(titleEl);
 
-        card.addEventListener('click', (function (m, idx) {
-          return function () {
-            openPanel(
+        card.addEventListener('click', (function (m, idx, el) {
+          return function (e) {
+            e.stopPropagation();
+            showFloat(
+              el,
               '<p class="bs-panel-title">' + escHtml(m.title) +
               '<span class="bs-tier-badge" style="background:' + TIER_COLORS[m.tier] + '">' + m.tier + '</span></p>' +
               '<p class="bs-panel-note">' + escHtml(m.note) + '</p>',
               'manga-' + idx
             );
           };
-        })(manga, globalIdx));
+        })(manga, globalIdx, card));
 
         cards.appendChild(card);
       });
@@ -746,18 +830,20 @@
 
   function fetchMangaCover(manga) {
     var slug = 'bsmc-' + manga.title.replace(/[^a-z0-9]/gi, '-').toLowerCase();
-    return fetch('https://api.mangadex.org/manga?title=' + encodeURIComponent(manga.title) + '&limit=1')
+    return fetch('https://api.mangadex.org/manga?title=' + encodeURIComponent(manga.title) + '&limit=1&includes[]=cover_art')
       .then(function (r) { return r.json(); })
       .then(function (d) {
-        var mangaId = d.data && d.data[0] && d.data[0].id;
-        if (!mangaId) throw new Error('no id');
-        return fetch('https://api.mangadex.org/cover?manga[]=' + mangaId + '&limit=1')
-          .then(function (r) { return r.json(); })
-          .then(function (cd) {
-            var fileName = cd.data && cd.data[0] && cd.data[0].attributes && cd.data[0].attributes.fileName;
-            if (!fileName) throw new Error('no file');
-            return 'https://uploads.mangadex.org/covers/' + mangaId + '/' + fileName + '.256.jpg';
-          });
+        var entry = d.data && d.data[0];
+        if (!entry) throw new Error('no entry');
+        var mangaId = entry.id;
+        var rels = entry.relationships || [];
+        var coverRel = null;
+        for (var i = 0; i < rels.length; i++) {
+          if (rels[i].type === 'cover_art') { coverRel = rels[i]; break; }
+        }
+        var fileName = coverRel && coverRel.attributes && coverRel.attributes.fileName;
+        if (!fileName) throw new Error('no fileName');
+        return 'https://uploads.mangadex.org/covers/' + mangaId + '/' + fileName + '.256.jpg';
       })
       .then(function (url) {
         mangaCache[manga.title] = url;
@@ -808,20 +894,22 @@
       wrap.appendChild(pin);
       wrap.appendChild(cover);
 
-      wrap.addEventListener('click', (function (a, idx) {
-        return function () {
+      wrap.addEventListener('click', (function (a, idx, el) {
+        return function (e) {
+          e.stopPropagation();
           var stars = '';
           for (var s = 0; s < 5; s++) {
             stars += '<span class="' + (s < a.stars ? 'bs-star-filled' : 'bs-star-empty') + '">&#9733;</span>';
           }
-          openPanel(
+          showFloat(
+            el,
             '<p class="bs-panel-title">' + escHtml(a.title) + '</p>' +
             '<div class="bs-panel-stars">' + stars + '</div>' +
             '<p class="bs-panel-note">' + escHtml(a.note) + '</p>',
             'anime-' + idx
           );
         };
-      })(anime, i));
+      })(anime, i, wrap));
 
       wall.appendChild(wrap);
     });
