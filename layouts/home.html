@@ -1,76 +1,145 @@
-{{ define "main"}}
+{{ define "css" }}
+<script>document.documentElement.classList.add('hp')</script>
+{{ end }}
 
+{{ define "main" }}
 {{ $allPosts := where site.RegularPages "Type" "posts" }}
-{{ $newest := index (sort $allPosts "Date" "desc") 0 }}
-{{ $paginator := .Paginate $allPosts }}
+{{ $sortedPosts := sort $allPosts "Date" "desc" }}
+{{ $recentPosts := first 2 $sortedPosts }}
+{{ $newest := index $sortedPosts 0 }}
 
-<div class="px-4 my-6">
-  <a href="/library/" class="home-library-teaser">
-    Take a look at my library <span class="home-library-arrow">→</span>
-  </a>
-</div>
+<aside class="hp-sidebar">
+  <div class="hp-avatar-wrap">
+    <div class="hp-avatar-ring"></div>
+    <img class="hp-avatar" src="{{ site.Params.avatar | relURL }}" alt="{{ site.Params.author }}" />
+  </div>
 
-<div class="px-4 mb-8">
-  <div class="home-cr-label">Currently Reading</div>
-  <div class="home-cr-card">
-    <img class="home-cr-cover" id="home-cr-img"
-         src="/images/books/poppy-war.jpg"
-         alt="The Poppy War">
-    <div class="home-cr-placeholder" id="home-cr-ph">The Poppy War</div>
-    <div class="home-cr-info">
-      <div class="home-cr-title">The Poppy War</div>
-      <div class="home-cr-author">R.F. Kuang</div>
-      <div class="home-cr-note">Speechless.</div>
-      <a href="/library/" class="home-cr-link">See my full library →</a>
+  <h1 class="hp-name">{{ site.Params.author }}</h1>
+  <p class="hp-role">Power Platform Developer</p>
+  <p class="hp-bio">Sole internal dev at ThriveTribe, a UK health and wellbeing charity. Building the Dynamics 365 systems that run NHS health programmes for 400+ staff. Also making content for Powercademy. Currently drowning in backlog.</p>
+
+  <div class="hp-status">
+    <span class="hp-status-dot"></span>
+    Open to new conversations
+  </div>
+
+  <nav class="hp-nav" aria-label="Main navigation">
+    <a href="/" class="hp-nav-item hp-nav-item--active">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="/posts/" class="hp-nav-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <span>Blog</span>
+    </a>
+    <a href="/library/" class="hp-nav-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span>My Library</span>
+    </a>
+    <a href="/search/" class="hp-nav-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span>Search</span>
+    </a>
+    <a href="mailto:Ibrahimstephenson@gmail.com?subject=Portfolio%20Enquiry" class="hp-nav-item">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span>Contact</span>
+    </a>
+  </nav>
+
+  <div class="hp-cr-card">
+    <div class="hp-cr-label">Currently Reading</div>
+    <div class="hp-cr-inner">
+      <img class="hp-cr-cover" src="/images/books/poppy-war.jpg" alt="The Poppy War" onerror="this.style.display='none'" />
+      <div class="hp-cr-info">
+        <div class="hp-cr-title">The Poppy War</div>
+        <div class="hp-cr-author">R.F. Kuang</div>
+        <div class="hp-cr-note">Speechless.</div>
+        <a href="/library/" class="hp-cr-link">Browse full library →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hp-socials">
+    <a href="https://www.linkedin.com/in/ibrahimstephenson" class="hp-social-btn" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://github.com/IbrahimStephenson" class="hp-social-btn" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+    </a>
+    <a href="https://www.youtube.com/@Powercademy" class="hp-social-btn" target="_blank" rel="noopener" aria-label="YouTube – Powercademy">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+    <a href="mailto:Ibrahimstephenson@gmail.com?subject=Portfolio%20Enquiry" class="hp-social-btn" aria-label="Email">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </a>
+  </div>
+</aside>
+
+<div class="hp-content">
+  <div class="hp-section-header">
+    <span class="hp-section-label">Latest Writing</span>
+    <hr class="hp-section-rule" />
+  </div>
+
+  <div class="hp-posts-grid">
+    {{ range $recentPosts }}
+    {{ $isNewest := eq .Permalink $newest.Permalink }}
+    <a href="{{ .RelPermalink }}" class="hp-post-card{{ if $isNewest }} hp-post-card--latest{{ end }}">
+      {{ if .Params.cover }}
+      <div class="hp-post-img-wrap">
+        <img src="{{ .Params.cover }}" alt="{{ .Title }}" class="hp-post-img" loading="lazy" />
+      </div>
+      {{ else }}
+      <div class="hp-post-img-wrap hp-post-img-wrap--placeholder">
+        <span>{{ .Title | truncate 30 }}</span>
+      </div>
+      {{ end }}
+      <div class="hp-post-body">
+        {{ if $isNewest }}
+        <span class="hp-badge hp-badge--latest">Latest</span>
+        {{ else }}
+        {{ with .Params.categories }}
+        {{ if in . "Rant" }}
+        <span class="hp-badge hp-badge--personal">Personal</span>
+        {{ else }}
+        <span class="hp-badge hp-badge--cat">{{ index . 0 }}</span>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+        <h2 class="hp-post-title">{{ .Title }}</h2>
+        <p class="hp-post-excerpt">{{ or .Description (.Summary | plainify | truncate 120 "...") }}</p>
+        <div class="hp-post-meta">
+          <span>{{ .Date | time.Format "Jan 2, 2006" }}</span>
+          <span>{{ .ReadingTime }} min read</span>
+        </div>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  <a href="/posts/" class="hp-view-all">View all posts →</a>
+
+  <div class="hp-section-header hp-section-header--mt">
+    <span class="hp-section-label">On YouTube</span>
+    <hr class="hp-section-rule" />
+  </div>
+
+  <div class="hp-yt-card">
+    <div class="hp-yt-icon-wrap">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </div>
+    <div class="hp-yt-info">
+      <h3 class="hp-yt-title">Powercademy</h3>
+      <p class="hp-yt-desc">I contribute to and edit Power Platform content for Powercademy on YouTube and LinkedIn. If you're in the Power Platform space, worth a subscribe.</p>
+      <a href="https://www.youtube.com/@Powercademy" class="hp-yt-link" target="_blank" rel="noopener">Visit channel →</a>
     </div>
   </div>
 </div>
-<script>
-(function () {
-  var img = document.getElementById('home-cr-img');
-  var ph  = document.getElementById('home-cr-ph');
-  if (img) {
-    img.onerror = function () {
-      img.classList.add('home-cr-hidden');
-      if (ph) ph.classList.add('home-cr-ph-show');
-    };
-  }
-})();
-</script>
-
-{{ if site.Params.zenMode }}
-<div class="dream-zen-posts max-w-[65ch] mt-8 mx-auto px-4 space-y-8">
-{{ range $paginator.Pages }}
-  {{ .Render "zen-summary" }}
-{{ end }}
-</div>
-{{ else }}
-<div class="dream-grid opacity-0">
-  {{ range $paginator.Pages }}
-  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
-    {{ if eq .Permalink $newest.Permalink }}
-      {{ .Scratch.Set "isNewest" true }}
-    {{ else }}
-      {{ .Scratch.Set "isNewest" false }}
-    {{ end }}
-    {{ .Render "summary" }}
-  </div>
-  {{ end }}
-</div>
-{{ end }}
-
-{{ if gt $paginator.TotalPages 1 }}
-<div class="flex justify-center mt-8">
-  {{ partial "paginator.html" (dict "paginator" $paginator) }}
-</div>
-{{ end }}
 
 {{ end }}
 
 {{ define "js" }}
-
 {{ if site.Params.Experimental.jsDate }}
   {{ partial "luxon.html" . }}
 {{ end }}
-
 {{ end }}
