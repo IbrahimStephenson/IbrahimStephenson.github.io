@@ -10,6 +10,7 @@ tags:
   - claude
   - dataverse
 draft: false
+featured: true
 cover: /images/datascraper.png
 ---
 
