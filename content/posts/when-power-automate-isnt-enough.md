@@ -36,9 +36,9 @@ That separation matters. When a behaviour needs to fire reliably inside Datavers
 
 ## The One Limitation That Is Actually Fine
 
-The limitations of Power Automate do not exist with custom plugins. Except for the human limitation of learning code. But here is the thing: that is not a blocker. That is a challenge. And if you have made it this far in the Power Platform world, you are not the kind of person who backs down from a challenge. (kinda cringe but let it slide)
+The limitations of Power Automate do not exist with custom plugins. The only one left is the human limitation of learning code. That is not a blocker. It is just what you have to do.
 
-If you have been sleeping on plugins, this might be your sign to wake up.
+If you have been ignoring plugins, it is worth a second look.
 
 ---
 

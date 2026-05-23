@@ -28,9 +28,9 @@ Every conversation I have with each of them is valuable. But in completely diffe
 
 The CTO gives me direction. Strategic priorities, where the organisation is heading, what integrations are coming. That shapes how I think about architecture and what to build for longevity versus what to ship now.
 
-A programme manager gives me scope. What is the process supposed to look like? What are the compliance requirements? What does success actually mean for this programme?
+Programme managers give me scope. What is the process supposed to look like? What are the compliance requirements? What does success mean for this programme specifically?
 
-A frontline advisor gives me reality. What is the process actually like? Where does it break down? What workarounds have they quietly built into their daily routine because the system doesn't quite fit the work?
+From a frontline advisor I get reality. What is the process actually like? Where does it break down? What workarounds have they quietly built into their day because the system doesn't quite fit how the work actually flows?
 
 That last one is the one developers most often skip. It is also the one that tells you the most.
 
@@ -62,7 +62,7 @@ My job is to hold both conversations and build something that satisfies both. St
 
 It is not a kickoff meeting where you collect requirements and disappear.
 
-It is checking back with an advisor two weeks after a change to ask if it actually helped. It is being present enough that people flag things to you informally, not just through a ticket. It is translating what a CTO describes in strategic terms into something a canvas app can actually deliver, and then validating that translation with the people who will use it every day.
+Two weeks after a change, I check back and ask if it actually helped. People flag things to me informally, not just through a ticket, because they know I want to hear it. When a CTO describes something in strategic terms, I have to translate that into something a canvas app can actually deliver, then validate that translation with the people who will use it every day.
 
 As the only developer, I do not have the luxury of specialising in just the technical side. The business analysis, the user research, the stakeholder management, that is all part of the role too.
 

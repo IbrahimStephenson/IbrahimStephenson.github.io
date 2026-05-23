@@ -52,11 +52,11 @@ The deployment went through PAC CLI. Claude ran the commands. The app went to th
 
 ## What Actually Changed
 
-The canvas app was four screens. The generative page is five, with training videos as a first-class feature.
+The generative page has five screens versus the canvas app's four, with training videos added as a proper feature rather than squeezed in later.
 
-The canvas app had delegation limitations on search. The React app does not have the same constraints.
+Search in the canvas app ran into delegation limits. The React version does not have that problem.
 
-The canvas app required Power Apps Studio for every change. The generative page can be iterated on through Claude Code from the terminal, described in plain English, deployed via PAC CLI.
+Every change to the canvas app meant opening Power Apps Studio. The generative page gets iterated on from the terminal, described in plain English, deployed via PAC CLI.
 
 The canvas app was something I built and maintained. The generative page is something I described and directed.
 

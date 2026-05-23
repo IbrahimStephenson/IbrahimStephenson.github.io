@@ -38,15 +38,17 @@ My first instinct was to reconstruct the missing sessions from scratch. Hardcode
 
 Then I thought about it differently. If a referral is incomplete, there will almost certainly be another referral on the same service that is complete. Why not use that as a source of truth?
 
-That was the insight that made everything work.
-
 ## The Solution
 
 I built two Power Automate flows packaged as a managed Dataverse solution.
 
-**Detection Flow** runs on a daily schedule. It queries Cosmos for referrals in FirstSession status with fewer than 14 booking records. All NHS programme referrals should have exactly 13 sessions plus an initial assessment, so anything below that threshold gets flagged. When it finds affected records it triggers the fix flow for each one.
+### Detection flow
 
-**Fix Flow** is where it gets interesting. Rather than reconstructing sessions from scratch, the flow queries Cosmos for a reference client on the same service with a full set of 13 sessions. It diffs the two bookings arrays, identifies exactly which session types are missing, borrows the structural data from the reference client, and constructs the missing session objects from that.
+The detection flow runs on a daily schedule. It queries Cosmos for referrals in FirstSession status with fewer than 14 booking records. All NHS programme referrals should have exactly 13 sessions plus an initial assessment, so anything below that threshold gets flagged. When it finds affected records it triggers the fix flow for each one.
+
+### Fix flow
+
+Rather than reconstructing sessions from scratch, the fix flow queries Cosmos for a reference client on the same service with a full set of 13 sessions. It diffs the two bookings arrays, identifies exactly which session types are missing, borrows the structural data from the reference client, and constructs the missing session objects from that.
 
 The tricky part was ordering. Cosmos does not guarantee array order, but the downstream flows expected sessions in programme sequence. Just merging the arrays would append missing sessions at the end and break everything downstream.
 

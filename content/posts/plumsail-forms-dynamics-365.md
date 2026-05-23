@@ -26,23 +26,23 @@ It starts the same way on every project.
 
 <!--more-->
 
-We've used Plumsail to collect data from over 75,000 clients — forms embedded directly into our website, feeding straight into Dynamics 365 and triggering workflows via Power Automate. It's become a core part of how we capture external data at scale.
+We've used Plumsail to collect data from over 75,000 clients, with forms embedded directly into our website feeding straight into Dynamics 365 and triggering Power Automate workflows. It's become a core part of how we capture external data at scale.
 
 ## What Makes It Worth It
 
 Microsoft Forms is fine for internal surveys. For anything customer-facing or deeply integrated, it runs out of road quickly. Plumsail doesn't have that problem.
 
-**Custom layouts and conditional logic** — build forms that actually behave the way your process requires, not whatever Microsoft Forms allows this week.
+Custom layouts and conditional logic mean forms that actually behave the way your process requires, not whatever Microsoft Forms allows this week.
 
-**Deep Power Platform integration** — data flows straight into Dynamics 365 and triggers Power Automate flows without awkward workarounds. Azure and Git integration are there too if your stack needs them.
+Data flows straight into Dynamics 365 and triggers Power Automate flows without awkward workarounds. Azure and Git integration are there too if your stack needs them.
 
-**Exceptional support and community** — genuinely one of the better support teams in the Microsoft ecosystem. Issues get resolved, not just acknowledged.
+The support is also genuinely one of the better ones in the Microsoft space. Issues get resolved, not just acknowledged.
 
 We're still finding useful features years into using it, which says a lot.
 
 ## One Thing I'd Add
 
-If they introduced a sandbox or test environment — similar to Power Apps environments — it would make testing form changes before pushing to production much cleaner. That's the one gap I'd love to see closed.
+If they introduced a sandbox or test environment, similar to what Power Apps environments provide, it would make testing form changes before pushing to production much cleaner. That's the one gap I'd love to see closed.
 
 ## Worth Knowing
 

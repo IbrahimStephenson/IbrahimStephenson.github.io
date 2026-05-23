@@ -30,7 +30,7 @@ When I started properly investigating ThriveTribe's environments, there was a 5,
 
 ## The Plan
 
-The goal was a full managed solution pipeline. DEV stays unmanaged so developers can work freely. UAT and PROD get managed solutions only, locked down, no direct edits. Every change goes through the pipeline. That is the standard. That is what I was building toward.
+The goal was a full managed solution pipeline. DEV stays unmanaged so developers can work freely. UAT and PROD get managed solutions only, locked down, no direct edits. Every change goes through the pipeline. That is the standard.
 
 The migration itself was a seven-phase operation planned across two nights. Phase zero was backups of everything before touching anything. Then consolidating PROD into a single exportable solution, getting DEV and UAT to parity, deploying managed to UAT, deploying managed to PROD, and finally reimporting any in-progress DEV work that had been saved aside.
 
@@ -64,7 +64,7 @@ The fix was consolidating connection references across the environment. Because 
 
 ## The Layered Architecture
 
-While all of this was happening I also redesigned the solution structure itself. The monolithic single-solution approach was part of why things had gotten messy. One solution containing everything means a failed import rolls back everything.
+I also redesigned the solution structure during all of this. The monolithic single-solution approach was part of why things had gotten messy. One solution containing everything means a failed import rolls back everything.
 
 The new architecture is four layers. Layer zero is Components: plugins and PCF custom controls that everything else depends on. Layer one is Data: tables, columns, relationships, views, forms, option sets. Layer two is Flows: Power Automate flows and environment variables. Layer three is UI: canvas apps, model-driven apps, web resources.
 
@@ -84,7 +84,7 @@ The result is that managed solutions can only reach UAT or PROD through the pipe
 
 I am not going to pretend this was clean. It took multiple sessions of XML surgery, several rounds of debugging errors I had never seen before, a custom PowerShell script with its own debugging journey, and more ZIP file repacking than I care to count.
 
-But the before and after is stark. Before: three environments drifting apart with no audit trail and no way to know what was actually in PROD. After: a layered architecture, a proper deployment pipeline, connection references consolidated, and every change going through version control before it touches a managed environment.
+The before and after is stark. Three environments drifting apart with no audit trail became a layered architecture, a proper deployment pipeline, connection references consolidated, and every change going through version control before it touches a managed environment.
 
 If you are building on Power Platform at any serious scale and you are still working unmanaged, this is the migration worth doing. Just set aside more time than you think you need.
 

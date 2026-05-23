@@ -19,13 +19,14 @@ buildFuture = true
   lightTheme = "emerald"
   darkTheme = "forest"
   noDefaultSummaryCover = true
-  reorderNavItems = ["home", "about", "library", "search", "linkedin", "github", "email"]
+  reorderNavItems = ["home", "about", "blogs", "library", "search", "linkedin", "github", "email"]
 
 [params.advanced]
   customCSS = ["/css/custom.css"]
 
 [params.navItems]
   home = { href = "/", title = "Home" }
+  blogs = { href = "/posts/", title = "Blogs" }
   library = { href = "/library/", title = "Library" }
   linkedin = { href = "https://www.linkedin.com/in/ibrahimstephenson", target = "_blank", icon = "logo-linkedin", title = "LinkedIn" }
   github = { href = "https://github.com/IbrahimStephenson", target = "_blank", icon = "logo-github", title = "GitHub" }

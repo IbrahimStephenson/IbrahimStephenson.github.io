@@ -50,8 +50,6 @@ That was the front end sorted. I still needed something to actually read the doc
 
 ## Where Claude Comes In
 
-This is the part that changed everything compared to the original Datascraper.
-
 Instead of training a model on fixed layouts, I built a Power Automate flow called Process Referral Document. When a file gets uploaded, the flow sends the PDF to Claude via an HTTP action along with a prompt that says, roughly: this is a referral for this specific service, extract these fields, return it as JSON.
 
 Claude reads it the way a person would. It understands context. It does not need to have seen that exact template before. Different GP letterheads, different formats, fields in different positions. It does not matter. It finds the information because it knows what it is looking for, not just where it usually appears.
