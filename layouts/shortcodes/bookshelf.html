@@ -88,9 +88,12 @@
 
 /* ── READ SHELF ────────────────────────────────── */
 .bs-shelf-wrap {
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: visible;
   padding-bottom: 2px;
+}
+
+.bs-shelf-row {
+  margin-bottom: 36px;
 }
 
 .bs-shelf-books {
@@ -153,7 +156,7 @@
 .bs-spine-title {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: rgba(255,255,255,0.87);
   padding: 0.35rem 0;
@@ -707,9 +710,6 @@
     flex: none;
     width: 100%;
   }
-  .bs-shelf-wrap {
-    overflow-x: auto;
-  }
   .bs-tbr-book {
     width: 100%;
   }
@@ -738,10 +738,7 @@
     <div class="bs-books-layout">
       <div class="bs-shelf-section">
         <div class="bs-section-label">Shelved (Already Read)</div>
-        <div class="bs-shelf-wrap">
-          <div class="bs-shelf-books" id="bs-shelf-books"></div>
-          <div class="bs-shelf-bar"></div>
-        </div>
+        <div class="bs-shelf-wrap" id="bs-shelf-wrap"></div>
       </div>
       <div class="bs-tbr-section">
         <div class="bs-section-label">getting to it</div>
@@ -782,29 +779,49 @@
   };
 
   var SHELF = [
-    { title: 'Sword of Kaigen',           color: '#4a6fa5', rating: 6, image: '/images/books/Sword of Kaigen.jpg', note: 'Could not stop crying at the ending, had me SOBBING. I think this is the #1 book i have ever read, in my entire life. The complexity the emotions the twists. *Chefs Kiss*' },
-    { title: 'The Way of Kings',          color: '#4a6fa5', rating: 4, image: '/images/books/The way of Kings.jpg', note: 'Really did not think id make it through this book but so glad i stuck with it.' },
-    { title: 'Words of Radiance',         color: '#7b4f9e', rating: 4, image: '/images/books/Words of Radiance.jpg', note: "Better than the first. Shallan's arc is underrated." },
-    { title: 'The Final Empire',          color: '#6a3a3a', rating: 4, image: '/images/books/The final empire.jpg', note: 'Genuinly an amazing book, had me hooked immedaitely.' },
-    { title: 'The Well of Ascension',     color: '#3a6a6a', rating: 4, image: '/images/books/The well of Ascension.jpg', note: 'Bit slower but i loved the character development, once you finish the third book everything starts to click.' },
-    { title: 'The Hero of Ages',          color: '#7a5a3a', rating: 5, image: '/images/books/The hero of ages.jpg', note: 'ITS WRITTEN IN STEEL. Goosebumps literally!!!' },
-    { title: 'Warbreaker',               color: '#7a5a3a', rating: 3, image: '/images/books/Warbreaker.jpg', note: 'I think this was one of the most complicated magic systems i have read. I understood it like at the end of the book but during the book i was baffled.' },
-    { title: 'Red Rising',               color: '#8a3a3a', rating: 4.5, image: '/images/books/Red Rising.jpg', note: 'I think i cried like 6 times reading this book.' },
-    { title: 'Golden Son',               color: '#4a6a8a', rating: 3, image: '/images/books/Golden Son.jpg', note: 'My favourite trope is always acadamy tropes and this book did that AMAZINGLY.' },
-    { title: 'Morning Star',             color: '#6a4a8a', rating: 3, image: '/images/books/Morning Star.jpg', note: 'We see some insane character development, and character losses in this book. RIP ragnar.' },
-    { title: 'Iron Gold',                color: '#6a4a8a', rating: 4, image: '/images/books/Iron Gold.jpg', note: 'Man idk i just wish Darrow could live a life without war. Like he doesnt NEED to keep fighting everyone.' },
-    { title: 'Dark Age',                 color: '#6a4a8a', rating: 3, image: '/images/books/Dark Age.jpg', note: 'Honestly this book was just a setup for the final book and i CANNOT wait to see whats about to go down.' },
-    { title: 'Babel',                    color: '#6a4a8a', rating: 5, image: '/images/books/Babel.jpg', note: 'The ending was an insane twist, one of the first books i read as an adult and completely changed how i see everything.' },
-    { title: 'Fourth Wing',              color: '#4a6fa5', rating: 4, image: '/images/books/Fourth Wing.jpg', note: 'Hooked all throughout the book. I love the acadamy trope and eat it up everyday. But seeing Violet slowly uncover the truth of the world is great to see, the betrayal from her best friend as well!!!!' },
-    { title: 'Iron Flame',              color: '#4a6fa5', rating: 4, image: '/images/books/Iron Flame.jpg', note: 'Great second book to Fourth Wing, the ending really had me on the edge of my seat though. And every time violet gets more powers it is just amazing to read.' },
-    { title: 'Tress of the Emerald Sea', color: '#4a6fa5', rating: 2, image: '/images/books/Tress of the Emerald Sea.jpg', note: 'Honestly just a lovely adventure story. I like reading standalone and this is a great example of a completed story but with enough mystery to keep you guessing.' },
-    { title: 'The Lost Sisters',         color: '#4a6fa5', rating: 3, image: '/images/books/The lost Sisters.jpg', note: 'This is quite a nice full circle book to be honest, as much as i was getting annoyed with Jude she redeemed herself in the end and it was quite tearful seeing her POV through it all.' },
-    { title: 'The Stolen Heir',          color: '#4a6fa5', rating: 2, image: '/images/books/The Stolen Heir.jpg', note: 'I liked this ending, it felt satisfying to put it simply.' },
-    { title: 'The Rage of Dragons',      color: '#4a6fa5', rating: 4, image: '/images/books/The rage of Dragons.jpg', note: 'This book had me on the edge of my seat, nail biting tension every other page it was STRESSFUL. But the MC was able to prove himself.' },
-    { title: 'The Fire of Vengeance',     color: '#4a6fa5', rating: 3, image: '/images/books/The Fire of Vengeance.jpg', note: 'Good ending, Although i feel there is still much not explained and left in the air.' },
-    { title: 'A Thousand Splendid Suns', color: '#4a6fa5', rating: 5, image: '/images/books/A Thousand Splendid Suns.jpg', note: 'This genuinly left a mark on me i will never forget.' },
-    { title: 'The Pariah',                   color: '#4a6fa5', rating: 3, image: '/images/books/Pariah.jpg', note: 'This book does an AMAZING job of demonstrating CULT and religious power in the wrong hands.' },
+    { title: 'Sword of Kaigen',           author: 'ML Wang',           rating: 6,   image: '/images/books/Sword of Kaigen.jpg',           note: 'Could not stop crying at the ending, had me SOBBING. I think this is the #1 book i have ever read, in my entire life. The complexity the emotions the twists. *Chefs Kiss*' },
+
+    { title: 'The Final Empire',           author: 'Brandon Sanderson', rating: 4,   image: '/images/books/The final empire.jpg',           note: 'Genuinly an amazing book, had me hooked immedaitely.' },
+    { title: 'The Well of Ascension',      author: 'Brandon Sanderson', rating: 4,   image: '/images/books/The well of Ascension.jpg',      note: 'Bit slower but i loved the character development, once you finish the third book everything starts to click.' },
+    { title: 'The Hero of Ages',           author: 'Brandon Sanderson', rating: 5,   image: '/images/books/The hero of ages.jpg',           note: 'ITS WRITTEN IN STEEL. Goosebumps literally!!!' },
+    { title: 'Warbreaker',                 author: 'Brandon Sanderson', rating: 3,   image: '/images/books/Warbreaker.jpg',                 note: 'I think this was one of the most complicated magic systems i have read. I understood it like at the end of the book but during the book i was baffled.' },
+    { title: 'The Way of Kings',           author: 'Brandon Sanderson', rating: 4,   image: '/images/books/The way of Kings.jpg',           note: 'Really did not think id make it through this book but so glad i stuck with it.' },
+    { title: 'Words of Radiance',          author: 'Brandon Sanderson', rating: 4,   image: '/images/books/Words of Radiance.jpg',          note: "Better than the first. Shallan's arc is underrated." },
+    { title: 'Tress of the Emerald Sea',   author: 'Brandon Sanderson', rating: 2,   image: '/images/books/Tress of the Emerald Sea.jpg',   note: 'Honestly just a lovely adventure story. I like reading standalone and this is a great example of a completed story but with enough mystery to keep you guessing.' },
+
+    { title: 'Red Rising',                 author: 'Pierce Brown',      rating: 4.5, image: '/images/books/Red Rising.jpg',                 note: 'I think i cried like 6 times reading this book.' },
+    { title: 'Golden Son',                 author: 'Pierce Brown',      rating: 3,   image: '/images/books/Golden Son.jpg',                 note: 'My favourite trope is always acadamy tropes and this book did that AMAZINGLY.' },
+    { title: 'Morning Star',               author: 'Pierce Brown',      rating: 3,   image: '/images/books/Morning Star.jpg',               note: 'We see some insane character development, and character losses in this book. RIP ragnar.' },
+    { title: 'Iron Gold',                  author: 'Pierce Brown',      rating: 4,   image: '/images/books/Iron Gold.jpg',                  note: 'Man idk i just wish Darrow could live a life without war. Like he doesnt NEED to keep fighting everyone.' },
+    { title: 'Dark Age',                   author: 'Pierce Brown',      rating: 3,   image: '/images/books/Dark Age.jpg',                   note: 'Honestly this book was just a setup for the final book and i CANNOT wait to see whats about to go down.' },
+
+    { title: 'Babel',                      author: 'RF Kuang',          rating: 5,   image: '/images/books/Babel.jpg',                      note: 'The ending was an insane twist, one of the first books i read as an adult and completely changed how i see everything.' },
+
+    { title: 'Fourth Wing',                author: 'Rebecca Yarros',    rating: 4,   image: '/images/books/Fourth Wing.jpg',                note: 'Hooked all throughout the book. I love the acadamy trope and eat it up everyday. But seeing Violet slowly uncover the truth of the world is great to see, the betrayal from her best friend as well!!!!' },
+    { title: 'Iron Flame',                 author: 'Rebecca Yarros',    rating: 4,   image: '/images/books/Iron Flame.jpg',                 note: 'Great second book to Fourth Wing, the ending really had me on the edge of my seat though. And every time violet gets more powers it is just amazing to read.' },
+
+    { title: 'The Lost Sisters',           author: 'Holly Black',       rating: 3,   image: '/images/books/The lost Sisters.jpg',           note: 'This is quite a nice full circle book to be honest, as much as i was getting annoyed with Jude she redeemed herself in the end and it was quite tearful seeing her POV through it all.' },
+    { title: 'The Stolen Heir',            author: 'Holly Black',       rating: 2,   image: '/images/books/The Stolen Heir.jpg',            note: 'I liked this ending, it felt satisfying to put it simply.' },
+
+    { title: 'The Rage of Dragons',        author: 'Evan Winter',       rating: 4,   image: '/images/books/The rage of Dragons.jpg',        note: 'This book had me on the edge of my seat, nail biting tension every other page it was STRESSFUL. But the MC was able to prove himself.' },
+    { title: 'The Fire of Vengeance',      author: 'Evan Winter',       rating: 3,   image: '/images/books/The Fire of Vengeance.jpg',      note: 'Good ending, Although i feel there is still much not explained and left in the air.' },
+
+    { title: 'A Thousand Splendid Suns',   author: 'Khaled Hosseini',   rating: 5,   image: '/images/books/A Thousand Splendid Suns.jpg',   note: 'This genuinly left a mark on me i will never forget.' },
+
+    { title: 'The Pariah',                 author: 'Anthony Ryan',      rating: 3,   image: '/images/books/Pariah.jpg',                     note: 'This book does an AMAZING job of demonstrating CULT and religious power in the wrong hands.' },
   ];
+
+  var AUTHOR_COLORS = {
+    'ML Wang':           '#c8a84b',
+    'Brandon Sanderson': '#5b8dd9',
+    'Pierce Brown':      '#c0392b',
+    'RF Kuang':          '#8e44ad',
+    'Rebecca Yarros':    '#16a085',
+    'Holly Black':       '#2c3e50',
+    'Evan Winter':       '#d35400',
+    'Khaled Hosseini':   '#27ae60',
+    'Anthony Ryan':      '#7f8c8d',
+  };
 
   var TBR = [
     { title: 'Blood over Bright Haven',   color: '#3a5a7a', note: 'Getting to it next, i swear...' },
@@ -957,77 +974,107 @@
   var heightOffsets = [0, 2, 0, 1, 2, 0, 1, 0, 2, 1];
 
   function renderBooks() {
-    var shelfEl = document.getElementById('bs-shelf-books');
-    var tbrEl   = document.getElementById('bs-tbr-books');
+    var shelfWrap = document.getElementById('bs-shelf-wrap');
+    var tbrEl     = document.getElementById('bs-tbr-books');
     var rotations = [-3, 4, -2, 3, -4, 2];
 
-    var spineHeights = [180, 200, 210, 195, 185, 205, 215, 190, 175, 200];
-    var spineWidth   = 40;
+    var spineHeights = [220, 240, 250, 230, 225, 245, 255, 235, 215, 240];
+    var spineWidth   = 52;
 
     var bookTooltip = document.createElement('div');
     bookTooltip.id = 'book-tooltip';
     bookTooltip.style.cssText = 'position:fixed;background:rgba(20,20,20,0.95);color:#e0e0e0;padding:8px 12px;border-radius:6px;font-size:12px;max-width:200px;pointer-events:none;z-index:9999;display:none;text-align:center;line-height:1.4;';
     document.body.appendChild(bookTooltip);
 
-    SHELF.forEach(function (book, i) {
-      var mb = heightOffsets[i % heightOffsets.length];
-      var h  = spineHeights[i % spineHeights.length];
-      var el = document.createElement('div');
-      el.className = 'bs-spine';
-      if (book.rating === 6) { el.classList.add('bs-spine-legendary'); }
-      el.style.cssText = 'background:' + book.color + ';width:' + spineWidth + 'px;height:' + h + 'px;margin-bottom:' + mb + 'px;';
-      el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>';
-      el.addEventListener('mouseenter', (function (b, spine) {
-        return function () {
-          bookTooltip.innerHTML = '<strong>' + escHtml(b.title) + '</strong><br>' + escHtml(b.note);
-          bookTooltip.style.display = 'block';
-          var rect = spine.getBoundingClientRect();
-          var tw   = bookTooltip.offsetWidth;
-          var th   = bookTooltip.offsetHeight;
-          var left = rect.left + rect.width / 2 - tw / 2;
-          var top  = rect.top - th - 8;
-          if (left < 6) left = 6;
-          if (left + tw > window.innerWidth - 6) left = window.innerWidth - tw - 6;
-          if (top < 6) top = rect.bottom + 8;
-          bookTooltip.style.left = left + 'px';
-          bookTooltip.style.top  = top  + 'px';
-        };
-      })(book, el));
-      el.addEventListener('mouseleave', function () {
-        bookTooltip.style.display = 'none';
+    var chunkSize = 10;
+    for (var c = 0; c < SHELF.length; c += chunkSize) {
+      var chunk = SHELF.slice(c, c + chunkSize);
+
+      var rowDiv = document.createElement('div');
+      rowDiv.className = 'bs-shelf-row';
+
+      var booksDiv = document.createElement('div');
+      booksDiv.className = 'bs-shelf-books';
+
+      chunk.forEach(function (book, j) {
+        var globalIdx = c + j;
+        var mb = heightOffsets[j % heightOffsets.length];
+        var h  = spineHeights[j % spineHeights.length];
+        var spineColor = AUTHOR_COLORS[book.author] || '#4a4a4a';
+
+        var el = document.createElement('div');
+        el.className = 'bs-spine';
+        if (book.rating === 6) { el.classList.add('bs-spine-legendary'); }
+
+        var marginLeft = (j > 0 && chunk[j].author !== chunk[j - 1].author) ? '10px' : '0';
+
+        el.style.cssText = 'background:' + spineColor + ';width:' + spineWidth + 'px;height:' + h + 'px;margin-bottom:' + mb + 'px;margin-left:' + marginLeft + ';';
+        el.innerHTML = '<div class="bs-spine-edge"></div><span class="bs-spine-title">' + escHtml(book.title) + '</span>';
+
+        el.addEventListener('mouseenter', (function (b, spine) {
+          return function () {
+            bookTooltip.innerHTML = '<strong>' + escHtml(b.title) + '</strong><br>' + escHtml(b.note);
+            bookTooltip.style.display = 'block';
+            var rect = spine.getBoundingClientRect();
+            var tw   = bookTooltip.offsetWidth;
+            var th   = bookTooltip.offsetHeight;
+            var left = rect.left + rect.width / 2 - tw / 2;
+            var top  = rect.top - th - 8;
+            if (left < 6) left = 6;
+            if (left + tw > window.innerWidth - 6) left = window.innerWidth - tw - 6;
+            if (top < 6) top = rect.bottom + 8;
+            bookTooltip.style.left = left + 'px';
+            bookTooltip.style.top  = top  + 'px';
+          };
+        })(book, el));
+        el.addEventListener('mouseleave', function () {
+          bookTooltip.style.display = 'none';
+        });
+        el.addEventListener('click', (function (b, idx) {
+          return function () {
+            var stars = '';
+            var r = b.rating;
+            if (r === 6) {
+              for (var s = 0; s < 5; s++) {
+                stars += '<span class="bs-star-filled">&#9733;</span>';
+              }
+              stars += '<span class="bs-star-legendary">&#9733;</span>';
+            } else {
+              for (var s = 1; s <= 5; s++) {
+                if (r >= s) {
+                  stars += '<span class="bs-star-filled">&#9733;</span>';
+                } else if (r >= s - 0.5) {
+                  stars += '<span style="color:#f59e0b;opacity:0.6;">&#9734;</span>';
+                } else {
+                  stars += '<span class="bs-star-empty">&#9733;</span>';
+                }
+              }
+            }
+            var imgHtml = b.image ? '<img src="' + escHtml(b.image) + '" alt="' + escHtml(b.title) + '" style="width:90px;height:135px;object-fit:cover;border-radius:5px;float:left;margin:0 14px 8px 0;">' : '';
+            var clearfix = b.image ? '<div style="clear:both;"></div>' : '';
+            openPanel(
+              imgHtml +
+              '<p class="bs-panel-title">' + escHtml(b.title) + '</p>' +
+              '<p class="bs-panel-sub">' + escHtml(b.author) + '</p>' +
+              '<div class="bs-panel-stars">' + stars + '</div>' +
+              (b.rating === 6 ? '<p style="color:#f97316;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin:0 0 0.6rem;">Legendary Read</p>' : '') +
+              '<p class="bs-panel-note">'  + escHtml(b.note)   + '</p>' +
+              clearfix,
+              'book-' + idx
+            );
+          };
+        })(book, globalIdx));
+
+        booksDiv.appendChild(el);
       });
-      el.addEventListener('click', (function (b, idx) {
-        return function () {
-          var stars = '';
-          var r = b.rating;
-          if (r <= 5) {
-            for (var s = 0; s < 5; s++) {
-              stars += '<span class="' + (s < r ? 'bs-star-filled' : 'bs-star-empty') + '">&#9733;</span>';
-            }
-          } else {
-            for (var s = 0; s < 5; s++) {
-              stars += '<span class="bs-star-filled">&#9733;</span>';
-            }
-            stars += '<span class="bs-star-legendary">&#9733;</span>';
-          }
-          var legendaryLabel = b.rating === 6
-            ? '<div style="color:#f97316;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:0.5rem;">Legendary Read</div>'
-            : '';
-          var imgHtml = b.image ? '<img src="' + escHtml(b.image) + '" alt="' + escHtml(b.title) + '" style="width:90px;height:135px;object-fit:cover;border-radius:5px;float:left;margin:0 14px 8px 0;">' : '';
-          var clearfix = b.image ? '<div style="clear:both;"></div>' : '';
-          openPanel(
-            imgHtml +
-            '<p class="bs-panel-title">' + escHtml(b.title) + '</p>' +
-            '<div class="bs-panel-stars">' + stars + '</div>' +
-            legendaryLabel +
-            '<p class="bs-panel-note">'  + escHtml(b.note)   + '</p>' +
-            clearfix,
-            'book-' + idx
-          );
-        };
-      })(book, i));
-      shelfEl.appendChild(el);
-    });
+
+      var barDiv = document.createElement('div');
+      barDiv.className = 'bs-shelf-bar';
+
+      rowDiv.appendChild(booksDiv);
+      rowDiv.appendChild(barDiv);
+      shelfWrap.appendChild(rowDiv);
+    }
 
     TBR.forEach(function (book, i) {
       var rot = rotations[i % rotations.length];
