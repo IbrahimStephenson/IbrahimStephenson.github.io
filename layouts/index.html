@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ site.Language.Locale }}" class="hp"
   x-data
   :class="($store.darkMode.isDark() ? 'dark' : 'light') + ' hp'"
@@ -44,7 +44,7 @@
       }
 
       html.hp {
-        --hp-sidebar-w: 240px;
+        --hp-sidebar-w: 50vw;
         --hp-pad:       40px;
       }
 
@@ -550,7 +550,7 @@
 
       <h1 class="hp-name">{{ site.Params.author }}</h1>
       <p class="hp-role">Power Platform Developer</p>
-      <p class="hp-bio">Iâ€™m Ibrahim, a Power Platform Developer based in London. This is my corner of the internet. Somewhere to write about the things Iâ€™m building, the problems Iâ€™m solving, and whatever else is on my mind. Currently drowning in backlog. Sole internal Power Platform developer at a UK health and wellbeing charity, building and maintaining the Dynamics 365 systems that run NHS health programmes. Always down to talk about whatever, whenever. If you are looking for something to read and want to hear my opinion (that no one asked for) on the books i've read, then take a look at my library. Unfortuntely my real life Library is much smaller since i keep giving away books after i've read them, but maybe that's my love language.</p>
+      <p class="hp-bio">I’m Ibrahim, a Power Platform Developer based in London. This is my corner of the internet. Somewhere to write about the things I’m building, the problems I’m solving, and whatever else is on my mind. Currently drowning in backlog. Sole internal Power Platform developer at a UK health and wellbeing charity, building and maintaining the Dynamics 365 systems that run NHS health programmes. Always down to talk about whatever, whenever. If you are looking for something to read and want to hear my opinion (that no one asked for) on the books i've read, then take a look at my library. Unfortuntely my real life Library is much smaller since i keep giving away books after i've read them, but maybe that's my love language.</p>
 
       <div class="hp-status">
         <span class="hp-status-dot"></span>
@@ -570,7 +570,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           <span>My Library</span>
         </a>
-        <a href="/about/" class="hp-nav-item">
+        <a href="/about/me/" class="hp-nav-item">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>About</span>
         </a>
