@@ -1,5 +1,7 @@
-{{ $page := .Page }}
-{{ $newest := .Newest }}
+{{ $page := . }}
+{{ $allPosts := where site.RegularPages "Type" "posts" }}
+{{ $newest := index (sort $allPosts "Date" "desc") 0 }}
+
 <a class="relative card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30" href="{{ $page.RelPermalink }}">
   {{ if eq $page.Permalink $newest.Permalink }}
   <span class="post-new-badge">New</span>
