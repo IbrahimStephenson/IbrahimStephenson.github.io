@@ -2,3 +2,19 @@
     width: 60px;
     height: 60px;
 }
+
+.post-new-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  background: #2dd4bf;
+  color: #0d1f0d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  pointer-events: none;
+}

@@ -1,0 +1,61 @@
+{{ $page := .Page }}
+{{ $newest := .Newest }}
+<a class="relative card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30" href="{{ $page.RelPermalink }}">
+  {{ if eq $page.Permalink $newest.Permalink }}
+  <span class="post-new-badge">New</span>
+  {{ end }}
+
+  {{ if $page.Params.cover }}
+  <figure>
+    {{ with $page.Resources.Get $page.Params.cover }}
+    {{ if eq .MediaType.SubType "svg" }}
+      <img src="{{ .RelPermalink }}" alt="{{ $page.Title }}" />
+    {{ else }}
+      {{ $webp := .Resize (printf "%dx%d webp" .Width .Height) }}
+      <picture>
+        <source srcset="{{ $webp.RelPermalink }}" type="image/webp" />
+        <img src="{{ .RelPermalink }}" alt="{{ $page.Title }}" />
+      </picture>
+    {{ end }}
+    {{ else }}
+    <img src="{{ $page.Params.cover }}" alt="{{ $page.Title }}" />
+    {{ end }}
+  </figure>
+  {{ else if not site.Params.noDefaultSummaryCover }}
+  <figure>
+    {{ with resources.Get (printf "images/default%d.jpg" (index (seq 4 | shuffle) 0)) }}
+    {{ $webp := .Resize (printf "%dx%d webp" .Width .Height) }}
+    <picture>
+      <source srcset="{{ $webp.RelPermalink }}" type="image/webp" />
+      <img src="{{ .RelPermalink }}" alt="{{ $page.Title }}" />
+    </picture>
+    {{ end }}
+  </figure>
+  {{ end }}
+
+  <div class="card-body">
+    <h2 class="card-title">{{ $page.Title }}</h2>
+
+    <p class="date text-base-content/60">
+    {{ if site.Params.Experimental.jsDate }}
+      <span data-format="luxon">{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}</span>
+    {{ else }}
+      {{ $page.Date | time.Format "Monday, Jan 2, 2006" }}
+    {{ end }}
+    </p>
+
+    {{ or $page.Description ($page.Summary | emojify | safeHTML) }}
+
+    {{ $hasAuthor := or $page.Params.author site.Params.author }}
+    <div class="card-actions justify-between items-center mt-4">
+      {{ if $hasAuthor }}
+        {{ partial "author.html" (dict "Params" $page.Params "template" "summary") }}
+      {{ end }}
+
+      <div class="flex items-center">
+        <ion-icon name="time" class="mr-1"></ion-icon>
+        <span>{{ $page.ReadingTime }}{{ T "minuteRead" $page.ReadingTime }}</span>
+      </div>
+    </div>
+  </div>
+</a>

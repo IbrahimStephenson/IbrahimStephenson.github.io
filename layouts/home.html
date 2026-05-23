@@ -1,6 +1,7 @@
 {{ define "main"}}
 
 {{ $allPosts := where site.RegularPages "Type" "posts" }}
+{{ $newest := index (sort $allPosts "Date" "desc") 0 }}
 {{ $paginator := .Paginate $allPosts }}
 
 <div class="px-4 my-6">
@@ -47,7 +48,7 @@
 <div class="dream-grid opacity-0">
   {{ range $paginator.Pages }}
   <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
-    {{ .Render "summary" }}
+    {{ partial "posts/summary.html" (dict "Page" . "Newest" $newest) }}
   </div>
   {{ end }}
 </div>
