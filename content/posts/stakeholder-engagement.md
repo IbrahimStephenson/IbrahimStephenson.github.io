@@ -1,6 +1,6 @@
 ---
 title: "Why Stakeholder Engagement is Half the Job When You're the Only Developer"
-date: 2026-05-20
+date: 2026-04-11
 author: Ibrahim Stephenson
 categories:
   - Power Platform

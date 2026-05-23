@@ -1,6 +1,6 @@
 ---
 title: "Building a Self-Service Knowledge Portal That Runs Itself"
-date: 2026-05-20
+date: 2026-04-18
 author: Ibrahim Stephenson
 categories:
   - Power Platform

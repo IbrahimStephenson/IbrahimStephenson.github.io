@@ -1,6 +1,6 @@
 ---
 title: "Life Coach"
-date: 2026-05-21
+date: 2026-04-25
 author: Ibrahim Stephenson
 categories:
   - Rant

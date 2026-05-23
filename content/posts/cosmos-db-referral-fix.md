@@ -1,6 +1,6 @@
 ---
 title: "How I Fixed a Two-Year Data Bug That Was Costing Thousands Every Month"
-date: 2026-05-20
+date: 2026-04-04
 author: Ibrahim Stephenson
 categories:
   - Power Platform

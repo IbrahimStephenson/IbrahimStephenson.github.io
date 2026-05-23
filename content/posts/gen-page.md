@@ -1,6 +1,6 @@
 ---
 title: "I Rebuilt the Support Hub With Generative Pages and It's Not Even Close"
-date: 2026-05-21
+date: 2026-05-02
 author: Ibrahim Stephenson
 categories:
   - Power Platform

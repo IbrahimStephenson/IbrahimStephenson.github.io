@@ -1,6 +1,6 @@
 ---
 title: "Why We Ditched Microsoft Forms for Plumsail (And Haven't Looked Back)"
-date: 2026-05-19
+date: 2026-03-21
 author: Ibrahim Stephenson
 categories:
   - Power Platform

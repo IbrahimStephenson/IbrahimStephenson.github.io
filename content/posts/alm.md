@@ -1,6 +1,6 @@
 ---
 title: "How I Built a Proper ALM Pipeline for Power Platform (Starting From Chaos)"
-date: 2026-05-22
+date: 2026-05-16
 author: Ibrahim Stephenson
 categories:
   - Power Platform
