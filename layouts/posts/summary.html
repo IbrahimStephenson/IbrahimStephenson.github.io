@@ -1,10 +1,11 @@
 {{ $page := . }}
-{{ $allPosts := where site.RegularPages "Type" "posts" }}
-{{ $newest := index (sort $allPosts "Date" "desc") 0 }}
+{{ $isNewest := .Scratch.Get "isNewest" }}
 
-<a class="relative card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30" href="{{ $page.RelPermalink }}">
-  {{ if eq $page.Permalink $newest.Permalink }}
-  <span class="post-new-badge">New</span>
+<a class="card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30{{ if $isNewest }} post-latest-card{{ end }}" href="{{ $page.RelPermalink }}">
+  {{ if $isNewest }}
+  <div class="post-latest-bar">
+    <span class="post-latest-label">Latest Post</span>
+  </div>
   {{ end }}
 
   {{ if $page.Params.cover }}
@@ -48,12 +49,7 @@
 
     {{ or $page.Description ($page.Summary | emojify | safeHTML) }}
 
-    {{ $hasAuthor := or $page.Params.author site.Params.author }}
-    <div class="card-actions justify-between items-center mt-4">
-      {{ if $hasAuthor }}
-        {{ partial "author.html" (dict "Params" $page.Params "template" "summary") }}
-      {{ end }}
-
+    <div class="card-actions justify-end items-center mt-4">
       <div class="flex items-center">
         <ion-icon name="time" class="mr-1"></ion-icon>
         <span>{{ $page.ReadingTime }}{{ T "minuteRead" $page.ReadingTime }}</span>
