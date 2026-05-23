@@ -2,11 +2,6 @@
 {{ $isNewest := .Scratch.Get "isNewest" }}
 
 <a class="card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30{{ if $isNewest }} post-latest-card{{ end }}" href="{{ $page.RelPermalink }}">
-  {{ if $isNewest }}
-  <div class="post-latest-bar">
-    <span class="post-latest-label">Latest Post</span>
-  </div>
-  {{ end }}
 
   {{ if $page.Params.cover }}
   <figure>
@@ -37,6 +32,7 @@
   {{ end }}
 
   <div class="card-body">
+    {{ if $isNewest }}<span class="post-latest-label">Latest Post</span>{{ end }}
     <h2 class="card-title">{{ $page.Title }}</h2>
 
     <p class="date text-base-content/60">

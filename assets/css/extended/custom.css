@@ -4,17 +4,15 @@
 }
 
 .post-latest-card {
-  border-top: 4px solid #2dd4bf;
-}
-
-.post-latest-bar {
-  padding: 6px 0 4px 0;
+  border-top: 3px solid #2dd4bf;
 }
 
 .post-latest-label {
-  font-size: 11px;
+  display: inline-block;
+  margin-bottom: 6px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #2dd4bf;
 }
