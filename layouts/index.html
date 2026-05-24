@@ -36,7 +36,7 @@
 
       .hp-page {
         display: grid;
-        grid-template-columns: 1fr 380px;
+        grid-template-columns: 1fr 460px;
         grid-template-rows: 1fr auto;
         align-items: start;
         min-height: 100vh;
@@ -288,10 +288,10 @@
         grid-row: 1 / 3;
         border-left: 1px solid rgba(255,255,255,0.06);
         background: rgba(255,255,255,0.02);
-        padding: 2.5rem 2rem;
+        padding: 2.75rem 2.25rem;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 2.25rem;
         overflow-y: auto;
       }
       html[data-theme="emerald"] .hp-right {
@@ -300,19 +300,19 @@
       }
 
       .hp-panel-label {
-        font-size: 0.82rem;
+        font-size: 0.88rem;
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: #64748b;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
       }
 
       .hp-panel-card {
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 14px;
-        padding: 1.4rem 1.55rem;
+        border-radius: 16px;
+        padding: 1.6rem 1.75rem;
         text-decoration: none;
         color: inherit;
         display: block;
@@ -326,27 +326,27 @@
       html[data-theme="emerald"] .hp-panel-card:hover { border-color: rgba(5,150,105,0.3); }
 
       .hp-panel-tag {
-        font-size: 0.76rem;
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: #2dd4bf;
-        margin-bottom: 7px;
+        margin-bottom: 8px;
       }
       html[data-theme="emerald"] .hp-panel-tag { color: #059669; }
 
-      .hp-panel-title { font-size: 1.1rem; font-weight: 500; line-height: 1.45; margin-bottom: 6px; }
-      .hp-panel-sub { font-size: 0.94rem; color: #64748b; line-height: 1.6; }
+      .hp-panel-title { font-size: 1.22rem; font-weight: 500; line-height: 1.45; margin-bottom: 7px; }
+      .hp-panel-sub { font-size: 1rem; color: #64748b; line-height: 1.6; }
 
-      .hp-panel-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0; }
+      .hp-panel-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0.5rem 0; }
       html[data-theme="emerald"] .hp-panel-divider { border-top-color: rgba(0,0,0,0.07); }
 
       .hp-working-card {
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
         border-left: 2px solid #f59e0b;
-        border-radius: 14px;
-        padding: 1.4rem 1.55rem;
+        border-radius: 16px;
+        padding: 1.6rem 1.75rem;
       }
       html[data-theme="emerald"] .hp-working-card {
         background: rgba(0,0,0,0.02);
@@ -354,19 +354,19 @@
         border-left-color: #f59e0b;
       }
       .hp-working-tag {
-        font-size: 0.76rem;
+        font-size: 0.8rem;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: #f59e0b;
-        margin-bottom: 7px;
+        margin-bottom: 8px;
       }
 
       /* Cover image classes */
       .hp-panel-book-row { display: flex; gap: 0.85rem; align-items: flex-start; margin-top: 0.25rem; }
-      .hp-panel-book-cover { width: 52px; height: 76px; object-fit: cover; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
+      .hp-panel-book-cover { width: 70px; height: 102px; object-fit: cover; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
       html[data-theme="emerald"] .hp-panel-book-cover { border-color: rgba(0,0,0,0.1); }
-      .hp-panel-post-cover { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin: 0.5rem 0 0.6rem; border: 1px solid rgba(255,255,255,0.08); }
+      .hp-panel-post-cover { width: 100%; height: 148px; object-fit: cover; border-radius: 8px; margin: 0.5rem 0 0.6rem; border: 1px solid rgba(255,255,255,0.08); }
       html[data-theme="emerald"] .hp-panel-post-cover { border-color: rgba(0,0,0,0.08); }
       .hp-strip-post-cover { width: 90px; align-self: stretch; min-height: 80px; max-height: 130px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
       html[data-theme="emerald"] .hp-strip-post-cover { border-color: rgba(0,0,0,0.08); }
