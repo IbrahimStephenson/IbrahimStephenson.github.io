@@ -20,7 +20,7 @@ At my company, "the Datascraper" was a thing of legend, believed to have been lo
 
 ## The Original
 
-Staff were manually inputting data from PDFs received from GPs that contained patient data into Dynamics. (TW) *Manually*.
+Staff were inputting data from PDFs received from GPs that contained patient data into Dynamics. **(TW) Manually.**
 
 Then one of my previous colleagues created the Datascraper 1.0. This essentially took information from PDFs and uploaded them as referrals into the database. At the time, revolutionary, groundbreaking. Then the cracks started to show.
 
@@ -54,8 +54,7 @@ However, this is where I found my second issue. A lot of these documents were no
 
 So I added a second page: a PDF converter. This allowed staff to input as many as 20 .docx files at once, click convert, and in a short span of time the documents would be converted into PDFs, downloaded locally onto the device. Which can then be uploaded onto the Datascraper page.
 
-However the limitation with generative page is each change needed after the initial prompt rewrote the entire page. This took way too long, so I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. I described the changes I wanted. Claude modified the React component directly. Loading states, error handling, form resets. Done. 
-
+However the limitation with generative page is each change needed after the initial prompt rewrote the entire page. This took way too long, so I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. I described the changes I wanted. Claude modified the React component directly. Loading states, error handling, form resets. Done.
 
 The Datascraper was a good solution. It just had a ceiling. This one does not.
 

@@ -14,80 +14,52 @@ draft: false
 cover: /images/ALM.png
 ---
 
-Three environments. No pipeline. Everything unmanaged. DEV, UAT, and PROD all existed, but nobody could tell you with confidence what was in each one or how they had diverged. And it had been that way for years.
+I used to dread our sprint deployments. Every 2 weeks we would deploy our solutions, individually, unmanaged. Chaotic. One person's change overwrote someone else's. Hotfixes, redeployments, environment restorations. It was chaos. Unmanaged chaos.
 
-This is how I fixed it, and how painful that process actually was.
+This is how I fixed it, and what it cost me.
 
 <!--more-->
 
-## What Unmanaged Actually Means
+## Quick Backstory
 
-If you have not dealt with this before, here is the problem with an unmanaged Power Platform environment.
+It wasn't always this bad. Believe it or not, at one point we had a working managed ALM pipeline. Running on Azure DevOps through each environment, source control, the works. Then there were redundancies, inadequate documentation. Pressing business needs meant attention was forced elsewhere. Resources stretched thin. A new offshore team who had their own plan in mind.
 
-In an unmanaged solution, every component is editable in every environment. Someone can open PROD, tweak a flow, save it, and nobody knows it happened. There is no deployment process. There is no audit trail. DEV, UAT, and PROD drift apart gradually until they are three different systems pretending to be one.
+Over time the pipeline kept failing. We didn't have the resources to fix it in time, we just had to keep moving. Deploying unmanaged, one solution at a time. At first we thought it was recoverable. It's fine, I'll make an unmanaged change this time but next time I'll do it properly. Spoiler: there was no next time. This was how it was, for a long while.
 
-When I started properly investigating ThriveTribe's environments, there was a 5,634 component gap between DEV and PROD. Not a typo. Over five thousand components that existed in one place and not the other, with no record of how or when they diverged. Manually reconciling that was never going to work. PROD became the source of truth by necessity, because it was the only environment we knew was definitely correct.
+Then I got sick of the fear. I took ownership, something I should have done a long time ago. But just because I had a passion to fix it doesn't mean there was a business need, doesn't mean there was time to. I still had pressing developments that had to be shipped, deadlines I had to meet. So what did I do?
+
+I worked weekends. Off hours. I took it upon myself to fix this, myself.
 
 ## The Plan
 
-The goal was a full managed solution pipeline. DEV stays unmanaged so developers can work freely. UAT and PROD get managed solutions only, locked down, no direct edits. Every change goes through the pipeline. That is the standard.
+I needed a plan first. So I spoke with the best person in the industry. Parvez. If you don't know who he is, he is the ALM guru for Power Platform. I was fortunate enough that through my connections I could have a quick call with him. I explained my issue and he gave me a solution.
 
-The migration itself was a seven-phase operation planned across two nights. Phase zero was backups of everything before touching anything. Then consolidating PROD into a single exportable solution, getting DEV and UAT to parity, deploying managed to UAT, deploying managed to PROD, and finally reimporting any in-progress DEV work that had been saved aside.
+Step 1: locate one source of truth. One environment the rest has to reflect.
+Step 2: get rid of deprecated flows, components, apps. Anything that does not have a purpose has to go. Clean it up.
+Step 3: pipeline and source control.
 
-The plan was solid. The execution was a different story.
-
-## Where It Started Going Wrong
-
-The first serious blocker was a third-party PCF control called IKL TextSMS4Dynamics. It had been installed at some point, used, and then effectively abandoned. But it was still baked into the solution XML. Every import attempt into UAT failed because the IKL dependency was declared in the solution but the IKL managed solution was not present in the target environment.
-
-So I opened the solution ZIP and started doing XML surgery. Grepped through customizations.xml and solution.xml hunting for every reference to IKL, TextSMS, LiveChat. Removed the PCF control declarations. Removed the workflow registrations. Repackaged. Tried again.
-
-Still failing. Because canvas app files are also ZIPs inside the main ZIP, and the binary grep had flagged false positives on them while the real references were hiding in the XML. Round two of surgery. Eventually got it clean.
-
-Then a completely different error appeared.
-
-## The DateTime Behaviour Problem
-
-This one genuinely surprised me. The import failed because a field called ttd_startdate had been defined in the solution XML as UserLocal datetime, but the target environment already had it as DateOnly. A formula column called ttd_joinabledate had been built against the DateOnly version and was blocking the import from changing the field behaviour.
-
-Dataverse does not let you change DateTime behaviour on a column that already has dependents through the normal UI. It just refuses. The only way through was more XML surgery: find every instance of ttd_startdate across multiple tables in customizations.xml, correct the Behavior values to match what the environment expected, add the CanChangeDateTimeBehavior flag to prevent future conflicts, repackage.
-
-That worked. Then I got a 403 on a Cosmos DB connection reference.
-
-## Connection References and the Settings File
-
-Connection references are one of the most annoying parts of Power Platform ALM. Each environment has its own connections and the solution cannot hardcode them. The standard approach is a deploymentSettings.json file that maps each connection reference in the solution to the correct connection ID in the target environment.
-
-I generated the settings file, mapped everything across, ran the import. The Cosmos DB connection kept throwing a permissions error because the connection in UAT was owned by a personal account rather than a service account. The import pipeline was running as a service principal that did not have access to someone's personal Cosmos connection.
-
-The fix was consolidating connection references across the environment. Because doing it flow by flow manually was not realistic given the volume of flows, I built a PowerShell script using a dedicated Azure app registration. Even that took several attempts: smart quote encoding errors in the script file, a missing AcceptLicense parameter, an AADSTS error when the Azure CLI client ID was blocked by the tenant. The resolution was creating a dedicated app registration named ThriveTribe-PowerShell-Script with a native client redirect URI and Dynamics CRM delegated permission.
+And so that's exactly what I did. It was not easy. It was in fact the single most painful thing I've done. Scanning through hundreds of flows, components, apps. Pieces of work half finished. Trying to understand the purpose of it all. Collating a massive document with all my findings, each flow's purpose explained. If it had no purpose it had no place here and had to go. It was far from easy, but it was more than necessary. We needed a fresh start. I needed a fresh start.
 
 ## The Layered Architecture
 
-I also redesigned the solution structure during all of this. The monolithic single-solution approach was part of why things had gotten messy. One solution containing everything means a failed import rolls back everything.
+Once I was able to get rid of all the junk and bloat in our PROD environment, came the time to clean up the rest. One fell sweep.
 
-The new architecture is four layers. Layer zero is Components: plugins and PCF custom controls that everything else depends on. Layer one is Data: tables, columns, relationships, views, forms, option sets. Layer two is Flows: Power Automate flows and environment variables. Layer three is UI: canvas apps, model-driven apps, web resources.
+I created 4 core solutions. One for Components, one for Data, one for Flows, and one for UI. These 4 solutions contained all our customisations in PROD. I took this and passed it back into UAT.
 
-The reason for the split is practical. If I deploy a flow change I should not have to touch the UI layer. If a UI deployment fails it should not roll back unrelated data changes. Each layer has its own solution, its own versioning, its own independent deployment sequence.
+It took a couple of hours and a few errors. Blocked by a third-party PCF that did not exist anywhere but was referenced in our main lead table. I had to request a single solution zip from the company that contained this component, after needing to explain the situation and a long unnecessary back and forth. Once I had this, there was another error. A field called startdate was defined as UserLocal datetime, but the UAT environment had it as DateOnly. Then a formula column called joinabledate had been built against the DateOnly version and was blocking the import. Since Dataverse doesn't let you change the DateTime behaviour on a column that has dependencies, the only way through was XML surgery. Opening the solution zip and locating every instance of startdate across multiple tables, correcting the behaviour values to match what the environment expected.
 
-## The Azure DevOps Pipeline
+Once I was finally able to import into UAT, I did the same thing for DEV. After a weekend of testing and cross-referencing I was certain the 3 environments could be triplets. They were identical.
 
-Once the environments were stable I built the actual CI/CD pipeline in Azure DevOps.
+## The Pipeline
 
-Two YAML pipelines. The export pipeline runs against DEV: it installs PAC CLI, exports the unpacked solution XML, and commits it to Azure Repos using a System.AccessToken. The deployment pipeline takes that committed XML, packs it as managed, and imports it to UAT with force overwrite.
+I built this pipeline using Azure DevOps. My reason was simple. There was more documentation online for it, more resources for me to reference and learn from. So it was a bit of a no brainer.
 
-The Entra ID app registration for the service connection is named ThriveTribe-DevOps-SP. Two Power Platform service connections in Azure DevOps, one for DEV and one for UAT. Connection references are handled via deploymentSettings.json so nothing is hardcoded to environment credentials. Environment variables handle any configuration that differs between environments.
+It ran from 2 YAML pipelines. The export pipeline runs against DEV: it installs PAC CLI, exports the solution XML, and commits it to Azure Repos. The deployment pipeline takes the XML, packs it as managed, and imports it to UAT with force overwrite.
 
-The result is that managed solutions can only reach UAT or PROD through the pipeline. No manual imports. No one making changes directly in production at midnight and hoping for the best.
+No more manual imports. Solutions go to UAT and PROD via the pipeline only. No one is making changes to production anymore.
 
 ## What It Actually Took
 
-I am not going to pretend this was clean. It took multiple sessions of XML surgery, several rounds of debugging errors I had never seen before, a custom PowerShell script with its own debugging journey, and more ZIP file repacking than I care to count.
-
-The before and after is stark. Three environments drifting apart with no audit trail became a layered architecture, a proper deployment pipeline, connection references consolidated, and every change going through version control before it touches a managed environment.
-
-If you are building on Power Platform at any serious scale and you are still working unmanaged, this is the migration worth doing. Just set aside more time than you think you need.
+Now I can sit back and enjoy our retros, our end of sprint ceremonies, our reviews. I can feel confident our deployments will work, the system will behave as expected. And better than everything, I can sleep peacefully every other Thursday.
 
 ---
-
-*Built with PAC CLI, Azure DevOps YAML pipelines, Entra ID app registration, and far too many hours in a text editor looking at solution XML.*
