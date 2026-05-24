@@ -263,9 +263,9 @@
       }
 
       .hp-strip-book-thumb {
-        width: 56px;
-        height: 78px;
-        border-radius: 3px;
+        width: 72px;
+        height: 100px;
+        border-radius: 5px;
         object-fit: cover;
         border: 1px solid rgba(255,255,255,0.08);
         flex-shrink: 0;
@@ -361,6 +361,17 @@
         color: #f59e0b;
         margin-bottom: 7px;
       }
+
+      /* Cover image classes */
+      .hp-panel-book-row { display: flex; gap: 0.85rem; align-items: flex-start; margin-top: 0.25rem; }
+      .hp-panel-book-cover { width: 52px; height: 76px; object-fit: cover; border-radius: 4px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
+      html[data-theme="emerald"] .hp-panel-book-cover { border-color: rgba(0,0,0,0.1); }
+      .hp-panel-post-cover { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin: 0.5rem 0 0.6rem; border: 1px solid rgba(255,255,255,0.08); }
+      html[data-theme="emerald"] .hp-panel-post-cover { border-color: rgba(0,0,0,0.08); }
+      .hp-strip-post-cover { width: 90px; align-self: stretch; min-height: 80px; max-height: 130px; object-fit: cover; border-radius: 8px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
+      html[data-theme="emerald"] .hp-strip-post-cover { border-color: rgba(0,0,0,0.08); }
+      .hp-strip-book-cover { width: 72px; height: 100px; object-fit: cover; border-radius: 5px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.1); }
+      html[data-theme="emerald"] .hp-strip-book-cover { border-color: rgba(0,0,0,0.1); }
 
       /* Utility classes replacing inline styles */
       .hp-avatar-fallback {
@@ -493,6 +504,9 @@
 
         {{ with index $sorted 0 }}
         <a href="{{ .RelPermalink }}" class="hp-strip-card hp-strip-card-latest">
+          {{ with .Params.cover }}
+          <img src="{{ . }}" alt="{{ $.Title }}" class="hp-strip-post-cover" onerror="this.style.display='none'">
+          {{ end }}
           <div class="hp-strip-body">
             <div class="hp-strip-label">Latest post</div>
             <div class="hp-strip-title">{{ .Title }}</div>
@@ -502,15 +516,21 @@
         </a>
         {{ end }}
 
+        {{ with site.Params.book }}
         <div class="hp-strip-card">
-          <img src="/images/books/poppy-war.jpg" alt="The Poppy War" class="hp-strip-book-thumb" onerror="this.style.display='none'">
+          {{ with .cover }}
+          <img src="{{ . }}" alt="{{ $.Site.Params.book.title }}" class="hp-strip-book-cover" onerror="this.style.display='none'">
+          {{ else }}
+          <div class="hp-strip-book-thumb">📖</div>
+          {{ end }}
           <div class="hp-strip-body">
             <div class="hp-strip-label">Currently reading</div>
-            <div class="hp-strip-title">The Poppy War</div>
-            <div class="hp-strip-meta">R.F. Kuang</div>
-            <div class="hp-strip-book-note">Speechless.</div>
+            <div class="hp-strip-title">{{ .title }}</div>
+            <div class="hp-strip-meta">{{ .author }}</div>
+            {{ with .note }}<div class="hp-strip-book-note">{{ . }}</div>{{ end }}
           </div>
         </div>
+        {{ end }}
 
       </div><!-- /.hp-bottom-strip -->
 
@@ -521,8 +541,18 @@
           <div class="hp-panel-label">Best book i've read to date</div>
           <div class="hp-panel-card">
             <div class="hp-panel-tag">Book</div>
-            <div class="hp-panel-title">The Sword of Kaigen</div>
-            <div class="hp-panel-sub">You won't be the same after reading this.</div>
+            <div class="hp-panel-book-row">
+              <img
+                src="/images/books/Sword of Kaigen.jpg"
+                alt="The Sword of Kaigen cover"
+                class="hp-panel-book-cover"
+                onerror="this.style.display='none'"
+              >
+              <div>
+                <div class="hp-panel-title">The Sword of Kaigen</div>
+                <div class="hp-panel-sub">You won't be the same after reading this.</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -530,11 +560,22 @@
 
         <div>
           <div class="hp-panel-label">Most read blog post</div>
-          <a href="/posts/datascraper/" class="hp-panel-card">
+          {{ $datascraper := "" }}
+          {{ range where site.RegularPages "Type" "posts" }}
+            {{ if or (eq .Title "The Datascraper") (strings.Contains .File.BaseFileName "datascraper") }}
+              {{ $datascraper = . }}
+            {{ end }}
+          {{ end }}
+          {{ with $datascraper }}
+          <a href="{{ .RelPermalink }}" class="hp-panel-card">
             <div class="hp-panel-tag">Post</div>
-            <div class="hp-panel-title">The Datascraper</div>
+            {{ with .Params.cover }}
+            <img src="{{ . }}" alt="The Datascraper" class="hp-panel-post-cover" onerror="this.style.display='none'">
+            {{ end }}
+            <div class="hp-panel-title">{{ .Title }}</div>
             <div class="hp-panel-sub">Still quite proud of this solution.</div>
           </a>
+          {{ end }}
         </div>
 
         <hr class="hp-panel-divider">

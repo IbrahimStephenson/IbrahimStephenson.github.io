@@ -31,3 +31,9 @@ buildFuture = true
   linkedin = { href = "https://www.linkedin.com/in/ibrahimstephenson", target = "_blank", icon = "logo-linkedin", title = "LinkedIn" }
   github = { href = "https://github.com/IbrahimStephenson", target = "_blank", icon = "logo-github", title = "GitHub" }
   email = { href = "mailto:Ibrahimstephenson@gmail.com?subject=Portfolio%20Enquiry", icon = "mail", title = "Contact Me" }
+
+[params.book]
+  title = "The Poppy War"
+  author = "R.F. Kuang"
+  note = "Speechless."
+  cover = "/images/books/poppy-war.jpg"
