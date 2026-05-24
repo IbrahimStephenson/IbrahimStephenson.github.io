@@ -29,108 +29,143 @@
 
     <style>
       /* ============================================================
-         THEME TOKENS
-         ============================================================ */
-
-      :root,
-      html[data-theme="forest"] {
-        --c-accent:        #2dd4bf;
-        --c-accent-dim:    rgba(45, 212, 191, 0.08);
-        --c-accent-border: rgba(45, 212, 191, 0.22);
-        --c-text:          #e2e8f0;
-        --c-text-muted:    #64748b;
-        --c-border:        rgba(255, 255, 255, 0.07);
-        --c-card:          rgba(255, 255, 255, 0.03);
-        --c-aside-bg:      rgba(255, 255, 255, 0.02);
-        --c-aside-border:  rgba(255, 255, 255, 0.06);
-      }
-
-      html[data-theme="emerald"] {
-        --c-accent:        #059669;
-        --c-accent-dim:    rgba(5, 150, 105, 0.07);
-        --c-accent-border: rgba(5, 150, 105, 0.3);
-        --c-text:          #1e293b;
-        --c-text-muted:    #64748b;
-        --c-border:        rgba(0, 0, 0, 0.09);
-        --c-card:          rgba(0, 0, 0, 0.02);
-        --c-aside-bg:      rgba(0, 0, 0, 0.015);
-        --c-aside-border:  rgba(0, 0, 0, 0.08);
-      }
-
-      /* ============================================================
-         PAGE LAYOUT
+         GRID LAYOUT
          ============================================================ */
 
       body { margin: 0; }
 
       .hp-page {
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 220px;
+        grid-template-rows: auto 1fr;
         min-height: 100vh;
         font-family: system-ui, -apple-system, sans-serif;
       }
 
       /* ============================================================
-         LEFT HERO
+         TOP STRIP
          ============================================================ */
 
-      .hp-hero {
+      .hp-top-strip {
+        grid-column: 1;
+        grid-row: 1;
+        display: flex;
+        gap: 1rem;
+        padding: 1.5rem 2rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+
+      html[data-theme="emerald"] .hp-top-strip {
+        border-bottom-color: rgba(0,0,0,0.07);
+      }
+
+      .hp-strip-card {
         flex: 1;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 0.9rem 1.1rem;
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color 0.15s;
+      }
+      html[data-theme="emerald"] .hp-strip-card {
+        background: rgba(0,0,0,0.02);
+        border-color: rgba(0,0,0,0.08);
+      }
+      .hp-strip-card:hover { border-color: rgba(45,212,191,0.35); color: inherit; text-decoration: none; }
+      html[data-theme="emerald"] .hp-strip-card:hover { border-color: rgba(5,150,105,0.35); }
+      .hp-strip-card-latest { border-top: 2px solid #2dd4bf; }
+      html[data-theme="emerald"] .hp-strip-card-latest { border-top-color: #059669; }
+
+      .hp-strip-label {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #2dd4bf;
+        margin-bottom: 4px;
+      }
+      html[data-theme="emerald"] .hp-strip-label { color: #059669; }
+
+      .hp-strip-title {
+        font-size: 0.85rem;
+        font-weight: 500;
+        line-height: 1.35;
+      }
+
+      .hp-strip-meta {
+        font-size: 0.72rem;
+        color: #64748b;
+        margin-top: 5px;
+      }
+
+      .hp-strip-book-thumb {
+        width: 32px;
+        height: 46px;
+        border-radius: 3px;
+        object-fit: cover;
+        border: 1px solid rgba(255,255,255,0.08);
+        flex-shrink: 0;
+      }
+
+      .hp-strip-book-note {
+        font-size: 0.72rem;
+        color: #2dd4bf;
+        font-style: italic;
+        margin-top: 3px;
+      }
+      html[data-theme="emerald"] .hp-strip-book-note { color: #059669; }
+
+      /* ============================================================
+         CENTRE
+         ============================================================ */
+
+      .hp-centre {
+        grid-column: 1;
+        grid-row: 2;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 3rem 2.5rem;
-        gap: 1.1rem;
+        padding: 2rem 2rem 3rem;
+        gap: 1rem;
       }
 
       .hp-avatar {
-        width: 72px;
-        height: 72px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         object-fit: cover;
-        border: 2px solid var(--c-accent);
+        border: 2px solid #2dd4bf;
         display: block;
       }
-      .hp-avatar-fallback {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        border: 2px solid var(--c-accent);
-        background: var(--c-accent-dim);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-        color: var(--c-accent);
-        font-weight: 700;
-      }
+      html[data-theme="emerald"] .hp-avatar { border-color: #059669; }
 
-      .hp-identity {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.35rem;
-      }
       .hp-name {
-        font-size: 1.35rem;
+        font-size: 1.5rem;
         font-weight: 600;
-        color: var(--c-text);
+        text-align: center;
         margin: 0;
       }
       .hp-role {
-        font-size: 0.68rem;
+        font-size: 0.7rem;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: var(--c-accent);
-        margin: 0;
+        color: #2dd4bf;
+        margin: 4px 0 0;
       }
+      html[data-theme="emerald"] .hp-role { color: #059669; }
+
       .hp-bio {
-        font-size: 0.83rem;
-        color: var(--c-text-muted);
+        font-size: 0.875rem;
+        color: #64748b;
         line-height: 1.65;
-        max-width: 260px;
         text-align: center;
+        max-width: 300px;
         margin: 0;
       }
 
@@ -138,198 +173,221 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        background: var(--c-accent-dim);
-        border: 1px solid var(--c-accent-border);
+        background: rgba(45,212,191,0.08);
+        border: 1px solid rgba(45,212,191,0.2);
         border-radius: 999px;
-        padding: 4px 14px;
-        font-size: 0.72rem;
-        color: var(--c-accent);
+        padding: 5px 16px;
+        font-size: 0.75rem;
+        color: #2dd4bf;
+      }
+      html[data-theme="emerald"] .hp-pill {
+        background: rgba(5,150,105,0.07);
+        border-color: rgba(5,150,105,0.2);
+        color: #059669;
       }
       .hp-pill-dot {
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: var(--c-accent);
+        background: #2dd4bf;
         animation: hpPulse 2s infinite;
         flex-shrink: 0;
       }
-      @keyframes hpPulse {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0.25; }
-      }
+      html[data-theme="emerald"] .hp-pill-dot { background: #059669; }
+      @keyframes hpPulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
-      /* ============================================================
-         MENU
-         ============================================================ */
-
+      /* Menu */
       .hp-menu {
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 7px;
         width: 100%;
-        max-width: 320px;
+        max-width: 340px;
       }
 
       .hp-menu-item {
         display: flex;
         align-items: center;
         gap: 14px;
-        padding: 12px 16px;
+        padding: 13px 18px;
         border-radius: 12px;
-        border: 1px solid var(--c-border);
-        background: var(--c-card);
+        border: 1px solid rgba(255,255,255,0.07);
+        background: rgba(255,255,255,0.03);
         text-decoration: none;
         color: inherit;
         transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
       }
+      html[data-theme="emerald"] .hp-menu-item {
+        border-color: rgba(0,0,0,0.07);
+        background: rgba(0,0,0,0.02);
+      }
       .hp-menu-item:hover {
-        border-color: var(--c-accent-border);
-        background: var(--c-accent-dim);
+        border-color: rgba(45,212,191,0.4);
+        background: rgba(45,212,191,0.06);
         transform: translateX(3px);
         color: inherit;
         text-decoration: none;
       }
-      .hp-menu-icon {
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-        color: var(--c-text-muted);
-        transition: color 0.18s;
+      html[data-theme="emerald"] .hp-menu-item:hover {
+        border-color: rgba(5,150,105,0.4);
+        background: rgba(5,150,105,0.05);
       }
-      .hp-menu-item:hover .hp-menu-icon { color: var(--c-accent); }
 
-      .hp-menu-text {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        flex: 1;
-        min-width: 0;
-      }
-      .hp-menu-label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--c-text);
-        line-height: 1;
-      }
-      .hp-menu-sub {
-        font-size: 0.72rem;
-        color: var(--c-text-muted);
-        line-height: 1;
-        transition: color 0.18s;
-      }
-      .hp-menu-item:hover .hp-menu-sub { color: var(--c-accent); opacity: 0.8; }
+      .hp-menu-icon { width: 18px; height: 18px; flex-shrink: 0; color: #64748b; transition: color 0.18s; }
+      .hp-menu-item:hover .hp-menu-icon { color: #2dd4bf; }
+      html[data-theme="emerald"] .hp-menu-item:hover .hp-menu-icon { color: #059669; }
+
+      .hp-menu-label { font-size: 0.92rem; font-weight: 500; line-height: 1; }
+      .hp-menu-sub { font-size: 0.73rem; color: #64748b; margin-top: 2px; transition: color 0.18s; }
+      .hp-menu-item:hover .hp-menu-sub { color: rgba(45,212,191,0.7); }
+      html[data-theme="emerald"] .hp-menu-item:hover .hp-menu-sub { color: rgba(5,150,105,0.8); }
 
       .hp-menu-arrow {
         width: 14px;
         height: 14px;
         flex-shrink: 0;
-        color: var(--c-text-muted);
+        color: #64748b;
+        margin-left: auto;
         transition: color 0.18s, transform 0.18s;
       }
-      .hp-menu-item:hover .hp-menu-arrow {
-        color: var(--c-accent);
-        transform: translateX(2px);
-      }
+      .hp-menu-item:hover .hp-menu-arrow { color: #2dd4bf; transform: translateX(2px); }
+      html[data-theme="emerald"] .hp-menu-item:hover .hp-menu-arrow { color: #059669; }
 
-      /* ============================================================
-         SOCIAL ICONS
-         ============================================================ */
-
-      .hp-socials {
-        display: flex;
-        gap: 8px;
-        margin-top: 0.25rem;
-      }
+      /* Socials */
+      .hp-socials { display: flex; gap: 8px; margin-top: 0.25rem; }
       .hp-social {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         border-radius: 8px;
-        border: 1px solid var(--c-border);
-        background: var(--c-card);
+        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.03);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--c-text-muted);
+        color: #64748b;
         text-decoration: none;
         transition: border-color 0.15s, color 0.15s;
       }
-      .hp-social:hover { border-color: var(--c-accent); color: var(--c-accent); }
+      html[data-theme="emerald"] .hp-social {
+        border-color: rgba(0,0,0,0.08);
+        background: rgba(0,0,0,0.02);
+      }
+      .hp-social:hover { border-color: #2dd4bf; color: #2dd4bf; }
+      html[data-theme="emerald"] .hp-social:hover { border-color: #059669; color: #059669; }
 
       /* ============================================================
-         RIGHT ASIDE
+         RIGHT PANEL
          ============================================================ */
 
-      .hp-aside {
-        width: 240px;
-        flex-shrink: 0;
-        border-left: 1px solid var(--c-aside-border);
-        background: var(--c-aside-bg);
-        padding: 2rem 1.25rem;
+      .hp-right {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        border-left: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.02);
+        padding: 1.5rem 1.1rem;
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.1rem;
         overflow-y: auto;
       }
-
-      .hp-aside-label {
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--c-text-muted);
-        margin: 0;
+      html[data-theme="emerald"] .hp-right {
+        border-left-color: rgba(0,0,0,0.07);
+        background: rgba(0,0,0,0.015);
       }
 
-      .hp-post-card {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        background: var(--c-card);
-        border: 1px solid var(--c-border);
+      .hp-panel-label {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #64748b;
+        margin-bottom: 6px;
+      }
+
+      .hp-panel-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
         border-radius: 10px;
-        padding: 0.7rem 0.85rem;
+        padding: 0.75rem 0.85rem;
         text-decoration: none;
         color: inherit;
+        display: block;
         transition: border-color 0.15s;
       }
-      .hp-post-card:hover { border-color: var(--c-accent-border); color: inherit; text-decoration: none; }
-      .hp-post-latest { border-top: 2px solid var(--c-accent); }
+      html[data-theme="emerald"] .hp-panel-card {
+        background: rgba(0,0,0,0.02);
+        border-color: rgba(0,0,0,0.08);
+      }
+      .hp-panel-card:hover { border-color: rgba(45,212,191,0.3); color: inherit; text-decoration: none; }
+      html[data-theme="emerald"] .hp-panel-card:hover { border-color: rgba(5,150,105,0.3); }
 
-      .hp-post-tag         { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-accent); }
-      .hp-post-tag-personal { color: #fbbf24; }
-      .hp-post-tag-muted    { color: var(--c-text-muted); }
+      .hp-panel-tag {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #2dd4bf;
+        margin-bottom: 4px;
+      }
+      html[data-theme="emerald"] .hp-panel-tag { color: #059669; }
 
-      .hp-post-title { font-size: 0.8rem; font-weight: 500; color: var(--c-text); line-height: 1.35; }
-      .hp-post-meta  { display: flex; justify-content: space-between; font-size: 0.7rem; color: var(--c-text-muted); margin-top: 4px; }
+      .hp-panel-title { font-size: 0.8rem; font-weight: 500; line-height: 1.35; margin-bottom: 3px; }
+      .hp-panel-sub { font-size: 0.72rem; color: #64748b; line-height: 1.4; }
 
-      .hp-view-all { font-size: 0.72rem; color: var(--c-text-muted); text-decoration: none; transition: color 0.15s; }
-      .hp-view-all:hover { color: var(--c-accent); }
+      .hp-panel-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0; }
+      html[data-theme="emerald"] .hp-panel-divider { border-top-color: rgba(0,0,0,0.07); }
 
-      .hp-divider { border: none; border-top: 1px solid var(--c-aside-border); margin: 0; }
-
-      .hp-reading-card { background: var(--c-card); border: 1px solid var(--c-border); border-radius: 10px; padding: 0.7rem 0.85rem; }
-      .hp-reading-inner { display: flex; gap: 10px; align-items: flex-start; }
-      .hp-book-thumb  { width: 30px; height: 44px; border-radius: 3px; object-fit: cover; border: 1px solid var(--c-border); flex-shrink: 0; }
-      .hp-book-title  { font-size: 0.8rem; font-weight: 500; color: var(--c-text); line-height: 1.3; }
-      .hp-book-author { font-size: 0.7rem; color: var(--c-text-muted); margin-top: 2px; }
-      .hp-book-note   { font-size: 0.7rem; color: var(--c-accent); font-style: italic; margin-top: 2px; }
+      .hp-working-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-left: 2px solid #f59e0b;
+        border-radius: 10px;
+        padding: 0.75rem 0.85rem;
+      }
+      html[data-theme="emerald"] .hp-working-card {
+        background: rgba(0,0,0,0.02);
+        border-color: rgba(0,0,0,0.08);
+        border-left-color: #f59e0b;
+      }
+      .hp-working-tag {
+        font-size: 0.62rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #f59e0b;
+        margin-bottom: 4px;
+      }
 
       /* ============================================================
          MOBILE
          ============================================================ */
 
       @media (max-width: 768px) {
-        .hp-page { flex-direction: column; }
-        .hp-aside { width: 100%; border-left: none; border-top: 1px solid var(--c-aside-border); box-sizing: border-box; }
-        .hp-hero  { padding: 2rem 1.5rem; }
-        .hp-menu  { max-width: 100%; }
+        .hp-page {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
+        }
+        .hp-top-strip { flex-direction: column; padding: 1rem; }
+        .hp-right {
+          grid-column: 1;
+          grid-row: 3;
+          border-left: none;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+        html[data-theme="emerald"] .hp-right { border-top-color: rgba(0,0,0,0.07); }
+        .hp-right > div { flex: 1; min-width: 140px; }
+        .hp-centre { padding: 1.5rem; }
+        .hp-menu { max-width: 100%; }
       }
     </style>
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.1/dist/cdn.min.js" integrity="sha256-Rmqrc5SKeSLTSnQ9shSKWmJco1ks8c1hLI8UG2Np03M=" crossorigin="anonymous"></script>
   </head>
 
-  <body>
+  <body x-data="{ flip: false }">
     {{ partial "nav.html" . }}
 
     {{ $allPosts := where site.RegularPages "Type" "posts" }}
@@ -337,16 +395,42 @@
 
     <div class="hp-page">
 
-      <!-- LEFT: profile + menu -->
-      <div class="hp-hero">
+      <!-- TOP STRIP -->
+      <div class="hp-top-strip">
+
+        {{ with index $sorted 0 }}
+        <a href="{{ .RelPermalink }}" class="hp-strip-card hp-strip-card-latest">
+          <div style="flex:1">
+            <div class="hp-strip-label">Latest post</div>
+            <div class="hp-strip-title">{{ .Title }}</div>
+            <div class="hp-strip-meta">{{ .Date.Format "Jan 2, 2006" }} &middot; {{ .ReadingTime }} min read</div>
+          </div>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" style="flex-shrink:0;margin-top:2px" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        {{ end }}
+
+        <div class="hp-strip-card">
+          <img src="/images/books/poppy-war.jpg" alt="The Poppy War" class="hp-strip-book-thumb" onerror="this.style.display='none'">
+          <div style="flex:1">
+            <div class="hp-strip-label">Currently reading</div>
+            <div class="hp-strip-title">The Poppy War</div>
+            <div class="hp-strip-meta">R.F. Kuang</div>
+            <div class="hp-strip-book-note">Speechless.</div>
+          </div>
+        </div>
+
+      </div><!-- /.hp-top-strip -->
+
+      <!-- CENTRE -->
+      <div class="hp-centre">
 
         {{ with site.Params.avatar }}
           <img src="{{ . | relURL }}" alt="{{ site.Params.author }}" class="hp-avatar">
         {{ else }}
-          <div class="hp-avatar-fallback">IS</div>
+          <div class="hp-avatar" style="background:rgba(45,212,191,0.1);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#2dd4bf;">IS</div>
         {{ end }}
 
-        <div class="hp-identity">
+        <div style="text-align:center">
           <div class="hp-name">{{ site.Params.author }}</div>
           <div class="hp-role">Power Platform Developer</div>
           <p class="hp-bio">Sole internal dev at ThriveTribe, a UK health and wellbeing charity. Building the Dynamics 365 systems that run NHS health programmes for 400+ staff. Also making content for Powercademy.</p>
@@ -361,46 +445,31 @@
 
           <a href="/posts/" class="hp-menu-item">
             <svg class="hp-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-            <div class="hp-menu-text">
-              <span class="hp-menu-label">Blog</span>
-              <span class="hp-menu-sub">Writing on Power Platform &amp; work</span>
-            </div>
+            <div><div class="hp-menu-label">Blog</div><div class="hp-menu-sub">Writing on Power Platform &amp; work</div></div>
             <svg class="hp-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
 
           <a href="/library/" class="hp-menu-item">
             <svg class="hp-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-            <div class="hp-menu-text">
-              <span class="hp-menu-label">My Library</span>
-              <span class="hp-menu-sub">Books I&apos;ve read &amp; recommend</span>
-            </div>
+            <div><div class="hp-menu-label">My Library</div><div class="hp-menu-sub">Books I&apos;ve read &amp; recommend</div></div>
             <svg class="hp-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
 
-          <a href="/about/me/" class="hp-menu-item">
+          <a href="/about/" class="hp-menu-item">
             <svg class="hp-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <div class="hp-menu-text">
-              <span class="hp-menu-label">About</span>
-              <span class="hp-menu-sub">More about me &amp; what I do</span>
-            </div>
+            <div><div class="hp-menu-label">About</div><div class="hp-menu-sub">More about me &amp; what I do</div></div>
             <svg class="hp-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
 
           <a href="https://www.youtube.com/@Powercademy" target="_blank" rel="noopener" class="hp-menu-item">
-            <svg class="hp-menu-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-base-100, #0f1117)"/></svg>
-            <div class="hp-menu-text">
-              <span class="hp-menu-label">Powercademy</span>
-              <span class="hp-menu-sub">Power Platform content on YouTube</span>
-            </div>
+            <svg class="hp-menu-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-base-100,#0f1117)"/></svg>
+            <div><div class="hp-menu-label">Powercademy</div><div class="hp-menu-sub">Power Platform content on YouTube</div></div>
             <svg class="hp-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </a>
 
           <a href="mailto:Ibrahimstephenson@gmail.com?subject=Portfolio%20Enquiry" class="hp-menu-item">
             <svg class="hp-menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <div class="hp-menu-text">
-              <span class="hp-menu-label">Contact</span>
-              <span class="hp-menu-sub">Get in touch</span>
-            </div>
+            <div><div class="hp-menu-label">Contact</div><div class="hp-menu-sub">Get in touch</div></div>
             <svg class="hp-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </a>
 
@@ -421,50 +490,43 @@
           </a>
         </div>
 
-      </div><!-- /.hp-hero -->
+      </div><!-- /.hp-centre -->
 
-      <!-- RIGHT: aside -->
-      <aside class="hp-aside" aria-label="Latest content">
+      <!-- RIGHT PANEL -->
+      <aside class="hp-right" aria-label="Highlights">
 
-        <div class="hp-aside-label">Latest posts</div>
-
-        {{ range $i, $post := first 2 $sorted }}
-        <a href="{{ .RelPermalink }}" class="hp-post-card{{ if eq $i 0 }} hp-post-latest{{ end }}">
-          {{ if eq $i 0 }}
-            <span class="hp-post-tag">Latest</span>
-          {{ else if in (.Params.categories) "Rant" }}
-            <span class="hp-post-tag hp-post-tag-personal">Personal</span>
-          {{ else }}
-            <span class="hp-post-tag hp-post-tag-muted">{{ with index .Params.categories 0 }}{{ . }}{{ else }}Post{{ end }}</span>
-          {{ end }}
-          <div class="hp-post-title">{{ .Title }}</div>
-          <div class="hp-post-meta">
-            <span>{{ .Date.Format "Jan 2" }}</span>
-            <span>{{ .ReadingTime }} min</span>
-          </div>
-        </a>
-        {{ end }}
-
-        <a href="/posts/" class="hp-view-all">View all posts &rarr;</a>
-
-        <hr class="hp-divider">
-
-        <div class="hp-aside-label">Currently reading</div>
-
-        <div class="hp-reading-card">
-          <div class="hp-reading-inner">
-            <img src="/images/books/poppy-war.jpg" alt="The Poppy War" class="hp-book-thumb" onerror="this.style.display='none'">
-            <div>
-              <div class="hp-book-title">The Poppy War</div>
-              <div class="hp-book-author">R.F. Kuang</div>
-              <div class="hp-book-note">Speechless.</div>
-            </div>
+        <div>
+          <div class="hp-panel-label">Most recommended</div>
+          <div class="hp-panel-card">
+            <div class="hp-panel-tag">Book</div>
+            <div class="hp-panel-title">The Sword of Kaigen</div>
+            <div class="hp-panel-sub">M.L. Wang. My top recommendation, no hesitation.</div>
           </div>
         </div>
 
-        <a href="/library/" class="hp-view-all">Browse full library &rarr;</a>
+        <hr class="hp-panel-divider">
 
-      </aside>
+        <div>
+          <div class="hp-panel-label">Most popular</div>
+          <a href="/posts/datascraper/" class="hp-panel-card">
+            <div class="hp-panel-tag">Post</div>
+            <div class="hp-panel-title">The Datascraper</div>
+            <div class="hp-panel-sub">Most read on the site.</div>
+          </a>
+        </div>
+
+        <hr class="hp-panel-divider">
+
+        <div>
+          <div class="hp-panel-label">What I&apos;m working on</div>
+          <div class="hp-working-card">
+            <div class="hp-working-tag">In progress</div>
+            <div class="hp-panel-title">Migrating our largest service onto Dynamics 365</div>
+            <div class="hp-panel-sub" style="margin-top:3px;">NDPP. Biggest migration ThriveTribe has done.</div>
+          </div>
+        </div>
+
+      </aside><!-- /.hp-right -->
 
     </div><!-- /.hp-page -->
 
