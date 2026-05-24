@@ -36,7 +36,7 @@
 
       .hp-page {
         display: grid;
-        grid-template-columns: 1fr 320px;
+        grid-template-columns: 1fr 340px;
         grid-template-rows: 1fr auto;
         align-items: start;
         min-height: 100vh;
@@ -53,8 +53,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
-        padding: 1.75rem 2rem 2rem;
+        justify-content: center;
+        padding: 3.5rem 2rem 2rem;
         gap: 0.85rem;
       }
 
@@ -207,8 +207,8 @@
         grid-column: 1;
         grid-row: 2;
         display: flex;
-        gap: 1.25rem;
-        padding: 1rem 2rem 1.75rem;
+        gap: 1.5rem;
+        padding: 1.5rem 2rem 2.25rem;
         border-top: 1px solid rgba(255,255,255,0.06);
       }
 
@@ -220,9 +220,9 @@
         flex: 1;
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        padding: 1.1rem 1.35rem;
-        min-height: 100px;
+        border-radius: 14px;
+        padding: 1.35rem 1.6rem;
+        min-height: 120px;
         display: flex;
         gap: 10px;
         align-items: flex-start;
@@ -240,30 +240,30 @@
       html[data-theme="emerald"] .hp-strip-card-latest { border-top-color: #059669; }
 
       .hp-strip-label {
-        font-size: 0.68rem;
+        font-size: 0.72rem;
         font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: #2dd4bf;
-        margin-bottom: 6px;
+        margin-bottom: 7px;
       }
       html[data-theme="emerald"] .hp-strip-label { color: #059669; }
 
       .hp-strip-title {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         font-weight: 500;
         line-height: 1.4;
       }
 
       .hp-strip-meta {
-        font-size: 0.78rem;
+        font-size: 0.82rem;
         color: #64748b;
-        margin-top: 7px;
+        margin-top: 8px;
       }
 
       .hp-strip-book-thumb {
-        width: 40px;
-        height: 56px;
+        width: 48px;
+        height: 66px;
         border-radius: 3px;
         object-fit: cover;
         border: 1px solid rgba(255,255,255,0.08);
@@ -271,10 +271,10 @@
       }
 
       .hp-strip-book-note {
-        font-size: 0.78rem;
+        font-size: 0.82rem;
         color: #2dd4bf;
         font-style: italic;
-        margin-top: 5px;
+        margin-top: 6px;
       }
       html[data-theme="emerald"] .hp-strip-book-note { color: #059669; }
 
@@ -287,10 +287,10 @@
         grid-row: 1 / 3;
         border-left: 1px solid rgba(255,255,255,0.06);
         background: rgba(255,255,255,0.02);
-        padding: 2rem 1.6rem;
+        padding: 2.25rem 1.75rem;
         display: flex;
         flex-direction: column;
-        gap: 1.6rem;
+        gap: 1.75rem;
         overflow-y: auto;
       }
       html[data-theme="emerald"] .hp-right {
@@ -311,7 +311,7 @@
         background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
         border-radius: 13px;
-        padding: 1.1rem 1.2rem;
+        padding: 1.2rem 1.35rem;
         text-decoration: none;
         color: inherit;
         display: block;
@@ -334,8 +334,8 @@
       }
       html[data-theme="emerald"] .hp-panel-tag { color: #059669; }
 
-      .hp-panel-title { font-size: 0.97rem; font-weight: 500; line-height: 1.4; margin-bottom: 5px; }
-      .hp-panel-sub { font-size: 0.83rem; color: #64748b; line-height: 1.55; }
+      .hp-panel-title { font-size: 1rem; font-weight: 500; line-height: 1.45; margin-bottom: 5px; }
+      .hp-panel-sub { font-size: 0.86rem; color: #64748b; line-height: 1.6; }
 
       .hp-panel-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 0; }
       html[data-theme="emerald"] .hp-panel-divider { border-top-color: rgba(0,0,0,0.07); }
@@ -345,7 +345,7 @@
         border: 1px solid rgba(255,255,255,0.08);
         border-left: 2px solid #f59e0b;
         border-radius: 13px;
-        padding: 1.1rem 1.2rem;
+        padding: 1.2rem 1.35rem;
       }
       html[data-theme="emerald"] .hp-working-card {
         background: rgba(0,0,0,0.02);
@@ -424,7 +424,7 @@
         <div class="hp-name-block">
           <div class="hp-name">{{ site.Params.author }}</div>
           <div class="hp-role">Power Platform Developer</div>
-          <p class="hp-bio">Sole internal dev at ThriveTribe, a UK health and wellbeing charity. Building the Dynamics 365 systems that run NHS health programmes for 400+ staff. Also making content for Powercademy.</p>
+          <p class="hp-bio">Welcome to my corner of the internet. Somewhere to write about the things I'm building, the problems I'm solving, and whatever else is on my mind.</p>
         </div>
 
         <div class="hp-pill">
