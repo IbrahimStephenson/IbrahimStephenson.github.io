@@ -14,66 +14,49 @@ featured: true
 cover: /images/datascraper.png
 ---
 
-We had a solution everyone loved. Until they didn't. Here's what happened, and what I built to replace it.
+At my company, "the Datascraper" was a thing of legend, believed to have been lost and forgotten. Until I got my hands on it.
 
 <!--more-->
 
 ## The Original
 
-Staff were manually typing data from referral forms into Dataverse. Same fields every time. Patient name, date of birth, NHS number, GP surgery. Over and over, from documents that already had all of that written on them.
+Staff were manually inputting data from PDFs received from GPs that contained patient data into Dynamics. (TW) *Manually*.
 
-So I built something. We called it the Datascraper.
+Then one of my previous colleagues created the Datascraper 1.0. This essentially took information from PDFs and uploaded them as referrals into the database. At the time, revolutionary, groundbreaking. Then the cracks started to show.
 
-It used AI Builder's document processing model. You train it on example documents, tell it which fields to extract, it learns the layout. Staff upload a PDF, the model reads it, the data lands in Dataverse automatically. No typing.
+Our staff were pushing it to its limits, and beyond. They would insert documents that differed from the trained templates. It would have typos, missed information, and fields inputted in the wrong place. As you can imagine, working with patient data this was a massive problem. However the developer in charge had left the company by then, and the rest of us had a backlog to work through. We didn't have time to fix this. So it was dumped, unused, forgotten.
 
-People loved it. That does not happen often with back-office tools. It felt like a proper win.
+Until I was in a meeting and it got brought up in passing. I remembered an old doc the developer left behind titled "AI DataScraper." After the meeting I went to look at the doc. Then an idea was born.
 
-Then it started breaking.
+I spoke with my manager and put my idea forward: recreating the AI Datascraper, but better. More accurate. Trained using the best AI model to date. However I was quickly shut down, despite there being a need for this solution. There were more pressing items that needed attention. Bug fixes, BAU tasks, dev requests from ADOs. There was simply no time to work on it. So I offered to do it outside work hours. Took it upon myself as a personal project and challenge. I was determined to create something for everyone, something that won't break, that will grow alongside the company, not fall short from it. And that's exactly what I did.
 
-## What Actually Went Wrong
+## The People's Hero
 
-The issue was built into how document processing models work. You train them on specific layouts. The model learns where things usually appear on the page. That works great until someone updates their referral template, which GP surgeries do. New services came with different paperwork. Forms got redesigned.
+The first thing I did was talk to the staff. Figure out what docs they were receiving from the GPs, healthcare professionals, schools, etc. I managed to get a list from various sources, all a bit different and unique. I even got a TIFF file.
 
-Every time the layout shifted, even slightly, the model started returning wrong data. Fields came back blank. Sometimes it confidently filled in the wrong thing with no error. Staff stopped trusting it. Then they stopped using it. Then it became the thing people quietly worked around.
+Then I searched for a solution. Not just one that fits the requirements, but the best solution. A solution that will never break no matter what file is presented. A solution that is intuitive, can use semantic language, can understand more than just a prompt.
 
-I knew it needed replacing. I just did not know with what yet.
+I landed on Anthropic's model. I used a HTTP action to speak to the AI using an Anthropic API. This was genius. Claude reads it the way a person would. It understands context. It does not need to have seen that exact template before. Different GP letterheads, different formats, fields in different positions. It does not matter. It finds the information because it knows what it is looking for, not just where it usually appears. Previously fields had to be manually mapped over. Now, with a detailed and high level prompt, I could get Claude to infer the fields itself.
+
+GP notes, if you've ever worked with GPs before you know they love putting information in the notes. This information could map over onto possible fields on our Dataverse. But how do you map a free text note field onto a specific field? Well, with the right prompting we can get Claude to infer where it should land and insert it himself.
+
+For example, one clinician wrote that a patient smoked 15 times a day and had certain conditions. Claude could pick this up, locate the field on Dataverse, and populate it with the accurate data.
+
+But what if the data fields do not match? Well, that would be a problem. That's why I devised a scoring system. Out of 10, with reasoning, Claude explains how confident he feels with these interpretations. Anything less than a 9, he does not populate the field. Instead he inserts the info into the notes for the client, then flags to the advisor in the final email those fields, the score, and the reasoning behind it.
 
 ## Generative Pages
 
-I had been reading about generative pages in Power Apps. The idea is you describe what you want, and it generates a working React app inside the designer. I was sceptical. I have seen enough AI-generated interfaces to expect something generic and broken.
+So I've briefly explained the flow, but how did the advisors input these PDFs in the first place? We ran Dataverse from an MDA and there is no native PDF uploader. That is where Generative Pages comes into play.
 
-I tried it anyway.
+This release from Microsoft allows us to generate a full React page in our MDA. It's essentially a code app. It completely bypasses the natural limitations both Canvas Apps and Model Driven Apps have. It allows us to embed a beautifully designed, dynamic PDF uploader page into our MDA for our staff to use.
 
-Honestly? Better than I expected. Way better. I had a working front end in one session. File upload, a service selector pulling live from Dataverse, submit button, loading states, success and error feedback. Clean code I could iterate on just by describing what I wanted changed. No dragging components around a canvas.
+However, this is where I found my second issue. A lot of these documents were not in PDF format. I can't expect staff to spend time converting them into PDFs themselves. The whole point is to save time, not create more.
 
-That was the front end sorted. I still needed something to actually read the documents.
+So I added a second page: a PDF converter. This allowed staff to input as many as 20 .docx files at once, click convert, and in a short span of time the documents would be converted into PDFs, downloaded locally onto the device. Which can then be uploaded onto the Datascraper page.
 
-## Where Claude Comes In
+However the limitation with generative page is each change needed after the initial prompt rewrote the entire page. This took way too long, so I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. I described the changes I wanted. Claude modified the React component directly. Loading states, error handling, form resets. Done. 
 
-Instead of training a model on fixed layouts, I built a Power Automate flow called Process Referral Document. When a file gets uploaded, the flow sends the PDF to Claude via an HTTP action along with a prompt that says, roughly: this is a referral for this specific service, extract these fields, return it as JSON.
-
-Claude reads it the way a person would. It understands context. It does not need to have seen that exact template before. Different GP letterheads, different formats, fields in different positions. It does not matter. It finds the information because it knows what it is looking for, not just where it usually appears.
-
-The flow then maps that JSON to the right Dataverse fields and creates the records. Staff get an email with direct links to review what was created.
-
-The whole thing is genuinely more reliable than the original, with less setup and zero retraining when a new document format comes in.
-
-## Then Claude Helped Build the Front End Too
-
-This bit I still find a bit mad.
-
-When I needed to refine the generative page, I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. I described the changes I wanted. Claude modified the React component directly. Loading states, error handling, form resets. Done.
-
-So Claude is doing two things in this solution. Reading the PDFs inside the flow. And he built the interface staff use to upload them in the first place.
-
-## The Difference
-
-The old Datascraper needed training data, layout-specific configuration, and regular maintenance every time a template changed. When it broke, it broke silently. Wrong data, no error, no indication anything had gone wrong.
-
-The new version needs none of that upfront. The prompt defines what to extract. New service in scope? Update the prompt and the field mapping. That is it.
 
 The Datascraper was a good solution. It just had a ceiling. This one does not.
 
 ---
-
-*Built on Power Automate, Dataverse, Power Apps generative pages, and Claude via Anthropic API.*
