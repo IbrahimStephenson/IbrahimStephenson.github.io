@@ -94,6 +94,6 @@ The code is real React and TypeScript. If something goes wrong or the output nee
 
 Every generated page is solution-aware. It deploys into your solution, moves through DEV, UAT, and PROD with your pipeline, and behaves like any other solution component.
 
-The Support Hub went from blank prompt to deployed five-screen React app in a single session. If you have been putting this off, stop.
+If you have always been curious about generative pages, use this as your wake up call to give it a shot. You will be more than surprised.
 
 ---
