@@ -1,5 +1,5 @@
 ---
-title: "I Rebuilt the Support Hub With Generative Pages and It's Not Even Close"
+title: "Generative Pages in Model-Driven Apps: A Practical Guide"
 date: 2026-05-02
 author: Ibrahim Stephenson
 categories:
@@ -14,62 +14,86 @@ draft: false
 cover: /images/genpage.png
 ---
 
-The Support Hub canvas app worked. It did the job. But I always knew it had a ceiling.
-
-Then I discovered generative pages. And I rebuilt the whole thing in a fraction of the time, with a better result.
+If you haven't been living under a rock you should have heard about generative pages by now. Essentially it's a full React page created using prompts, no code needed, no drag and drop. Nothing. Just talk to the AI and it will create a functional site.
 
 <!--more-->
 
-## What We Had
+Now I, like many others, was quite intrigued and decided to give it a go. Whilst I was impressed by how it worked out of the box, it definitely wasn't production ready. Until I hooked it up to Claude Code inside VS Code, and boy oh boy was this thing amazing.
 
-The original Support Hub was a four-screen canvas app embedded in Dynamics 365. Advisors could browse Scribe guides filtered by service, search by keyword, and raise a Freshdesk ticket if they could not find what they needed. It was solid. People used it.
+So I figured I would create a quick post explaining how to do that so everyone can fully utilise the true hidden potential of generative pages in model-driven apps.
 
-But canvas apps have friction. Formula language, screen navigation, gallery delegation limits, component quirks. Every change is a deployment. Every new requirement means opening Power Apps Studio and wrestling with something.
+## What Are Generative Pages?
 
-I had been watching generative pages develop quietly in the background. The idea is you describe what you want in plain English, and Power Apps generates a working React app directly inside the designer. Real code. Real components. Not a low-code approximation of an app. An actual app.
+Generative pages let you describe a page in natural language and have a coding agent generate a fully working React and TypeScript application that lives inside your model-driven app. No Power Fx. No drag and drop. Real code.
 
-I was curious enough to try it for something real.
+They are Dataverse-native, supporting up to six tables per page. Solution-aware, so they move through your ALM pipeline with everything else. Generally available since October 2025, no additional AI credits required through the native maker experience, no extra licences for users beyond their existing MDA access.
 
-## The Rebuild
+Model-driven apps are rigid by design. Custom pages improved that by embedding a canvas app inside the MDA, but you were still limited to what Power Fx could do. Generative pages remove that ceiling entirely. React applications are what most modern apps are built on. Now you can bring that into Dynamics.
 
-I wrote a detailed prompt describing the Support Hub: the screens, the data model, the filtering logic, the search behaviour, the Freshdesk link. The ttd_supporthub table, the service and programme lookups, the nullable programme field, the hasascribe flag on services.
+## Method 1: Building Through the Maker Studio
 
-What came back was a working React app. Five screens navigated via React state with no page reloads. Service selector, programme selector, guide list with real-time search across title, description and keywords, a home screen with action cards. Fluent UI components throughout so it looked native inside Dynamics.
+The native route is the quickest way to get started.
 
-The canvas app had taken multiple sessions to build and debug. Formula errors, delegation warnings, lookup comparison issues that took hours to track down. The generative page got there in one prompt, with cleaner code underneath.
+Open your model-driven app in Power Apps Studio and add a new generative page. You will get a split interface: a chat panel on the left and a preview on the right. Describe the page you want in plain English. The agent will produce a plan, flag any assumptions it has made, then generate the code and render a preview.
 
-But the part that actually surprised me was what came next.
+You can iterate directly from the chat panel. Ask it to adjust the layout, add a filter, change a component. The code is accessible inline if you want to inspect or edit it directly.
 
-## Bringing Claude Code In
+Once you are happy, save and publish. Add the page to your app navigation and it is live.
 
-Once the generative page existed, I connected Claude Code to the Power Apps environment using the Power Platform Skills plugin. Instead of manually editing the React code through the designer, I could just describe changes and Claude would modify the component directly.
+This is the fastest route for simple pages. For anything more complex, the local machine approach gives you more control.
 
-That changed the iteration speed completely. I wanted a Training Videos section added, something the original canvas app never had. Advisors would be able to browse Microsoft Stream training videos and watch them inline in a modal without navigating away from the app. I described it. Claude built it. New screen, video card grid, searchable, inline iframe player.
+## Method 2: Building via Claude Code and the Power Platform Skills Plugin
 
-In the canvas app world that would have been a significant piece of work. With Claude Code and the generative page, it was a conversation.
+This is the approach I used for the Support Hub rebuild. What it produces is a different class of result from the native experience.
 
-The deployment went through PAC CLI. Claude ran the commands. The app went to the environment. Done.
+**What you need:**
 
-## What Actually Changed
+- Claude installed on your machine
+- VS Code with the Power Platform Tools extension installed
+- PAC CLI authenticated to your environment
 
-The generative page has five screens versus the canvas app's four, with training videos added as a proper feature rather than squeezed in later.
+**Installing the plugin:**
 
-Search in the canvas app ran into delegation limits. The React version does not have that problem.
+Open Claude in your terminal and type `/plugins`. Navigate to Add Marketplace and add the following:
 
-Every change to the canvas app meant opening Power Apps Studio. The generative page gets iterated on from the terminal, described in plain English, deployed via PAC CLI.
+```
+/plugin marketplace add microsoft/power-platform-skills
+```
 
-The canvas app was something I built and maintained. The generative page is something I described and directed.
+Once the marketplace is added, find Power Platform Skills, open it, and install the Model Apps skill. Press Escape to exit the plugin menu.
 
-That distinction matters more than it sounds. As the only developer in the organisation, the less time I spend in Power Apps Studio wrestling with formula syntax, the more time I have for things that actually need thinking. Generative pages do not replace the thinking. They just get out of the way of it.
+**Generating the page:**
 
-## Honest Caveat
+Run the skill with:
 
-It is not magic. The prompt matters. A vague description gets a vague result. I had to know the data model, the field names, the filtering logic, the exact behaviour I wanted. The better I could describe the system, the better the output.
+```
+/gen-page
+```
 
-And Claude Code editing the React component directly only works as well as your ability to tell it what you want. You still need to know what good looks like.
+Claude will check prerequisites (PAC CLI, Node.js) and authenticate against your environment. It will then ask whether you want to create a new page or edit an existing one. Select create.
 
-What changed is not that the knowledge requirement went away. It's that the execution gap between knowing what to build and having it built got much, much smaller.
+When prompted to describe the page, be specific. The more detail you provide about the data model, the filtering logic, the fields and relationships involved, the better the output. Include table names, field schema names, and exactly how you want the data to behave.
+
+Claude will retrieve your Dataverse schema, generate the React and TypeScript code, and deploy it to your environment. This takes roughly 10 to 15 minutes and burns through a large chunk of your context window. Once deployed, it will offer to verify the page using Playwright, opening a browser session and testing the app feature by feature. If anything is not working, it will fix it before handing back to you.
+
+For the Support Hub I described the full data model: the `ttd_supporthub` table, the service and programme lookups, the nullable programme field, the `hasascribe` flag, the search behaviour across title, description and keywords. What came back was a working five-screen React app with Fluent UI components, real-time search, and proper navigation via React state.
+
+**Iterating after deployment:**
+
+Once the page exists in your environment you can keep refining it through Claude. Describe the change you want, Claude modifies the component and redeploys via PAC CLI. No need to go back into Power Apps Studio.
+
+When I wanted a Training Videos section added I described the screen, the video card layout, and the inline iframe player. Claude built it, deployed it, done. In the canvas app world that would have been a significant piece of work.
+
+You can also open the generative page inside the MDA designer after deployment for inline edits if you prefer that interface.
+
+## What to Know Before You Start
+
+The prompt is everything. A vague description produces a vague result. You need to know your data model, your field names, and the exact behaviour you want before you start. The better you can describe the system, the better the output.
+
+The code is real React and TypeScript. If something goes wrong or the output needs adjusting, you need to be able to read it or work with someone who can.
+
+Every generated page is solution-aware. It deploys into your solution, moves through DEV, UAT, and PROD with your pipeline, and behaves like any other solution component.
+
+The Support Hub went from blank prompt to deployed five-screen React app in a single session. If you have been putting this off, stop.
 
 ---
-
-*Built with Power Apps generative pages, Claude Code, Power Platform Skills plugin, and PAC CLI. Data from Dataverse.*
