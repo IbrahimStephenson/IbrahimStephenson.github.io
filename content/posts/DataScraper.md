@@ -56,6 +56,8 @@ So I added a second page: a PDF converter. This allowed staff to input as many a
 
 However the limitation with generative page is each change needed after the initial prompt rewrote the entire page. This took way too long, so I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. I described the changes I wanted. Claude modified the React component directly. Loading states, error handling, form resets. Done.
 
+If you want to learn more about how to create a generative page and connect it to Claude Code like I did, I wrote a full guide on it: [How to Build a Generative Page with Claude Code](https://ibrahimstephenson.github.io/posts/gen-page/).
+
 The Datascraper was a good solution. It just had a ceiling. This one does not.
 
 ---
