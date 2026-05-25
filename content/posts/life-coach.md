@@ -10,22 +10,28 @@ draft: false
 cover: /images/life-coach.jpg
 ---
 
-When I was younger, my dream was to be a life coach. For an introvert, that is a pretty strange thing to want.
+When I was 15, for school careers day, we had to decide what career we wanted to pursue. A lot of my peers chose things like Doctor, Engineer, Rapper. I chose **Life Coach**. I could not really explain why. It just felt right, natural. Which is odd since I was the introvert of the class. What person would want to take life advice from someone who struggles during ice breakers.
 
 <!--more-->
 
-I have never been someone who finds social situations particularly natural. I can do them, and I do them well when I need to. I just do not seek them out.
+But where my weakness shows, my talent hides.
 
-I think it is partly genetic. My dad built his career around speeches and presentations. Growing up, I was constantly tagging along to his conferences, sitting in hotel ballrooms watching him command a room of hundreds. It just seemed normal. Standing up and talking to people was not something to be nervous about. It was just something adults did.
+I was exceptional on a stage. Not singing, or dancing. **Speaking.** I was selected from my school to represent at the Jack Petchey Speak Out Challenge.
 
-So when school rolled around and we had to do presentations, I was in my element. Top marks, no nerves, confident delivery. But the second a teacher said "okay everyone, let's do a quick icebreaker," my stomach dropped. Forced one-on-one small talk with strangers felt completely alien, even though speaking to the whole class did not.
+In my room when I was alone I would listen to spoken word and memorise it line for line. Whilst watching Sherlock Holmes I would memorise his monologues. For no reason other than I thought I wanted to. Never presented it, there was no need to memorise it, yet I would. I was naturally inclined towards things like that.
 
-That has changed over time. I have gotten used to it, worked on it, and if you put me in a room now I can hold my own. I am not going to be the one working the crowd, but I am not hiding by the door either. What used to be my biggest weakness is something I have quietly gotten on top of. It just took longer than most things.
+I think it is partly genetic. My dad built a career around giving speeches. Growing up I was always tagging along to his conferences, sitting in the halls watching him speak to hundreds in a room. It was normal to me. This wasn't something to be nervous about, this was just something we did.
 
-There is a distinction a lot of people do not really get. There is a difference between performing for an audience and actually connecting with individuals. One I find natural; the other I would rather skip.
+So when it was time to do presentations in school, I was in my element. Top marks, compliments from the teacher. But as I mentioned, I was still an introvert. When it was time to discuss in a group I shied away, only spoke when spoken to, and got anxious when it was my time to introduce myself.
 
-The same pattern shows up in my work. I lead meetings, drive stakeholder conversations, present findings, gather requirements, and I am good at it. That is the part of working in Power Platform I enjoy most. Give me a structured discussion with a clear objective and I am confident, focused, and useful. But catch me in the kitchen at a work event trying to make conversation? I have got about 0.2 seconds before I would rather just get on with my day.
+**This has changed over time.** I have grown, adapted, faced my weakness and turned it into my strength. Now I'm confident, can hold my own in conversations with anyone.
 
-I still do not fully understand where the line is, or why it sits exactly there. But I think the life coach ambition made sense precisely because of it. I did not want to make small talk with people. I wanted to have focused, purposeful conversations with them. Not despite any of that. Because of it.
+Now I have managed to take the skill I grew up learning and utilise it for work. I lead meetings. Drive stakeholder conversations, challenge decisions and demonstrate my solutions. I can hold my own in a room with senior leadership just the same as I can speak with an advisor.
 
-My biggest strength and my biggest weakness are basically the same thing. Just in different rooms.
+I think the journey matters. Someone who never had to learn how to speak has a different understanding of communication than someone who had to **build** that confidence. I know what it's like to have something important to say and not know how to say it. That makes me better at listening, reading the room, knowing what to do to allow the person to feel comfortable enough to speak freely and explain their thoughts, feedback and suggestions.
+
+Which in turn makes me a **better developer** for it.
+
+---
+
+*My biggest strength and my biggest weakness are basically the same thing. Just in different rooms.*
