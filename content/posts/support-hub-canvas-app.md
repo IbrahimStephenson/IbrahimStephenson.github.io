@@ -17,58 +17,52 @@ The worst kind of support ticket is the one that didn't need to be raised.
 
 <!--more-->
 
+We adopted Power Platform fast. Once the execs heard about it, the money we could save by migrating over, that was all it took. Next thing you knew we had hundreds of staff members using a half finished site. Hundreds of tickets rolling in per day, backlog as high as Everest. There was no way we were ever going to stop drowning.
+
+But most of the tickets were due to incorrect use of our platform. Advisors not knowing where to go and what to press. It wasn't so clear to them since they were new to using Dynamics. They didn't understand it properly, nobody really did. Except for the devs.
+
+**So I figured I could fix one of our problems. Which would help fix the rest.**
+
+If I could make a centralised hub full of docs, support guides, videos, FAQs, host it on Dynamics, the platform our advisors were having problems with, then this would reduce our ticket submissions by a large margin. Which would relieve some pressure so we could focus on the important stuff.
+
+And so that's what I did.
+
 ## The Problem
 
-Advisors were raising tickets for things they could answer themselves. How to complete a referral in Dynamics. How to log a clinical milestone. Basic navigation questions. The kind of thing that should be self-serviceable.
-
-The issue wasn't just volume. It was that any existing documentation was scattered, hard to find, and not specific to the service or programme the advisor was actually working on. A smoking cessation advisor and a weight management advisor have completely different workflows, different forms, different steps. Generic documentation wasn't cutting it.
+The requirements were to have a hub that could be updated by the managers with docs and training guides as and when. However each guide would only apply to certain services or business units, whilst others applied universally.
 
 The obvious answer would have been a SharePoint library. But that would have needed developer involvement every time something changed, which in a fast-moving organisation with 10+ services is basically constant. I needed something non-technical staff could maintain themselves, that surfaced the right content for the right service and programme, and that didn't need a code change every time a new guide appeared.
 
-## Thinking Through the Architecture
-
-The requirement that shaped everything was this: whatever I built had to be maintainable by a team lead with no technical background.
-
-That immediately ruled out anything file-based. Records are easy. Deployments are not. Dataverse as the content store made sense straight away.
-
-I also knew it had to live inside Dynamics 365 rather than being a separate portal. Advisors are already in Dynamics all day. Another URL means another login, another context switch, another reason not to bother. A Canvas App embedded in the Model-Driven App meant staff were already authenticated, already in the right place, zero friction.
-
-The trickier question was how to handle guides that apply to all programmes on a service versus ones specific to a single programme. I didn't want to duplicate records and I didn't want to hardcode anything.
-
-The answer was a nullable programme lookup. One field. Two behaviours. No hardcoding.
-
 ## The Build
 
-### Dataverse schema
+**The nullable programme lookup.**
 
-The content store is a custom table called ttd_supporthub. Each record has a title, a plain-text description, comma-separated keywords for search, a URL to the actual guide, a service lookup, and a programme lookup.
+The content is stored in a custom table called SupportHubs. Each record has a URL, keywords, description, service and programme lookup, and a title. The keyword and description fields are utilised for categorical distinctions and the search functionality.
 
 The programme lookup is nullable by design. No programme set means the guide surfaces for every programme under that service. Programme set means it only appears for that one. That single decision is what makes the whole thing flexible enough to grow without constant maintenance.
 
-There's also an isfeatured boolean for priority content, and the service table has a hasascribe boolean that controls which services appear in the app at all. Onboarding a new service means flipping that flag. No app changes required.
-
-### The canvas app
+**The canvas app.**
 
 Four screens, embedded in Dynamics.
 
-Home screen: two options. Scribe Guides or Raise a Ticket. The ticket button links straight to Freshdesk, so the app is both a self-service tool and a gateway to formal support when self-service genuinely isn't enough.
+Home screen had three options: Scribe Guides, Raise a Ticket, Training Videos.
 
-Service selection: shows only services where hasascribe is true, pulled from a filtered Dataverse view.
-
-Programme selection: filters to programmes linked to the chosen service.
-
-Guide list: filters the supporthub table where the service matches and either the programme field is blank or matches what was selected. A Search function runs across description and keywords in real time as the advisor types. Each result has an Open Guide button that launches the URL.
+The Scribe Guides option took advisors to a service selection gateway. Upon selection it shows a list of programmes associated to the service, to help further distinguish what guide the user is looking for. The guide list then filters the SupportHub table where the service matches and either the programme field is blank or matches what was selected. A search function runs across description and keywords in real time as the advisor types. Each result has an Open Guide button that launches the URL.
 
 ## Self-Scalability in Practice
 
-After deployment, adding a new guide is: open the Model-Driven App, create a Support Hub record, fill in the title, description, keywords, URL, pick the service and programme. It is live in the Canvas App immediately. No developer. No deployment. No code change.
+After deployment I ran a training session demonstrating to our lead staff members how they are able to add a guide to display on the canvas app.
+
+Adding a new guide is: open the Model-Driven App, create a Support Hub record, fill in the title, description, keywords, URL, pick the service and programme. It is live in the Canvas App immediately. No developer. No deployment. No code change.
 
 New service onboarded? Flip the flag. New programme added? It appears automatically because the gallery pulls from the existing Programmes table. Guide updated? Paste the new URL into the record.
 
-The system grows with the organisation without ever needing to involve me. That was always the goal. Build something that makes you redundant for maintenance, not something that creates a permanent dependency on you.
+**The system grows with the organisation without ever needing to involve me.**
+
+That was always the goal. Build something that makes you redundant for maintenance, not something that creates a permanent dependency on you.
 
 ## The Result
 
-Ticket volume for self-serviceable queries dropped. Team leads manage their own content libraries. The tool has been adopted across multiple services without a single change to the app itself since deployment.
+Ticket volume dropped, quick. We had more time to focus our attention where it really mattered. Team leads took accountability for their guides staying up to date. We hosted regular sessions with the leads demonstrating new features so they were able to create service specific guides to share with their teams.
 
-And every time a new programme gets added, it shows up in the portal automatically.
+And we were able to operate much more smoothly thanks to it.
