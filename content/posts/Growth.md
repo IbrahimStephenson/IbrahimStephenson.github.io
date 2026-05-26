@@ -43,7 +43,7 @@ I am not sure whether I grew enough for the responsibility, or whether the respo
 
 ## Then It Got Bigger
 
-We sourced an offshore development team. Suddenly I was leading a group of five or six developers, most of whom knew more than me technically, every single one of them. What I had that they did not was the internal knowledge. The history. The context. The understanding of why things were built the way they were and what the organisation actually needed.
+We sourced an offshore development team. Suddenly I was leading a group of five or six developers, most of whom knew more than me technically. What I had that they did not was the internal knowledge. The history. The context. The understanding of why things were built the way they were and what the organisation actually needed.
 
 That knowledge did not diminish. It compounded.
 
@@ -53,12 +53,14 @@ We built that. From three people and a database that nobody trusted.
 
 ## What I Actually Think About Working Alone
 
+Leading more people made one thing clearer, not less. The period of working alone was the thing that made the rest possible.
+
 There is something uniquely clarifying about being the only person. No diffusion of responsibility. No waiting for someone else to notice a problem. No ambiguity about whose decision it is.
 
 It is also exhausting in ways that are hard to explain to someone who has not done it. The weight of knowing that if something breaks at 8am on a Monday, you are it. There is no escalation path. There is just you and the problem.
 
-But I think working alone, or close to it, made me a better developer than a comfortable team ever would have. Not because teams are bad. Teams are great. But because pressure reveals things about yourself that comfort does not. I found out what I was actually capable of not by being supported through challenges, but by having no choice except to meet them.
+But I think working alone, or close to it, made me a better developer than a comfortable team ever would have. Teams are not the problem. But pressure is a different teacher. I found out what I was actually capable of not by being supported through challenges, but by having no choice except to meet them.
 
 I would not change how it went. Even the Albania stairs moment. Even the panic.
 
-That moment was the start of something I am genuinely proud of.
+I stepped up on those stairs. Everything since has followed from that.

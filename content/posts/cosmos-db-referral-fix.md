@@ -65,5 +65,3 @@ I could not fix the root cause. But our advisors no longer have to deal with mis
 If you want me to explain this in greater detail just send me a message and I can do that no problem.
 
 ---
-
-*Built with Power Automate, Cosmos DB, Azure Service Bus, and Dataverse.*

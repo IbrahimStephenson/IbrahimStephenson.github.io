@@ -30,9 +30,7 @@ The CTO gives me direction. Strategic priorities, where the organisation is head
 
 Programme managers give me scope. What is the process supposed to look like? What are the compliance requirements? What does success mean for this programme specifically?
 
-From a frontline advisor I get reality. What is the process actually like? Where does it break down? What workarounds have they quietly built into their day because the system doesn't quite fit how the work actually flows?
-
-That last one is the one developers most often skip. It is also the one that tells you the most.
+And then there are the frontline advisors. What I get from them is not requirements. It is reality. Where does the process actually break down? What workarounds have they quietly built into their day because the system doesn't quite fit how the work flows? That last one is the conversation developers most often skip. It is also the one that tells you the most.
 
 ## The Things You Miss From a Distance
 
@@ -46,9 +44,11 @@ So I set real defaults so they stopped typing the same values into every record.
 
 That insight did not come from a requirements document. It came from sitting with someone and shutting up long enough to see what they were dealing with.
 
+It is tempting to weight these conversations by seniority. Resist that.
+
 ## Why Every Level Matters Equally
 
-It is tempting to weight the conversations differently. The CTO sets the agenda so that conversation feels more important. The advisor is just a user.
+The CTO sets the agenda so that conversation can feel more important. The advisor is just a user.
 
 That framing will cause you to build the wrong things.
 
@@ -64,8 +64,8 @@ It is not a kickoff meeting where you collect requirements and disappear.
 
 Two weeks after a change, I check back and ask if it actually helped. People flag things to me informally, not just through a ticket, because they know I want to hear it. When a CTO describes something in strategic terms, I have to translate that into something a canvas app can actually deliver, then validate that translation with the people who will use it every day.
 
-As the only developer, I do not have the luxury of specialising in just the technical side. The business analysis, the user research, the stakeholder management, that is all part of the role too.
+As the only developer, I do not have the luxury of specialising in just the technical side. The business analysis, the user research, the stakeholder management — that is all part of the role too.
 
 The best thing I have built at ThriveTribe was not the most technically complex. It was the one where I understood the problem well enough before I started that I barely had to change anything after deployment.
 
-That only happened because I asked the right people the right questions first.
+When there is no team to catch your mistakes, you cannot afford to build the wrong thing. So you talk to people first.

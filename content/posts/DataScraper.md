@@ -14,50 +14,72 @@ featured: true
 cover: /images/datascraper.png
 ---
 
-At my company, "the Datascraper" was a thing of legend, believed to have been lost and forgotten. Until I got my hands on it.
+At my company, the Datascraper was a thing of legend. Believed to have been lost. Forgotten.
+
+Until I got my hands on it.
 
 <!--more-->
 
 ## The Original
 
-Staff were inputting data from PDFs received from GPs that contained patient data into Dynamics. **(TW) Manually.**
+Staff were receiving PDFs from GPs, healthcare professionals, schools. Patient referral documents. Every one had to be opened, read, and entered into Dynamics by hand.
 
-Then one of my previous colleagues created the Datascraper 1.0. This essentially took information from PDFs and uploaded them as referrals into the database. At the time, revolutionary, groundbreaking. Then the cracks started to show.
+Field by field. Record by record.
 
-Our staff were pushing it to its limits, and beyond. They would insert documents that differed from the trained templates. It would have typos, missed information, and fields inputted in the wrong place. As you can imagine, working with patient data this was a massive problem. However the developer in charge had left the company by then, and the rest of us had a backlog to work through. We didn't have time to fix this. So it was dumped, unused, forgotten.
+Then one of my previous colleagues built the Datascraper 1.0. It pulled information from the PDFs and pushed it into the database as referrals. No manual input. At the time it was the most impressive thing anyone on the team had seen.
 
-Until I was in a meeting and it got brought up in passing. I remembered an old doc the developer left behind titled "AI DataScraper." After the meeting I went to look at the doc. Then an idea was born.
+Then the cracks appeared.
 
-I spoke with my manager and put my idea forward: recreating the AI Datascraper, but better. More accurate. Trained using the best AI model to date. However I was quickly shut down, despite there being a need for this solution. There were more pressing items that needed attention. Bug fixes, BAU tasks, dev requests from ADOs. There was simply no time to work on it. So I offered to do it outside work hours. Took it upon myself as a personal project and challenge. I was determined to create something for everyone, something that won't break, that will grow alongside the company, not fall short from it. And that's exactly what I did.
+The tool had been trained on specific templates. Our staff, as staff do, started feeding it everything else. Documents with different layouts. Typos, missing fields, information in the wrong position. Working with patient data, inaccurate records aren't just an inconvenience. They follow people through their care. A missed field, a wrong value, a note in the wrong place.
+
+The developer who built it left the company. The rest of us had a backlog. No one had time to fix it. So it got shelved. Unused. Forgotten.
+
+I was in a meeting when someone mentioned it in passing. I remembered a document the developer had left behind, titled "AI DataScraper." After the meeting I went to find it.
+
+That was my opening.
 
 ## The People's Hero
 
-The first thing I did was talk to the staff. Figure out what docs they were receiving from the GPs, healthcare professionals, schools, etc. I managed to get a list from various sources, all a bit different and unique. I even got a TIFF file.
+I spoke with my manager and put my idea forward: rebuild the Datascraper, but better. More accurate. Built on a model that could handle the variation we were actually dealing with. I was quickly shut down. More pressing items, bug fixes, BAU tasks, dev requests from ADOs. No time.
 
-Then I searched for a solution. Not just one that fits the requirements, but the best solution. A solution that will never break no matter what file is presented. A solution that is intuitive, can use semantic language, can understand more than just a prompt.
+So I offered to do it in my own time.
 
-I landed on Anthropic's model. I used a HTTP action to speak to the AI using an Anthropic API. This was genius. Claude reads it the way a person would. It understands context. It does not need to have seen that exact template before. Different GP letterheads, different formats, fields in different positions. It does not matter. It finds the information because it knows what it is looking for, not just where it usually appears. Previously fields had to be manually mapped over. Now, with a detailed and high level prompt, I could get Claude to infer the fields itself.
+I was determined to build something that wouldn't break when the next unusual document came through. Something that would grow alongside the company, not fall short of it.
 
-GP notes, if you've ever worked with GPs before you know they love putting information in the notes. This information could map over onto possible fields on our Dataverse. But how do you map a free text note field onto a specific field? Well, with the right prompting we can get Claude to infer where it should land and insert it himself.
+The first thing I did was talk to the staff. Found out exactly what was coming in from GPs, clinicians, schools. Got a list from various sources, all formatted differently. One was a TIFF file. (Which is odd. But fine.)
 
-For example, one clinician wrote that a patient smoked 15 times a day and had certain conditions. Claude could pick this up, locate the field on Dataverse, and populate it with the accurate data.
+I needed a solution that didn't depend on seeing the exact template before. One that could read a document the way a person would. Understand context. Find information because it knows what it's looking for, not just where it usually sits.
 
-But what if the data fields do not match? Well, that would be a problem. That's why I devised a scoring system. Out of 10, with reasoning, Claude explains how confident he feels with these interpretations. Anything less than a 9, he does not populate the field. Instead he inserts the info into the notes for the client, then flags to the advisor in the final email those fields, the score, and the reasoning behind it.
+I landed on Claude via Anthropic's API, called through a HTTP action in Power Automate.
+
+It reads a document and infers the fields itself. Different GP letterheads, different layouts, fields in different positions. It doesn't matter. Previously every field had to be manually mapped. Now a detailed prompt does that work.
+
+GP notes are where this gets interesting. If you've worked with GPs you know they put everything in the notes. Free text. Unstructured. One clinician wrote that a patient smoked 15 times a day and listed several conditions alongside it. Claude picked that up, identified the relevant Dataverse fields, and populated them with the right data.
+
+But confidence matters. Claude doesn't always get it right. So I built a scoring system.
+
+For every field it interprets, Claude returns a score out of 10 with its reasoning. Anything below a 9, it does not populate the field. Instead it drops the information into the notes, then flags it in the final email to the advisor: the field, the score, why it wasn't confident. The advisor reviews it. The record stays clean.
+
+Wrong patient data doesn't get a second chance to be corrected quietly. It either goes in right or it gets flagged.
 
 ## Generative Pages
 
-So I've briefly explained the flow, but how did the advisors input these PDFs in the first place? We ran Dataverse from an MDA and there is no native PDF uploader. That is where Generative Pages comes into play.
+The flow needed a way for advisors to actually submit these documents. We run Dataverse from a Model Driven App and there's no native PDF uploader.
 
-This release from Microsoft allows us to generate a full React page in our MDA. It's essentially a code app. It completely bypasses the natural limitations both Canvas Apps and Model Driven Apps have. It allows us to embed a beautifully designed, dynamic PDF uploader page into our MDA for our staff to use.
+That's where Generative Pages came in. Microsoft's release lets you generate a full React page inside an MDA. It bypasses the limitations of both Canvas Apps and Model Driven Apps entirely. I embedded a PDF uploader directly into the app for staff to use.
 
-However, this is where I found my second issue. A lot of these documents were not in PDF format. I can't expect staff to spend time converting them into PDFs themselves. The whole point is to save time, not create more.
+Then I hit a second problem. A lot of these documents weren't PDFs. Converting them manually would have created work, not saved it.
 
-So I added a second page: a PDF converter. This allowed staff to input as many as 20 .docx files at once, click convert, and in a short span of time the documents would be converted into PDFs, downloaded locally onto the device. Which can then be uploaded onto the Datascraper page.
+I added a second page: a PDF converter. Staff could drop in up to 20 .docx files at once, click convert, and the documents would come back as PDFs ready to upload. No manual conversion.
 
-However the limitation with generative page is each change needed after the initial prompt rewrote the entire page. This took way too long, so I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. I described the changes I wanted. Claude modified the React component directly. Loading states, error handling, form resets. Done.
+One more thing slowed me down. Every change to a Generative Page after the initial prompt rewrote the entire component. Small adjustments were taking too long. So I connected Claude Code directly to the Power Apps environment using the Power Platform Skills plugin. Described the changes I needed. Loading states, error handling, form resets. Claude modified the React component directly.
 
-If you want to learn more about how to create a generative page and connect it to Claude Code like I did, I wrote a full guide on it: [How to Build a Generative Page with Claude Code](https://ibrahimstephenson.github.io/posts/gen-page/).
-
-The Datascraper was a good solution. It just had a ceiling. This one does not.
+If you want to build your own Generative Page and connect it to Claude Code, I wrote a full guide: [How to Build a Generative Page with Claude Code](https://ibrahimstephenson.github.io/posts/gen-page/).
 
 ---
+
+The original Datascraper was a good solution for the world it was built for. Fixed templates, predictable documents, a team that stayed inside the lines.
+
+That world doesn't exist anymore.
+
+Build for the variation, not the ideal case. The ideal case never shows up.

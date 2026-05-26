@@ -24,11 +24,9 @@ So I figured I would create a quick post explaining how to do that so everyone c
 
 ## What Are Generative Pages?
 
-Generative pages let you describe a page in natural language and have a coding agent generate a fully working React and TypeScript application that lives inside your model-driven app. No Power Fx. No drag and drop. Real code.
+Generative pages let you describe a page in natural language and get back a fully working React and TypeScript application that lives inside your model-driven app. No Power Fx. No drag and drop. Real code.
 
-They are Dataverse-native, supporting up to six tables per page. Solution-aware, so they move through your ALM pipeline with everything else. Generally available since October 2025, no additional AI credits required through the native maker experience, no extra licences for users beyond their existing MDA access.
-
-Model-driven apps are rigid by design. Custom pages improved that by embedding a canvas app inside the MDA, but you were still limited to what Power Fx could do. Generative pages remove that ceiling entirely. React applications are what most modern apps are built on. Now you can bring that into Dynamics.
+Model-driven apps are rigid by design. Custom pages improved that by embedding a canvas app inside the MDA, but you were still limited to what Power Fx could do. Generative pages remove that ceiling. They've been generally available since October 2025, support up to six Dataverse tables per page, sit inside your solution so they travel through your ALM pipeline, and require no extra credits or licences beyond what your users already have.
 
 ## Method 1: Building Through the Maker Studio
 
@@ -40,19 +38,15 @@ You can iterate directly from the chat panel. Ask it to adjust the layout, add a
 
 Once you are happy, save and publish. Add the page to your app navigation and it is live.
 
-This is the fastest route for simple pages. For anything more complex, the local machine approach gives you more control.
+This is the fastest route for simple pages. For anything more complex, skip the studio entirely and build locally.
 
 ## Method 2: Building via Claude Code and the Power Platform Skills Plugin
 
 This is the approach I used for the Support Hub rebuild. What it produces is a different class of result from the native experience.
 
-**What you need:**
+You need three things. Claude installed on your machine. VS Code with the Power Platform Tools extension. PAC CLI authenticated to your environment.
 
-- Claude installed on your machine
-- VS Code with the Power Platform Tools extension installed
-- PAC CLI authenticated to your environment
-
-**Installing the plugin:**
+### Installing the plugin
 
 Open Claude in your terminal and type `/plugins`. Navigate to Add Marketplace and add the following:
 
@@ -62,7 +56,7 @@ Open Claude in your terminal and type `/plugins`. Navigate to Add Marketplace an
 
 Once the marketplace is added, find Power Platform Skills, open it, and install the Model Apps skill. Press Escape to exit the plugin menu.
 
-**Generating the page:**
+### Generating the page
 
 Run the skill with:
 
@@ -78,7 +72,7 @@ Claude will retrieve your Dataverse schema, generate the React and TypeScript co
 
 For the Support Hub I described the full data model: the `ttd_supporthub` table, the service and programme lookups, the nullable programme field, the `hasascribe` flag, the search behaviour across title, description and keywords. What came back was a working five-screen React app with Fluent UI components, real-time search, and proper navigation via React state.
 
-**Iterating after deployment:**
+### Iterating after deployment
 
 Once the page exists in your environment you can keep refining it through Claude. Describe the change you want, Claude modifies the component and redeploys via PAC CLI. No need to go back into Power Apps Studio.
 
@@ -94,6 +88,4 @@ The code is real React and TypeScript. If something goes wrong or the output nee
 
 Every generated page is solution-aware. It deploys into your solution, moves through DEV, UAT, and PROD with your pipeline, and behaves like any other solution component.
 
-If you have always been curious about generative pages, use this as your wake up call to give it a shot. You will be more than surprised.
-
----
+Power Platform always said you didn't need to write code to build what you needed. Generative pages are the first time that has actually been true for me.

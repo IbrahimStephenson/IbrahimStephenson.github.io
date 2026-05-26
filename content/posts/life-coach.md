@@ -37,5 +37,3 @@ Someone who never had to learn how to speak has a different understanding of com
 Which in turn makes me a better developer for it.
 
 ---
-
-*My biggest strength and my biggest weakness are basically the same thing. Just in different rooms.*
